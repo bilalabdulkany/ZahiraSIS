@@ -42,11 +42,22 @@
             this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.studentBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.admnoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.registernoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.keyclassDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bfarrearsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.curarrearsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.curbfarresDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.admonDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.arrearsfrmDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.arrearstoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahiraSISDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stuclassBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -140,11 +151,90 @@
             this.studentBindingSource1.DataMember = "student";
             this.studentBindingSource1.DataSource = this.zahira_SISDataSet;
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToOrderColumns = true;
+            this.dataGridView1.AutoGenerateColumns = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.admnoDataGridViewTextBoxColumn,
+            this.registernoDataGridViewTextBoxColumn,
+            this.keyclassDataGridViewTextBoxColumn,
+            this.bfarrearsDataGridViewTextBoxColumn,
+            this.curarrearsDataGridViewTextBoxColumn,
+            this.curbfarresDataGridViewTextBoxColumn,
+            this.admonDataGridViewTextBoxColumn,
+            this.arrearsfrmDataGridViewTextBoxColumn,
+            this.arrearstoDataGridViewTextBoxColumn});
+            this.dataGridView1.DataSource = this.studentBindingSource;
+            this.dataGridView1.Location = new System.Drawing.Point(26, 139);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
+            this.dataGridView1.TabIndex = 6;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // admnoDataGridViewTextBoxColumn
+            // 
+            this.admnoDataGridViewTextBoxColumn.DataPropertyName = "admno";
+            this.admnoDataGridViewTextBoxColumn.HeaderText = "admno";
+            this.admnoDataGridViewTextBoxColumn.Name = "admnoDataGridViewTextBoxColumn";
+            this.admnoDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.admnoDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // registernoDataGridViewTextBoxColumn
+            // 
+            this.registernoDataGridViewTextBoxColumn.DataPropertyName = "registerno";
+            this.registernoDataGridViewTextBoxColumn.HeaderText = "registerno";
+            this.registernoDataGridViewTextBoxColumn.Name = "registernoDataGridViewTextBoxColumn";
+            // 
+            // keyclassDataGridViewTextBoxColumn
+            // 
+            this.keyclassDataGridViewTextBoxColumn.DataPropertyName = "key_class";
+            this.keyclassDataGridViewTextBoxColumn.HeaderText = "key_class";
+            this.keyclassDataGridViewTextBoxColumn.Name = "keyclassDataGridViewTextBoxColumn";
+            // 
+            // bfarrearsDataGridViewTextBoxColumn
+            // 
+            this.bfarrearsDataGridViewTextBoxColumn.DataPropertyName = "bfarrears";
+            this.bfarrearsDataGridViewTextBoxColumn.HeaderText = "bfarrears";
+            this.bfarrearsDataGridViewTextBoxColumn.Name = "bfarrearsDataGridViewTextBoxColumn";
+            // 
+            // curarrearsDataGridViewTextBoxColumn
+            // 
+            this.curarrearsDataGridViewTextBoxColumn.DataPropertyName = "curarrears";
+            this.curarrearsDataGridViewTextBoxColumn.HeaderText = "curarrears";
+            this.curarrearsDataGridViewTextBoxColumn.Name = "curarrearsDataGridViewTextBoxColumn";
+            // 
+            // curbfarresDataGridViewTextBoxColumn
+            // 
+            this.curbfarresDataGridViewTextBoxColumn.DataPropertyName = "curbfarres";
+            this.curbfarresDataGridViewTextBoxColumn.HeaderText = "curbfarres";
+            this.curbfarresDataGridViewTextBoxColumn.Name = "curbfarresDataGridViewTextBoxColumn";
+            // 
+            // admonDataGridViewTextBoxColumn
+            // 
+            this.admonDataGridViewTextBoxColumn.DataPropertyName = "admon";
+            this.admonDataGridViewTextBoxColumn.HeaderText = "admon";
+            this.admonDataGridViewTextBoxColumn.Name = "admonDataGridViewTextBoxColumn";
+            // 
+            // arrearsfrmDataGridViewTextBoxColumn
+            // 
+            this.arrearsfrmDataGridViewTextBoxColumn.DataPropertyName = "arrearsfrm";
+            this.arrearsfrmDataGridViewTextBoxColumn.HeaderText = "arrearsfrm";
+            this.arrearsfrmDataGridViewTextBoxColumn.Name = "arrearsfrmDataGridViewTextBoxColumn";
+            // 
+            // arrearstoDataGridViewTextBoxColumn
+            // 
+            this.arrearstoDataGridViewTextBoxColumn.DataPropertyName = "arrearsto";
+            this.arrearstoDataGridViewTextBoxColumn.HeaderText = "arrearsto";
+            this.arrearstoDataGridViewTextBoxColumn.Name = "arrearstoDataGridViewTextBoxColumn";
+            // 
             // frmHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(442, 261);
+            this.ClientSize = new System.Drawing.Size(471, 321);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.comboBox2);
@@ -159,6 +249,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.stuclassBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -179,5 +270,15 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.BindingSource studentBindingSource1;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewComboBoxColumn admnoDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn registernoDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn keyclassDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn bfarrearsDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn curarrearsDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn curbfarresDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn admonDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn arrearsfrmDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn arrearstoDataGridViewTextBoxColumn;
     }
 }
