@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ZahiraSIS
 {
-    public partial class Dashboard : Form
+    public partial class frmDashboard : Form
     {
-        public Dashboard()
+        public frmDashboard()
         {
             InitializeComponent();
         }
@@ -24,7 +24,8 @@ namespace ZahiraSIS
 
         private void mnuStudentClassReport_Click(object sender, EventArgs e)
         {
-
+            frmHome home = new frmHome();
+            home.ShowDialog();
         }
     }
 }
