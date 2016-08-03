@@ -31,9 +31,9 @@
             this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.zahira_SISDataSet = new ZahiraSIS.Zahira_SISDataSet();
-            this.zahiraSISDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.stuclassBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.zahiraSISDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.zahira_SISDataSet = new ZahiraSIS.Zahira_SISDataSet();
             this.stuclassTableAdapter = new ZahiraSIS.Zahira_SISDataSetTableAdapters.stuclassTableAdapter();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
@@ -43,7 +43,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.studentBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.admnoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.admnoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.registernoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.keyclassDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bfarrearsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,9 +52,9 @@
             this.admonDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.arrearsfrmDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.arrearstoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.zahiraSISDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stuclassBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zahiraSISDataSetBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -80,20 +80,20 @@
             this.comboBox1.TabIndex = 1;
             this.comboBox1.ValueMember = "key_fld";
             // 
-            // zahira_SISDataSet
+            // stuclassBindingSource
             // 
-            this.zahira_SISDataSet.DataSetName = "Zahira_SISDataSet";
-            this.zahira_SISDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            this.stuclassBindingSource.DataMember = "stuclass";
+            this.stuclassBindingSource.DataSource = this.zahiraSISDataSetBindingSource;
             // 
             // zahiraSISDataSetBindingSource
             // 
             this.zahiraSISDataSetBindingSource.DataSource = this.zahira_SISDataSet;
             this.zahiraSISDataSetBindingSource.Position = 0;
             // 
-            // stuclassBindingSource
+            // zahira_SISDataSet
             // 
-            this.stuclassBindingSource.DataMember = "stuclass";
-            this.stuclassBindingSource.DataSource = this.zahiraSISDataSetBindingSource;
+            this.zahira_SISDataSet.DataSetName = "Zahira_SISDataSet";
+            this.zahira_SISDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // stuclassTableAdapter
             // 
@@ -169,7 +169,7 @@
             this.dataGridView1.DataSource = this.studentBindingSource;
             this.dataGridView1.Location = new System.Drawing.Point(26, 139);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(340, 150);
             this.dataGridView1.TabIndex = 6;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -179,7 +179,6 @@
             this.admnoDataGridViewTextBoxColumn.HeaderText = "admno";
             this.admnoDataGridViewTextBoxColumn.Name = "admnoDataGridViewTextBoxColumn";
             this.admnoDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.admnoDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // registernoDataGridViewTextBoxColumn
             // 
@@ -244,9 +243,9 @@
             this.Name = "frmHome";
             this.Text = "Home";
             this.Load += new System.EventHandler(this.frmHome_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.zahiraSISDataSetBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.stuclassBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zahiraSISDataSetBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -271,7 +270,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.BindingSource studentBindingSource1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewComboBoxColumn admnoDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn admnoDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn registernoDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn keyclassDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn bfarrearsDataGridViewTextBoxColumn;

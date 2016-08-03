@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace ZahiraSIS
 {
@@ -14,8 +15,10 @@ namespace ZahiraSIS
             bool verify = false;
             try
             {
+                String connectionString = "";
+                connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Zahira_SISConnectionString"].ToString();
                 SqlDataReader rdr = null;
-                SqlConnection conn = new SqlConnection("Data Source=ABDULKANY\\SQLEXPRESS32;Initial Catalog=Zahira_SIS;Integrated Security=True");
+                SqlConnection conn = new SqlConnection(connectionString);
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("select * from z_users where username='"+username+"' AND password ='"+password+"'", conn);
                 rdr = cmd.ExecuteReader();
