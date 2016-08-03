@@ -22,7 +22,7 @@ namespace ZahiraSIS
             dbConnector dbcon = new dbConnector();
             if (dbcon.connectDB(txtUsername.Text, txtPassword.Text))
             {
-                frmHome home = new frmHome();
+                frmDashboard home = new frmDashboard();
                 this.Hide();
                 home.ShowDialog();
             }
