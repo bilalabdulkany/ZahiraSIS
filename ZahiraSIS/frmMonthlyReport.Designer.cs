@@ -1,6 +1,6 @@
 ﻿namespace ZahiraSIS
 {
-    partial class frmHome
+    partial class frmMonthlyReport
     {
         /// <summary>
         /// Required designer variable.

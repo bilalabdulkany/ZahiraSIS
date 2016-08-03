@@ -35,5 +35,36 @@ namespace ZahiraSIS
             }
             return verify;
         }
+
+        public String getTeacherName(String teacher) {
+            String tName = "";
+            try
+            {
+                String connectionString = "";
+                connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Zahira_SISConnectionString"].ToString();
+                SqlDataReader rdr = null;
+                SqlConnection conn = new SqlConnection(connectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("select name from teacher where key_fld='" + teacher + "'",conn);
+                rdr = cmd.ExecuteReader();
+                rdr.Read();
+                if (rdr.HasRows)
+                {
+                    Console.WriteLine("Has values");
+                   tName = rdr["name"].ToString();
+                }
+                conn.Close();
+                conn.Dispose();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("exception" + e.ToString());
+            }
+            return tName;
+
+        }
     }
+
+    
+
 }

@@ -24,7 +24,7 @@ namespace ZahiraSIS
 
         private void mnuStudentClassReport_Click(object sender, EventArgs e)
         {
-            frmHome home = new frmHome();
+            frmClassReport home = new frmClassReport();
             home.ShowDialog();
         }
     }
