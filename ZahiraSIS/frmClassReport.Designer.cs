@@ -37,7 +37,6 @@
             this.stuclassTableAdapter = new ZahiraSIS.Zahira_SISDataSetTableAdapters.stuclassTableAdapter();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.zahira_SISDataSet1 = new ZahiraSIS.Zahira_SISDataSet();
-            this.txtTeacherField = new System.Windows.Forms.TextBox();
             this.teacherTableAdapter1 = new ZahiraSIS.Zahira_SISDataSetTableAdapters.teacherTableAdapter();
             this.txtTeacherName = new System.Windows.Forms.TextBox();
             this.teacherBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -66,11 +65,11 @@
             this.cmbClass.DataSource = this.stuclassBindingSource;
             this.cmbClass.DisplayMember = "name";
             this.cmbClass.FormattingEnabled = true;
-            this.cmbClass.Location = new System.Drawing.Point(86, 39);
+            this.cmbClass.Location = new System.Drawing.Point(113, 31);
             this.cmbClass.Name = "cmbClass";
             this.cmbClass.Size = new System.Drawing.Size(251, 21);
             this.cmbClass.TabIndex = 1;
-            this.cmbClass.ValueMember = "code";
+            this.cmbClass.ValueMember = "key_tea";
             this.cmbClass.SelectedIndexChanged += new System.EventHandler(this.cmbClass_SelectedIndexChanged);
             // 
             // stuclassBindingSource
@@ -97,14 +96,6 @@
             this.zahira_SISDataSet1.DataSetName = "Zahira_SISDataSet";
             this.zahira_SISDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
-            // txtTeacherField
-            // 
-            this.txtTeacherField.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.stuclassBindingSource, "key_tea", true));
-            this.txtTeacherField.Location = new System.Drawing.Point(86, 66);
-            this.txtTeacherField.Name = "txtTeacherField";
-            this.txtTeacherField.Size = new System.Drawing.Size(121, 20);
-            this.txtTeacherField.TabIndex = 2;
-            // 
             // teacherTableAdapter1
             // 
             this.teacherTableAdapter1.ClearBeforeFill = true;
@@ -112,7 +103,7 @@
             // txtTeacherName
             // 
             this.txtTeacherName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.teacherBindingSource, "name", true));
-            this.txtTeacherName.Location = new System.Drawing.Point(86, 93);
+            this.txtTeacherName.Location = new System.Drawing.Point(113, 70);
             this.txtTeacherName.Name = "txtTeacherName";
             this.txtTeacherName.Size = new System.Drawing.Size(251, 20);
             this.txtTeacherName.TabIndex = 3;
@@ -130,11 +121,11 @@
             // Teacher
             // 
             this.Teacher.AutoSize = true;
-            this.Teacher.Location = new System.Drawing.Point(32, 93);
+            this.Teacher.Location = new System.Drawing.Point(29, 73);
             this.Teacher.Name = "Teacher";
-            this.Teacher.Size = new System.Drawing.Size(35, 13);
+            this.Teacher.Size = new System.Drawing.Size(78, 13);
             this.Teacher.TabIndex = 4;
-            this.Teacher.Text = "label2";
+            this.Teacher.Text = "Teacher Name";
             // 
             // frmClassReport
             // 
@@ -143,7 +134,6 @@
             this.ClientSize = new System.Drawing.Size(395, 317);
             this.Controls.Add(this.Teacher);
             this.Controls.Add(this.txtTeacherName);
-            this.Controls.Add(this.txtTeacherField);
             this.Controls.Add(this.cmbClass);
             this.Controls.Add(this.label1);
             this.Name = "frmClassReport";
@@ -171,7 +161,6 @@
         private Zahira_SISDataSetTableAdapters.stuclassTableAdapter stuclassTableAdapter;
         private System.Windows.Forms.BindingSource bindingSource1;
         private Zahira_SISDataSet zahira_SISDataSet1;
-        private System.Windows.Forms.TextBox txtTeacherField;
         private Zahira_SISDataSetTableAdapters.teacherTableAdapter teacherTableAdapter1;
         private System.Windows.Forms.TextBox txtTeacherName;
         private System.Windows.Forms.BindingSource teacherBindingSource;

@@ -33,8 +33,11 @@ namespace ZahiraSIS
 
         private void cmbClass_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
+
+            Console.WriteLine(cmbClass.SelectedValue.ToString());
             dbCon = new dbConnector();
-            txtTeacherName.Text = dbCon.getTeacherName(txtTeacherField.Text);
+            txtTeacherName.Text = dbCon.getTeacherName(cmbClass.SelectedValue.ToString());
         }
     }
 }

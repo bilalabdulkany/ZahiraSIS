@@ -50,7 +50,7 @@ namespace ZahiraSIS
                 rdr.Read();
                 if (rdr.HasRows)
                 {
-                    Console.WriteLine("Has values");
+                   
                    tName = rdr["name"].ToString();
                 }
                 conn.Close();
