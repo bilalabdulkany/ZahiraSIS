@@ -21,6 +21,8 @@ namespace ZahiraSIS
 
         private void frmClassReport_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'zahira_SISDataSet.student' table. You can move, or remove it, as needed.
+            this.studentTableAdapter.Fill(this.zahira_SISDataSet.student);
             // TODO: This line of code loads data into the 'zahira_SISDataSet.stuclass' table. You can move, or remove it, as needed.
             this.stuclassTableAdapter.Fill(this.zahira_SISDataSet.stuclass);
 
@@ -33,11 +35,36 @@ namespace ZahiraSIS
 
         private void cmbClass_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-
-            Console.WriteLine(cmbClass.SelectedValue.ToString());
+                       Console.WriteLine(cmbClass.SelectedValue.ToString());
             dbCon = new dbConnector();
             txtTeacherName.Text = dbCon.getTeacherName(cmbClass.SelectedValue.ToString());
+        }
+
+        private void fillByToolStripButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                object ParameterName = new object();
+                this.studentTableAdapter.FillBy(this.zahira_SISDataSet.student, ParameterName);
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+
+        }
+
+        private void fillByClassToolStripButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.studentTableAdapter.FillByClass(this.zahira_SISDataSet.student, new System.Nullable<int>(((int)(System.Convert.ChangeType(txtClassKey.Text, typeof(int))))));
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+
         }
     }
 }
