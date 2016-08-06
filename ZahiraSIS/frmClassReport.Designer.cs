@@ -43,7 +43,7 @@
             this.bindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.Teacher = new System.Windows.Forms.Label();
             this.txtClassKey = new System.Windows.Forms.TextBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.grdStudents = new System.Windows.Forms.DataGridView();
             this.keyfldDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.admnoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -51,10 +51,8 @@
             this.keyclassDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.studentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.studentTableAdapter = new ZahiraSIS.Zahira_SISDataSetTableAdapters.studentTableAdapter();
-            this.fillByClassToolStrip = new System.Windows.Forms.ToolStrip();
-            this.classKeyToolStripLabel = new System.Windows.Forms.ToolStripLabel();
-            this.classKeyToolStripTextBox = new System.Windows.Forms.ToolStripTextBox();
-            this.fillByClassToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.stuclassBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahiraSISDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).BeginInit();
@@ -62,9 +60,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.teacherBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdStudents)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource)).BeginInit();
-            this.fillByClassToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -151,21 +148,21 @@
             this.txtClassKey.Size = new System.Drawing.Size(100, 20);
             this.txtClassKey.TabIndex = 5;
             // 
-            // dataGridView1
+            // grdStudents
             // 
-            this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.grdStudents.AutoGenerateColumns = false;
+            this.grdStudents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdStudents.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.keyfldDataGridViewTextBoxColumn,
             this.admnoDataGridViewTextBoxColumn,
             this.nameDataGridViewTextBoxColumn,
             this.addressDataGridViewTextBoxColumn,
             this.keyclassDataGridViewTextBoxColumn});
-            this.dataGridView1.DataSource = this.studentBindingSource;
-            this.dataGridView1.Location = new System.Drawing.Point(32, 138);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(332, 150);
-            this.dataGridView1.TabIndex = 6;
+            this.grdStudents.DataSource = this.studentBindingSource;
+            this.grdStudents.Location = new System.Drawing.Point(32, 138);
+            this.grdStudents.Name = "grdStudents";
+            this.grdStudents.Size = new System.Drawing.Size(332, 150);
+            this.grdStudents.TabIndex = 6;
             // 
             // keyfldDataGridViewTextBoxColumn
             // 
@@ -206,44 +203,34 @@
             // 
             this.studentTableAdapter.ClearBeforeFill = true;
             // 
-            // fillByClassToolStrip
+            // button1
             // 
-            this.fillByClassToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.classKeyToolStripLabel,
-            this.classKeyToolStripTextBox,
-            this.fillByClassToolStripButton});
-            this.fillByClassToolStrip.Location = new System.Drawing.Point(0, 0);
-            this.fillByClassToolStrip.Name = "fillByClassToolStrip";
-            this.fillByClassToolStrip.Size = new System.Drawing.Size(395, 25);
-            this.fillByClassToolStrip.TabIndex = 8;
-            this.fillByClassToolStrip.Text = "fillByClassToolStrip";
+            this.button1.Location = new System.Drawing.Point(229, 295);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "Export";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // classKeyToolStripLabel
+            // button2
             // 
-            this.classKeyToolStripLabel.Name = "classKeyToolStripLabel";
-            this.classKeyToolStripLabel.Size = new System.Drawing.Size(56, 22);
-            this.classKeyToolStripLabel.Text = "ClassKey:";
-            // 
-            // classKeyToolStripTextBox
-            // 
-            this.classKeyToolStripTextBox.Name = "classKeyToolStripTextBox";
-            this.classKeyToolStripTextBox.Size = new System.Drawing.Size(100, 25);
-            // 
-            // fillByClassToolStripButton
-            // 
-            this.fillByClassToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.fillByClassToolStripButton.Name = "fillByClassToolStripButton";
-            this.fillByClassToolStripButton.Size = new System.Drawing.Size(66, 22);
-            this.fillByClassToolStripButton.Text = "FillByClass";
-            this.fillByClassToolStripButton.Click += new System.EventHandler(this.fillByClassToolStripButton_Click);
+            this.button2.Location = new System.Drawing.Point(229, 96);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(106, 23);
+            this.button2.TabIndex = 10;
+            this.button2.Text = "View Students";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // frmClassReport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(395, 325);
-            this.Controls.Add(this.fillByClassToolStrip);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.grdStudents);
             this.Controls.Add(this.txtClassKey);
             this.Controls.Add(this.Teacher);
             this.Controls.Add(this.txtTeacherName);
@@ -259,10 +246,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.teacherBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdStudents)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource)).EndInit();
-            this.fillByClassToolStrip.ResumeLayout(false);
-            this.fillByClassToolStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -284,7 +269,7 @@
         private System.Windows.Forms.BindingSource bindingSource2;
         private System.Windows.Forms.Label Teacher;
         private System.Windows.Forms.TextBox txtClassKey;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView grdStudents;
         private System.Windows.Forms.BindingSource studentBindingSource;
         private Zahira_SISDataSetTableAdapters.studentTableAdapter studentTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn keyfldDataGridViewTextBoxColumn;
@@ -292,9 +277,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn addressDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn keyclassDataGridViewTextBoxColumn;
-        private System.Windows.Forms.ToolStrip fillByClassToolStrip;
-        private System.Windows.Forms.ToolStripLabel classKeyToolStripLabel;
-        private System.Windows.Forms.ToolStripTextBox classKeyToolStripTextBox;
-        private System.Windows.Forms.ToolStripButton fillByClassToolStripButton;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }
