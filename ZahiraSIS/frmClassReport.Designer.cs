@@ -143,8 +143,10 @@
             // txtClassKey
             // 
             this.txtClassKey.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.stuclassBindingSource, "key_fld", true));
+            this.txtClassKey.Enabled = false;
             this.txtClassKey.Location = new System.Drawing.Point(113, 96);
             this.txtClassKey.Name = "txtClassKey";
+            this.txtClassKey.ReadOnly = true;
             this.txtClassKey.Size = new System.Drawing.Size(100, 20);
             this.txtClassKey.TabIndex = 5;
             // 

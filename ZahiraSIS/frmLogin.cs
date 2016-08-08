@@ -19,6 +19,10 @@ namespace ZahiraSIS
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            if (txtUsername.Text == "" || txtPassword.Text == "") {
+                MessageBox.Show("Fields cannot be blank!");
+                return;
+            }
             dbConnector dbcon = new dbConnector();
             if (dbcon.connectDB(txtUsername.Text, txtPassword.Text))
             {
