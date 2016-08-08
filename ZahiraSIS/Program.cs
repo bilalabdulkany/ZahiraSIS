@@ -11,6 +11,7 @@ namespace ZahiraSIS
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        /// //This is from another computer
         [STAThread]
         static void Main()
         {
