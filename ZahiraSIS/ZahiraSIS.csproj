@@ -48,6 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="com.zahira.view.reports\frmServiceArrearsClasswise.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="com.zahira.view.reports\frmServiceArrearsClasswise.Designer.cs">
+      <DependentUpon>frmServiceArrearsClasswise.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmClassReport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,11 +73,11 @@
     <Compile Include="frmLogin.Designer.cs">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmMonthlyReport.cs">
+    <Compile Include="frmClassDetailReport.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMonthlyReport.Designer.cs">
-      <DependentUpon>frmMonthlyReport.cs</DependentUpon>
+    <Compile Include="frmClassDetailReport.Designer.cs">
+      <DependentUpon>frmClassDetailReport.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,6 +89,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Zahira_SISDataSet.xsd</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="com.zahira.view.reports\frmServiceArrearsClasswise.resx">
+      <DependentUpon>frmServiceArrearsClasswise.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmClassReport.resx">
       <DependentUpon>frmClassReport.cs</DependentUpon>
     </EmbeddedResource>
@@ -92,8 +101,8 @@
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMonthlyReport.resx">
-      <DependentUpon>frmMonthlyReport.cs</DependentUpon>
+    <EmbeddedResource Include="frmClassDetailReport.resx">
+      <DependentUpon>frmClassDetailReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -158,6 +167,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

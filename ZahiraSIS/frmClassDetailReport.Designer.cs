@@ -1,6 +1,6 @@
 ﻿namespace ZahiraSIS
 {
-    partial class frmMonthlyReport
+    partial class frmClassDetailReport
     {
         /// <summary>
         /// Required designer variable.
@@ -228,7 +228,7 @@
             this.arrearstoDataGridViewTextBoxColumn.HeaderText = "arrearsto";
             this.arrearstoDataGridViewTextBoxColumn.Name = "arrearstoDataGridViewTextBoxColumn";
             // 
-            // frmHome
+            // frmClassDetailReport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -240,8 +240,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label1);
-            this.Name = "frmHome";
-            this.Text = "Home";
+            this.Name = "frmClassDetailReport";
+            this.Text = "Class Detail Report";
             this.Load += new System.EventHandler(this.frmHome_Load);
             ((System.ComponentModel.ISupportInitialize)(this.stuclassBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahiraSISDataSetBindingSource)).EndInit();

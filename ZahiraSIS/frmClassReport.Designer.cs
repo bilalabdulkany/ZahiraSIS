@@ -72,6 +72,7 @@
             this.label1.Size = new System.Drawing.Size(32, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Class";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // cmbClass
             // 
@@ -89,6 +90,7 @@
             // 
             this.stuclassBindingSource.DataMember = "stuclass";
             this.stuclassBindingSource.DataSource = this.zahiraSISDataSetBindingSource;
+            this.stuclassBindingSource.CurrentChanged += new System.EventHandler(this.stuclassBindingSource_CurrentChanged);
             // 
             // zahiraSISDataSetBindingSource
             // 
@@ -149,6 +151,7 @@
             this.txtClassKey.ReadOnly = true;
             this.txtClassKey.Size = new System.Drawing.Size(100, 20);
             this.txtClassKey.TabIndex = 5;
+            this.txtClassKey.TextChanged += new System.EventHandler(this.txtClassKey_TextChanged);
             // 
             // grdStudents
             // 
@@ -165,6 +168,7 @@
             this.grdStudents.Name = "grdStudents";
             this.grdStudents.Size = new System.Drawing.Size(332, 150);
             this.grdStudents.TabIndex = 6;
+            this.grdStudents.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdStudents_CellContentClick);
             // 
             // keyfldDataGridViewTextBoxColumn
             // 

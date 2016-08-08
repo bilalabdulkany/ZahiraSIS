@@ -36,7 +36,7 @@ namespace ZahiraSIS
 
         private void cmbClass_SelectedIndexChanged(object sender, EventArgs e)
         {
-                       Console.WriteLine(cmbClass.SelectedValue.ToString());
+            Console.WriteLine(cmbClass.SelectedValue.ToString());
             dbCon = new dbConnector();
             txtTeacherName.Text = dbCon.getTeacherName(cmbClass.SelectedValue.ToString());
         }
@@ -163,6 +163,26 @@ namespace ZahiraSIS
             {
                 System.Windows.Forms.MessageBox.Show(ex.Message);
             }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtClassKey_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void grdStudents_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void stuclassBindingSource_CurrentChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

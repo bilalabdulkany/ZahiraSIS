@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ZahiraSIS
 {
-    public partial class frmMonthlyReport : Form
+    public partial class frmClassDetailReport : Form
     {
-        public frmMonthlyReport()
+        public frmClassDetailReport()
         {
             InitializeComponent();
         }
