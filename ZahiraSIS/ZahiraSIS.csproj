@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="com.zahira.bean.student\StudentArrearsBean.cs" />
+    <Compile Include="com.zahira.dao.Student\StudentDAO.cs" />
     <Compile Include="com.zahira.view.reports\frmServiceArrearsClasswise.cs">
       <SubType>Form</SubType>
     </Compile>

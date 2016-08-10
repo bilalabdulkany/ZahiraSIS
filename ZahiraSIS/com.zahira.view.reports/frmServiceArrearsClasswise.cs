@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ZahiraSIS.com.zahira.bean.student;
 
 namespace ZahiraSIS.com.zahira.view.reports
 {
@@ -55,11 +56,23 @@ namespace ZahiraSIS.com.zahira.view.reports
             try
             {
                 this.studentTableAdapter.FillByClass(this.zahira_SISDataSet.student, new System.Nullable<int>(((int)(System.Convert.ChangeType(cmbClass.SelectedValue, typeof(int))))));
+                StudentArrearsBean bean = null;
+                StudentDAO studentDAO = new StudentDAO();
+                bean = studentDAO.getStudentArrears(cmbClass.SelectedValue.ToString());
+                txtBFArrears.Text = bean.getBfArrears();
+                txtCurArrears.Text = bean.getCurArrears();
+                txtCurBFArrears.Text = bean.getCurBfArrears();
+
             }
             catch (System.Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show(ex.Message);
             }
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
