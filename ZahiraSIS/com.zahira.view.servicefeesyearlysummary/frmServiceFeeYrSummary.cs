@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ZahiraSIS
 {
-    public partial class frmClassDetailReport : Form
+    public partial class frmServiceFeeYrSummary : Form
     {
-        public frmClassDetailReport()
+        public frmServiceFeeYrSummary()
         {
             InitializeComponent();
         }
@@ -32,6 +32,11 @@ namespace ZahiraSIS
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

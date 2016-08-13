@@ -56,6 +56,7 @@
             this.menuStrip1.Size = new System.Drawing.Size(433, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // Report
             // 
@@ -84,7 +85,7 @@
             // classTeacherToolStripMenuItem
             // 
             this.classTeacherToolStripMenuItem.Name = "classTeacherToolStripMenuItem";
-            this.classTeacherToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.classTeacherToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.classTeacherToolStripMenuItem.Text = "Class Wise";
             this.classTeacherToolStripMenuItem.Click += new System.EventHandler(this.classTeacherToolStripMenuItem_Click);
             // 
@@ -101,14 +102,14 @@
             // summartToolStripMenuItem
             // 
             this.summartToolStripMenuItem.Name = "summartToolStripMenuItem";
-            this.summartToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.summartToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.summartToolStripMenuItem.Text = "Class Wise";
             this.summartToolStripMenuItem.Click += new System.EventHandler(this.summartToolStripMenuItem_Click);
             // 
             // detailToolStripMenuItem
             // 
             this.detailToolStripMenuItem.Name = "detailToolStripMenuItem";
-            this.detailToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.detailToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.detailToolStripMenuItem.Text = "Summary";
             // 
             // toolStripSeparator1
@@ -121,6 +122,7 @@
             this.serviceFeesYearlySummaryToolStripMenuItem.Name = "serviceFeesYearlySummaryToolStripMenuItem";
             this.serviceFeesYearlySummaryToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
             this.serviceFeesYearlySummaryToolStripMenuItem.Text = "Service Fees Yearly Summary";
+            this.serviceFeesYearlySummaryToolStripMenuItem.Click += new System.EventHandler(this.serviceFeesYearlySummaryToolStripMenuItem_Click);
             // 
             // studentBFArrearsToolStripMenuItem
             // 

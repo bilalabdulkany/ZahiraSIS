@@ -1,6 +1,6 @@
 ﻿namespace ZahiraSIS
 {
-    partial class frmClassDetailReport
+    partial class frmServiceFeeYrSummary
     {
         /// <summary>
         /// Required designer variable.
@@ -52,6 +52,7 @@
             this.admonDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.arrearsfrmDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.arrearstoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.stuclassBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahiraSISDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).BeginInit();
@@ -79,6 +80,7 @@
             this.comboBox1.Size = new System.Drawing.Size(181, 21);
             this.comboBox1.TabIndex = 1;
             this.comboBox1.ValueMember = "key_fld";
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // stuclassBindingSource
             // 
@@ -228,11 +230,21 @@
             this.arrearstoDataGridViewTextBoxColumn.HeaderText = "arrearsto";
             this.arrearstoDataGridViewTextBoxColumn.Name = "arrearstoDataGridViewTextBoxColumn";
             // 
-            // frmClassDetailReport
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(323, 305);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "Export";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // frmServiceFeeYrSummary
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(471, 321);
+            this.ClientSize = new System.Drawing.Size(471, 347);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label3);
@@ -240,8 +252,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label1);
-            this.Name = "frmClassDetailReport";
-            this.Text = "Class Detail Report";
+            this.Name = "frmServiceFeeYrSummary";
+            this.Text = "Monthly Fees payment Summary";
             this.Load += new System.EventHandler(this.frmHome_Load);
             ((System.ComponentModel.ISupportInitialize)(this.stuclassBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahiraSISDataSetBindingSource)).EndInit();
@@ -279,5 +291,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn admonDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn arrearsfrmDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn arrearstoDataGridViewTextBoxColumn;
+        private System.Windows.Forms.Button button1;
     }
 }

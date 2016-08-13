@@ -55,9 +55,13 @@ namespace ZahiraSIS
             switch (MessageBox.Show(this, "Are you sure you want to close?", "Closing", MessageBoxButtons.YesNo))
             {
                 case DialogResult.No:
-                    e.Cancel = true;
-                    
+                    e.Cancel = true;                    
                     break;
+                case DialogResult.Yes:
+                   
+                    System.Windows.Forms.Application.Exit();
+                 break;
+
                 default:
                     break;
             }
@@ -66,6 +70,18 @@ namespace ZahiraSIS
         private void frmDashboard_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void serviceFeesYearlySummaryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmServiceFeeYrSummary formSummary = new frmServiceFeeYrSummary();
+            formSummary.Show();
+            
         }
     }
 }
