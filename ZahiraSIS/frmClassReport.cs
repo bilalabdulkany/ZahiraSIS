@@ -18,6 +18,7 @@ namespace ZahiraSIS
         public frmClassReport()
         {
             InitializeComponent();
+            Console.WriteLine("Accessed Class Report");
         }
 
         private void frmClassReport_Load(object sender, EventArgs e)
@@ -36,7 +37,8 @@ namespace ZahiraSIS
 
         private void cmbClass_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Console.WriteLine(cmbClass.SelectedValue.ToString());
+
+            Console.WriteLine("Selected index:" +cmbClass.SelectedValue.ToString());
             dbCon = new dbConnector();
             txtTeacherName.Text = dbCon.getTeacherName(cmbClass.SelectedValue.ToString());
         }
@@ -50,6 +52,7 @@ namespace ZahiraSIS
             }
             catch (System.Exception ex)
             {
+                Console.WriteLine(ex);
                 System.Windows.Forms.MessageBox.Show(ex.Message);
             }
 
@@ -63,6 +66,7 @@ namespace ZahiraSIS
             }
             catch (System.Exception ex)
             {
+                Console.WriteLine(ex);
                 System.Windows.Forms.MessageBox.Show(ex.Message);
             }
 
@@ -82,6 +86,7 @@ namespace ZahiraSIS
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 obj = null;
                 MessageBox.Show("Exception Occured while releasing object " + ex.ToString());
             }
@@ -141,6 +146,7 @@ namespace ZahiraSIS
             }
             catch (System.Exception ex)
             {
+                Console.WriteLine(ex);
                 MessageBox.Show(ex.Message);
             }
             finally
@@ -161,6 +167,7 @@ namespace ZahiraSIS
             }
             catch (System.Exception ex)
             {
+                Console.WriteLine(ex);
                 System.Windows.Forms.MessageBox.Show(ex.Message);
             }
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace ZahiraSIS
         public frmLogin()
         {
             InitializeComponent();
+            outputToFile();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -31,6 +33,7 @@ namespace ZahiraSIS
                 home.ShowDialog();
             }
             else {
+                Console.WriteLine("invalid credentials");
                 MessageBox.Show("Invalid Login Credentials");
             }
         }
@@ -42,6 +45,18 @@ namespace ZahiraSIS
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
+
+        }
+
+        private void outputToFile()
+        {
+            DateTime today = DateTime.Today;
+           String date= today.ToString("dd-MM-yyyy");
+            FileStream filestream = new FileStream("./trace."+ date+".log", FileMode.Append);
+            var streamwriter = new StreamWriter(filestream);
+            streamwriter.AutoFlush = true;
+            Console.SetOut(streamwriter);
+            Console.SetError(streamwriter);
 
         }
     }

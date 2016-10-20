@@ -15,14 +15,21 @@ namespace ZahiraSIS
         public frmServiceFeeYrSummary()
         {
             InitializeComponent();
+            Console.WriteLine("Accessed Service Fee Yearly");
         }
 
         private void frmHome_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'zahira_SISDataSet.student' table. You can move, or remove it, as needed.
-            this.studentTableAdapter.Fill(this.zahira_SISDataSet.student);
-            // TODO: This line of code loads data into the 'zahira_SISDataSet.stuclass' table. You can move, or remove it, as needed.
-            this.stuclassTableAdapter.Fill(this.zahira_SISDataSet.stuclass);
+            try
+            {
+                // TODO: This line of code loads data into the 'zahira_SISDataSet.student' table. You can move, or remove it, as needed.
+                this.studentTableAdapter.Fill(this.zahira_SISDataSet.student);
+                // TODO: This line of code loads data into the 'zahira_SISDataSet.stuclass' table. You can move, or remove it, as needed.
+                this.stuclassTableAdapter.Fill(this.zahira_SISDataSet.stuclass);
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex);
+            }
 
         }
 

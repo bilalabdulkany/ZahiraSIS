@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using ZahiraSIS.com.zahira.view.promotestudents;
 
 namespace ZahiraSIS
 {
@@ -16,6 +16,7 @@ namespace ZahiraSIS
         public frmDashboard()
         {
             InitializeComponent();
+            Console.WriteLine("Accessed Dashboard");
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
@@ -82,6 +83,12 @@ namespace ZahiraSIS
             frmServiceFeeYrSummary formSummary = new frmServiceFeeYrSummary();
             formSummary.Show();
             
+        }
+
+        private void studentPromotionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmPromoteStudents promotion = new frmPromoteStudents();
+            promotion.Show();
         }
     }
 }

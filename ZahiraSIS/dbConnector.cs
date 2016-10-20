@@ -13,39 +13,55 @@ namespace ZahiraSIS
 
         public bool connectDB(String username,String password) {
             bool verify = false;
+            String connectionString = "";
+            SqlDataReader rdr = null;
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
             try
             {
-                String connectionString = "";
+
                 connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Zahira_SISConnectionString"].ToString();
-                SqlDataReader rdr = null;
-                SqlConnection conn = new SqlConnection(connectionString);
+                conn = new SqlConnection(connectionString);
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("select * from z_users where username='"+username+"' AND password ='"+password+"'", conn);
+                cmd = new SqlCommand("select * from z_users where username='" + username + "' AND password ='" + password + "'", conn);
                 rdr = cmd.ExecuteReader();
                 rdr.Read();
                 if (rdr.HasRows)
                 {
-                    verify = true; 
+                    verify = true;
                 }
-                conn.Close();
-                conn.Dispose();
+               
             }
-            catch (Exception e) {
-                Console.WriteLine("exception"+e.ToString());
+            catch (Exception e)
+            {
+                Console.WriteLine("exception" + e.ToString());
+            }
+            finally {
+                try
+                {
+                    conn.Close();
+                    conn.Dispose();
+                } catch (Exception e1) {
+                    Console.WriteLine("exception in closing connection:" + e1);
+                }
             }
             return verify;
         }
 
         public String getTeacherName(String teacher) {
             String tName = "";
+            String connectionString = "";
+            SqlDataReader rdr = null;
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
             try
             {
-                String connectionString = "";
+                
                 connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Zahira_SISConnectionString"].ToString();
-                SqlDataReader rdr = null;
-                SqlConnection conn = new SqlConnection(connectionString);
+                conn = new SqlConnection(connectionString);
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("select name from teacher where key_fld='" + teacher + "'",conn);
+                cmd = new SqlCommand("select name from teacher where key_fld='" + teacher + "'",conn);
+                Console.WriteLine("SQL: "+cmd.CommandText);
                 rdr = cmd.ExecuteReader();
                 rdr.Read();
                 if (rdr.HasRows)
@@ -53,12 +69,23 @@ namespace ZahiraSIS
                    
                    tName = rdr["name"].ToString();
                 }
-                conn.Close();
-                conn.Dispose();
+                
             }
             catch (Exception e)
             {
                 Console.WriteLine("exception" + e.ToString());
+            }
+            finally
+            {
+                try
+                {
+                    conn.Close();
+                    conn.Dispose();
+                }
+                catch (Exception e1)
+                {
+                    Console.WriteLine("exception in closing connection:" + e1);
+                }
             }
             return tName;
 

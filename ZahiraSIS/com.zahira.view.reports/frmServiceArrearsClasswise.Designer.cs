@@ -325,14 +325,10 @@
         private System.Windows.Forms.DataGridView grdStudents;
         private System.Windows.Forms.ComboBox cmbClass;
         private System.Windows.Forms.Label label1;
-        private Zahira_SISDataSet zahira_SISDataSet;
-        private System.Windows.Forms.BindingSource stuclassBindingSource;
-        private Zahira_SISDataSetTableAdapters.stuclassTableAdapter stuclassTableAdapter;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.BindingSource studentBindingSource;
         private Zahira_SISDataSetTableAdapters.studentTableAdapter studentTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn admnoDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
@@ -349,5 +345,9 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtCurBFArrears;
         private System.Windows.Forms.Label label6;
+        public Zahira_SISDataSet zahira_SISDataSet;
+        public System.Windows.Forms.BindingSource stuclassBindingSource;
+        public Zahira_SISDataSetTableAdapters.stuclassTableAdapter stuclassTableAdapter;
+        public System.Windows.Forms.BindingSource studentBindingSource;
     }
 }

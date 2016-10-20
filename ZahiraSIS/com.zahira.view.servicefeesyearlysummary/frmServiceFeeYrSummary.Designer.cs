@@ -270,17 +270,11 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.BindingSource zahiraSISDataSetBindingSource;
         private Zahira_SISDataSet zahira_SISDataSet;
-        private System.Windows.Forms.BindingSource stuclassBindingSource;
-        private Zahira_SISDataSetTableAdapters.stuclassTableAdapter stuclassTableAdapter;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.BindingSource studentBindingSource;
-        private Zahira_SISDataSetTableAdapters.studentTableAdapter studentTableAdapter;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.BindingSource studentBindingSource1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn admnoDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn registernoDataGridViewTextBoxColumn;
@@ -292,5 +286,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn arrearsfrmDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn arrearstoDataGridViewTextBoxColumn;
         private System.Windows.Forms.Button button1;
+        public System.Windows.Forms.BindingSource zahiraSISDataSetBindingSource;
+        public System.Windows.Forms.BindingSource stuclassBindingSource;
+        public Zahira_SISDataSetTableAdapters.stuclassTableAdapter stuclassTableAdapter;
+        public System.Windows.Forms.BindingSource studentBindingSource;
+        public Zahira_SISDataSetTableAdapters.studentTableAdapter studentTableAdapter;
+        public System.Windows.Forms.BindingSource studentBindingSource1;
     }
 }

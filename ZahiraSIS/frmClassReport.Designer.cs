@@ -233,7 +233,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(395, 325);
+            this.ClientSize = new System.Drawing.Size(458, 325);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.grdStudents);
@@ -243,7 +243,7 @@
             this.Controls.Add(this.cmbClass);
             this.Controls.Add(this.label1);
             this.Name = "frmClassReport";
-            this.Text = "frmClassReport";
+            this.Text = "Class Report";
             this.Load += new System.EventHandler(this.frmClassReport_Load);
             ((System.ComponentModel.ISupportInitialize)(this.stuclassBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahiraSISDataSetBindingSource)).EndInit();
@@ -276,8 +276,6 @@
         private System.Windows.Forms.Label Teacher;
         private System.Windows.Forms.TextBox txtClassKey;
         private System.Windows.Forms.DataGridView grdStudents;
-        private System.Windows.Forms.BindingSource studentBindingSource;
-        private Zahira_SISDataSetTableAdapters.studentTableAdapter studentTableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn keyfldDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn admnoDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
@@ -285,5 +283,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn keyclassDataGridViewTextBoxColumn;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        public System.Windows.Forms.BindingSource studentBindingSource;
+        public Zahira_SISDataSetTableAdapters.studentTableAdapter studentTableAdapter;
     }
 }

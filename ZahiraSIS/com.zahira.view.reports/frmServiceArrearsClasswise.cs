@@ -16,6 +16,7 @@ namespace ZahiraSIS.com.zahira.view.reports
         public frmServiceArrearsClasswise()
         {
             InitializeComponent();
+            Console.WriteLine("Accessed Service Arrears");
         }
 
         private void cmbClass_SelectedIndexChanged(object sender, EventArgs e)
@@ -55,6 +56,20 @@ namespace ZahiraSIS.com.zahira.view.reports
         {
             try
             {
+                //TODO fill datatable with Lists. also check the date range.
+                if (dateTimePicker1.Value != null) {
+                    Console.WriteLine(dateTimePicker1.Value.ToString("yyyy-MM-dd"));
+                }
+                if (dateTimePicker2.Value != null)
+                {
+                    Console.WriteLine(dateTimePicker2.Value.ToString("yyyy-MM-dd"));
+                }
+                /**
+                 * SELECT key_fld, active, enamfcnsn, mfeecnsn, admno, name, dob, address, registerno, bloodgr, comments, prntname, prntphone, prntemail,
+                 *  key_class, bfarrears, curarrears, key_change, curbfarres, admon,
+                 *   arrearsfrm, arrearsto FROM dbo.student
+                 *   where key_class = @ClassKey and arrearsfrm =@from arrearsto <= @to
+                 **/
                 this.studentTableAdapter.FillByClass(this.zahira_SISDataSet.student, new System.Nullable<int>(((int)(System.Convert.ChangeType(cmbClass.SelectedValue, typeof(int))))));
                 StudentArrearsBean bean = null;
                 StudentDAO studentDAO = new StudentDAO();

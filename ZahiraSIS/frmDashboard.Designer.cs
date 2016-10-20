@@ -44,13 +44,16 @@
             this.studentDetailReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuStudentClassReport = new System.Windows.Forms.ToolStripMenuItem();
             this.generalReceiptParticularsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.proceduresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.studentPromotionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Report});
+            this.Report,
+            this.proceduresToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(433, 24);
@@ -85,7 +88,7 @@
             // classTeacherToolStripMenuItem
             // 
             this.classTeacherToolStripMenuItem.Name = "classTeacherToolStripMenuItem";
-            this.classTeacherToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.classTeacherToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.classTeacherToolStripMenuItem.Text = "Class Wise";
             this.classTeacherToolStripMenuItem.Click += new System.EventHandler(this.classTeacherToolStripMenuItem_Click);
             // 
@@ -102,14 +105,14 @@
             // summartToolStripMenuItem
             // 
             this.summartToolStripMenuItem.Name = "summartToolStripMenuItem";
-            this.summartToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.summartToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.summartToolStripMenuItem.Text = "Class Wise";
             this.summartToolStripMenuItem.Click += new System.EventHandler(this.summartToolStripMenuItem_Click);
             // 
             // detailToolStripMenuItem
             // 
             this.detailToolStripMenuItem.Name = "detailToolStripMenuItem";
-            this.detailToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.detailToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.detailToolStripMenuItem.Text = "Summary";
             // 
             // toolStripSeparator1
@@ -150,6 +153,21 @@
             this.generalReceiptParticularsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
             this.generalReceiptParticularsToolStripMenuItem.Text = "General Receipt Particulars";
             // 
+            // proceduresToolStripMenuItem
+            // 
+            this.proceduresToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.studentPromotionsToolStripMenuItem});
+            this.proceduresToolStripMenuItem.Name = "proceduresToolStripMenuItem";
+            this.proceduresToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
+            this.proceduresToolStripMenuItem.Text = "Procedures";
+            // 
+            // studentPromotionsToolStripMenuItem
+            // 
+            this.studentPromotionsToolStripMenuItem.Name = "studentPromotionsToolStripMenuItem";
+            this.studentPromotionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.studentPromotionsToolStripMenuItem.Text = "Student Promotions";
+            this.studentPromotionsToolStripMenuItem.Click += new System.EventHandler(this.studentPromotionsToolStripMenuItem_Click);
+            // 
             // frmDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -181,5 +199,7 @@
         private System.Windows.Forms.ToolStripMenuItem classTeacherToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem summartToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem detailToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem proceduresToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem studentPromotionsToolStripMenuItem;
     }
 }
