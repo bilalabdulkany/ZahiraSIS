@@ -16,7 +16,7 @@ namespace ZahiraSIS
         public frmLogin()
         {
             InitializeComponent();
-            outputToFile();
+           // outputToFile();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)

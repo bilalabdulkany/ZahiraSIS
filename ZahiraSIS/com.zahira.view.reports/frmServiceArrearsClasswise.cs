@@ -54,15 +54,20 @@ namespace ZahiraSIS.com.zahira.view.reports
 
         private void button2_Click(object sender, EventArgs e)
         {
+            String fromdate=null;
+            String todate=null;
             try
             {
                 //TODO fill datatable with Lists. also check the date range.
                 if (dateTimePicker1.Value != null) {
-                    Console.WriteLine(dateTimePicker1.Value.ToString("yyyy-MM-dd"));
+                    fromdate=dateTimePicker1.Value.ToString("yyyy-MM-dd");
+                    Console.WriteLine(fromdate);
+
                 }
                 if (dateTimePicker2.Value != null)
                 {
-                    Console.WriteLine(dateTimePicker2.Value.ToString("yyyy-MM-dd"));
+                    todate = dateTimePicker2.Value.ToString("yyyy-MM-dd");
+                    
                 }
                 /**
                  * SELECT key_fld, active, enamfcnsn, mfeecnsn, admno, name, dob, address, registerno, bloodgr, comments, prntname, prntphone, prntemail,
@@ -70,10 +75,12 @@ namespace ZahiraSIS.com.zahira.view.reports
                  *   arrearsfrm, arrearsto FROM dbo.student
                  *   where key_class = @ClassKey and arrearsfrm =@from arrearsto <= @to
                  **/
-                this.studentTableAdapter.FillByClass(this.zahira_SISDataSet.student, new System.Nullable<int>(((int)(System.Convert.ChangeType(cmbClass.SelectedValue, typeof(int))))));
+               // this.studentTableAdapter.FillByClass(this.zahira_SISDataSet.student, new System.Nullable<int>(((int)(System.Convert.ChangeType(cmbClass.SelectedValue, typeof(int))))));
                 StudentArrearsBean bean = null;
                 StudentDAO studentDAO = new StudentDAO();
-                bean = studentDAO.getStudentArrears(cmbClass.SelectedValue.ToString());
+                String selectedClass = cmbClass.SelectedValue.ToString();
+                tblStudents.DataSource = studentDAO.getStudentArrearsByDate(cmbClass.SelectedValue.ToString(), fromdate, todate);
+                bean = studentDAO.getStudentArrears(selectedClass);
                 txtBFArrears.Text = bean.getBfArrears();
                 txtCurArrears.Text = bean.getCurArrears();
                 txtCurBFArrears.Text = bean.getCurBfArrears();
