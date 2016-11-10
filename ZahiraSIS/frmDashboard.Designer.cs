@@ -31,6 +31,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDashboard));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.Report = new System.Windows.Forms.ToolStripMenuItem();
             this.serviceFeesReceiptReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,6 +47,8 @@
             this.generalReceiptParticularsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.proceduresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.studentPromotionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnStuArrears = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -88,7 +91,7 @@
             // classTeacherToolStripMenuItem
             // 
             this.classTeacherToolStripMenuItem.Name = "classTeacherToolStripMenuItem";
-            this.classTeacherToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.classTeacherToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.classTeacherToolStripMenuItem.Text = "Class Wise";
             this.classTeacherToolStripMenuItem.Click += new System.EventHandler(this.classTeacherToolStripMenuItem_Click);
             // 
@@ -168,12 +171,35 @@
             this.studentPromotionsToolStripMenuItem.Text = "Student Promotions";
             this.studentPromotionsToolStripMenuItem.Click += new System.EventHandler(this.studentPromotionsToolStripMenuItem_Click);
             // 
+            // btnStuArrears
+            // 
+            this.btnStuArrears.Location = new System.Drawing.Point(49, 87);
+            this.btnStuArrears.Name = "btnStuArrears";
+            this.btnStuArrears.Size = new System.Drawing.Size(101, 52);
+            this.btnStuArrears.TabIndex = 2;
+            this.btnStuArrears.Text = "Student Arrears";
+            this.btnStuArrears.UseVisualStyleBackColor = true;
+            this.btnStuArrears.Click += new System.EventHandler(this.btnStuArrears_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(157, 87);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(93, 52);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Classwise Arrears";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frmDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(433, 274);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnStuArrears);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frmDashboard";
             this.Text = "Dashboard";
@@ -201,5 +227,7 @@
         private System.Windows.Forms.ToolStripMenuItem detailToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem proceduresToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem studentPromotionsToolStripMenuItem;
+        private System.Windows.Forms.Button btnStuArrears;
+        private System.Windows.Forms.Button button1;
     }
 }

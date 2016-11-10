@@ -31149,7 +31149,7 @@ namespace ZahiraSIS.Zahira_SISDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = "Zahira_SISConnectionString"; //global::ZahiraSIS.Properties.Settings.Default.Zahira_SISConnectionString;
+            this._connection.ConnectionString = global::ZahiraSIS.Properties.Settings.Default.Zahira_SISConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmServiceFeeYrSummary));
             this.label1 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.stuclassBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -40,25 +41,25 @@
             this.studentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.studentTableAdapter = new ZahiraSIS.Zahira_SISDataSetTableAdapters.studentTableAdapter();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtName = new System.Windows.Forms.TextBox();
             this.studentBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.admnoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.registernoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.keyclassDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bfarrearsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.curarrearsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.curbfarresDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.admonDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.arrearsfrmDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.arrearstoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dtStudentArrears = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtArrearsToDate = new System.Windows.Forms.TextBox();
+            this.lblArrearsDate = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtFees = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.stuclassBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahiraSISDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtStudentArrears)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -112,14 +113,11 @@
             // 
             // comboBox2
             // 
-            this.comboBox2.DataSource = this.studentBindingSource;
-            this.comboBox2.DisplayMember = "admno";
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Location = new System.Drawing.Point(101, 53);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(181, 21);
             this.comboBox2.TabIndex = 3;
-            this.comboBox2.ValueMember = "admno";
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // studentBindingSource
@@ -140,127 +138,143 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "Name";
             // 
-            // textBox1
+            // txtName
             // 
-            this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.studentBindingSource, "name", true));
-            this.textBox1.Location = new System.Drawing.Point(104, 87);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(177, 20);
-            this.textBox1.TabIndex = 5;
+            this.txtName.Location = new System.Drawing.Point(104, 87);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(177, 20);
+            this.txtName.TabIndex = 5;
             // 
             // studentBindingSource1
             // 
             this.studentBindingSource1.DataMember = "student";
             this.studentBindingSource1.DataSource = this.zahira_SISDataSet;
             // 
-            // dataGridView1
+            // dtStudentArrears
             // 
-            this.dataGridView1.AllowUserToOrderColumns = true;
-            this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.admnoDataGridViewTextBoxColumn,
-            this.registernoDataGridViewTextBoxColumn,
-            this.keyclassDataGridViewTextBoxColumn,
-            this.bfarrearsDataGridViewTextBoxColumn,
-            this.curarrearsDataGridViewTextBoxColumn,
-            this.curbfarresDataGridViewTextBoxColumn,
-            this.admonDataGridViewTextBoxColumn,
-            this.arrearsfrmDataGridViewTextBoxColumn,
-            this.arrearstoDataGridViewTextBoxColumn});
-            this.dataGridView1.DataSource = this.studentBindingSource;
-            this.dataGridView1.Location = new System.Drawing.Point(26, 139);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(340, 150);
-            this.dataGridView1.TabIndex = 6;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // admnoDataGridViewTextBoxColumn
-            // 
-            this.admnoDataGridViewTextBoxColumn.DataPropertyName = "admno";
-            this.admnoDataGridViewTextBoxColumn.HeaderText = "admno";
-            this.admnoDataGridViewTextBoxColumn.Name = "admnoDataGridViewTextBoxColumn";
-            this.admnoDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // registernoDataGridViewTextBoxColumn
-            // 
-            this.registernoDataGridViewTextBoxColumn.DataPropertyName = "registerno";
-            this.registernoDataGridViewTextBoxColumn.HeaderText = "registerno";
-            this.registernoDataGridViewTextBoxColumn.Name = "registernoDataGridViewTextBoxColumn";
-            // 
-            // keyclassDataGridViewTextBoxColumn
-            // 
-            this.keyclassDataGridViewTextBoxColumn.DataPropertyName = "key_class";
-            this.keyclassDataGridViewTextBoxColumn.HeaderText = "key_class";
-            this.keyclassDataGridViewTextBoxColumn.Name = "keyclassDataGridViewTextBoxColumn";
-            // 
-            // bfarrearsDataGridViewTextBoxColumn
-            // 
-            this.bfarrearsDataGridViewTextBoxColumn.DataPropertyName = "bfarrears";
-            this.bfarrearsDataGridViewTextBoxColumn.HeaderText = "bfarrears";
-            this.bfarrearsDataGridViewTextBoxColumn.Name = "bfarrearsDataGridViewTextBoxColumn";
-            // 
-            // curarrearsDataGridViewTextBoxColumn
-            // 
-            this.curarrearsDataGridViewTextBoxColumn.DataPropertyName = "curarrears";
-            this.curarrearsDataGridViewTextBoxColumn.HeaderText = "curarrears";
-            this.curarrearsDataGridViewTextBoxColumn.Name = "curarrearsDataGridViewTextBoxColumn";
-            // 
-            // curbfarresDataGridViewTextBoxColumn
-            // 
-            this.curbfarresDataGridViewTextBoxColumn.DataPropertyName = "curbfarres";
-            this.curbfarresDataGridViewTextBoxColumn.HeaderText = "curbfarres";
-            this.curbfarresDataGridViewTextBoxColumn.Name = "curbfarresDataGridViewTextBoxColumn";
-            // 
-            // admonDataGridViewTextBoxColumn
-            // 
-            this.admonDataGridViewTextBoxColumn.DataPropertyName = "admon";
-            this.admonDataGridViewTextBoxColumn.HeaderText = "admon";
-            this.admonDataGridViewTextBoxColumn.Name = "admonDataGridViewTextBoxColumn";
-            // 
-            // arrearsfrmDataGridViewTextBoxColumn
-            // 
-            this.arrearsfrmDataGridViewTextBoxColumn.DataPropertyName = "arrearsfrm";
-            this.arrearsfrmDataGridViewTextBoxColumn.HeaderText = "arrearsfrm";
-            this.arrearsfrmDataGridViewTextBoxColumn.Name = "arrearsfrmDataGridViewTextBoxColumn";
-            // 
-            // arrearstoDataGridViewTextBoxColumn
-            // 
-            this.arrearstoDataGridViewTextBoxColumn.DataPropertyName = "arrearsto";
-            this.arrearstoDataGridViewTextBoxColumn.HeaderText = "arrearsto";
-            this.arrearstoDataGridViewTextBoxColumn.Name = "arrearstoDataGridViewTextBoxColumn";
+            this.dtStudentArrears.AllowUserToOrderColumns = true;
+            this.dtStudentArrears.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dtStudentArrears.Location = new System.Drawing.Point(26, 184);
+            this.dtStudentArrears.Name = "dtStudentArrears";
+            this.dtStudentArrears.Size = new System.Drawing.Size(609, 150);
+            this.dtStudentArrears.TabIndex = 6;
+            this.dtStudentArrears.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(323, 305);
+            this.button1.Location = new System.Drawing.Point(560, 340);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 7;
             this.button1.Text = "Export";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(184, 113);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(97, 23);
+            this.button2.TabIndex = 8;
+            this.button2.Text = "View Results";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(26, 165);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(83, 13);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Payment History";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.txtFees);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.lblArrearsDate);
+            this.groupBox1.Controls.Add(this.txtArrearsToDate);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Location = new System.Drawing.Point(303, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(332, 153);
+            this.groupBox1.TabIndex = 10;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Current Arrears Info";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 41);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(63, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Arrears from";
+            // 
+            // txtArrearsToDate
+            // 
+            this.txtArrearsToDate.Enabled = false;
+            this.txtArrearsToDate.Location = new System.Drawing.Point(197, 34);
+            this.txtArrearsToDate.Name = "txtArrearsToDate";
+            this.txtArrearsToDate.ReadOnly = true;
+            this.txtArrearsToDate.Size = new System.Drawing.Size(129, 20);
+            this.txtArrearsToDate.TabIndex = 1;
+            // 
+            // lblArrearsDate
+            // 
+            this.lblArrearsDate.AutoSize = true;
+            this.lblArrearsDate.Location = new System.Drawing.Point(66, 41);
+            this.lblArrearsDate.Name = "lblArrearsDate";
+            this.lblArrearsDate.Size = new System.Drawing.Size(16, 13);
+            this.lblArrearsDate.TabIndex = 2;
+            this.lblArrearsDate.Text = "---";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 66);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(64, 13);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Mothly Fees";
+            // 
+            // txtFees
+            // 
+            this.txtFees.Location = new System.Drawing.Point(145, 58);
+            this.txtFees.Name = "txtFees";
+            this.txtFees.ReadOnly = true;
+            this.txtFees.Size = new System.Drawing.Size(129, 20);
+            this.txtFees.TabIndex = 4;
             // 
             // frmServiceFeeYrSummary
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(471, 347);
+            this.ClientSize = new System.Drawing.Size(647, 396);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.dtStudentArrears);
+            this.Controls.Add(this.txtName);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmServiceFeeYrSummary";
-            this.Text = "Monthly Fees payment Summary";
+            this.Text = "Student Fee Arrears";
             this.Load += new System.EventHandler(this.frmHome_Load);
             ((System.ComponentModel.ISupportInitialize)(this.stuclassBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahiraSISDataSetBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dtStudentArrears)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -274,17 +288,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn admnoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn registernoDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn keyclassDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn bfarrearsDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn curarrearsDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn curbfarresDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn admonDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn arrearsfrmDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn arrearstoDataGridViewTextBoxColumn;
+        private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.DataGridView dtStudentArrears;
         private System.Windows.Forms.Button button1;
         public System.Windows.Forms.BindingSource zahiraSISDataSetBindingSource;
         public System.Windows.Forms.BindingSource stuclassBindingSource;
@@ -292,5 +297,13 @@
         public System.Windows.Forms.BindingSource studentBindingSource;
         public Zahira_SISDataSetTableAdapters.studentTableAdapter studentTableAdapter;
         public System.Windows.Forms.BindingSource studentBindingSource1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox txtFees;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblArrearsDate;
+        private System.Windows.Forms.TextBox txtArrearsToDate;
+        private System.Windows.Forms.Label label5;
     }
 }

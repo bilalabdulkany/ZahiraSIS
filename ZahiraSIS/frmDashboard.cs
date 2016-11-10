@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,30 @@ namespace ZahiraSIS
         public frmDashboard()
         {
             InitializeComponent();
+            //outputToFile();
             Console.WriteLine("Accessed Dashboard");
+        }
+        /**
+        * Log the console output to trace files.
+        * 
+        **/
+        private void outputToFile()
+        {
+            try
+            {
+                DateTime today = DateTime.Today;
+                String date = today.ToString("dd-MM-yyyy");
+                FileStream filestream = new FileStream("./trace." + date + ".log", FileMode.Append);
+                var streamwriter = new StreamWriter(filestream);
+                streamwriter.AutoFlush = true;
+                Console.SetOut(streamwriter);
+                Console.SetError(streamwriter);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
@@ -89,6 +113,19 @@ namespace ZahiraSIS
         {
             frmPromoteStudents promotion = new frmPromoteStudents();
             promotion.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            com.zahira.view.reports.frmServiceArrearsClasswise frmServiceArrears = new com.zahira.view.reports.frmServiceArrearsClasswise();
+            frmServiceArrears.Show();
+        }
+
+        private void btnStuArrears_Click(object sender, EventArgs e)
+        {
+            frmServiceFeeYrSummary formSummary = new frmServiceFeeYrSummary();
+            formSummary.Show();
         }
     }
 }

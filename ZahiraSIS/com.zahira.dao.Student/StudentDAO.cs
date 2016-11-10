@@ -50,13 +50,106 @@ namespace ZahiraSIS
             return bean;
 
         }
+        public DataTable getStudentArrearsByIndex(String studentIndex)
+        {
+            String connectionString = "";
+            //SqlDataReader rdr = null;
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            DataTable tbl = null;
+            try
+            {
+                connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Zahira_SISConnectionString"].ToString();
+                conn = new SqlConnection(connectionString);
+                conn.Open();
+                String sql = "select trnno,trndate,paid,payfrom,payto,mfeerate,totarrears,arrearsfrm,arrearsto,key_class from mnthfeepay where mnthfeepay.key_stu ="
+  + "(select key_fld from student where admno = @Index)";
+                cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = sql;
+                cmd.Parameters.Add("@Index", SqlDbType.VarChar).Value = studentIndex;
 
+                Console.WriteLine("SQL:" + cmd.CommandText);
+                Console.WriteLine("params:" + studentIndex);
+                //  rdr = cmd.ExecuteReader();
+                tbl = new DataTable();
+                tbl.Load(cmd.ExecuteReader());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("exception" + e.ToString());
+            }
+            finally
+            {
+                try
+                {
+                    conn.Close();
+                    // rdr.Close();
+                    conn.Dispose();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            return tbl;
+
+        }
+
+        /**
+         * Get a DataTable of the student admission numbers when the class is given.
+         **/
+        public DataTable getStudentIndexFromClass(String studentClass) {
+            String connectionString = "";
+            //SqlDataReader rdr = null;
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            DataTable tbl = null;
+            try
+            {
+                connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Zahira_SISConnectionString"].ToString();
+                conn = new SqlConnection(connectionString);
+                conn.Open();
+                String sql = "SELECT admno, name FROM dbo.student "
+                      + "where key_class = @Class"
+                      + " order by admno";
+                cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = sql;
+                cmd.Parameters.Add("@Class", SqlDbType.VarChar).Value = studentClass;
+              
+                Console.WriteLine("SQL:" + cmd.CommandText);
+                Console.WriteLine("params:" + studentClass);
+                //  rdr = cmd.ExecuteReader();
+                tbl = new DataTable();
+                tbl.Load(cmd.ExecuteReader());                
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("exception" + e.ToString());
+            }
+            finally
+            {
+                try
+                {
+                    conn.Close();
+                    // rdr.Close();
+                    conn.Dispose();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            return tbl;
+
+        }
 
         public DataTable getStudentArrearsByDate(String studentClass, String fromDate, String toDate)
         {
-            String _keyfield;
-            String _admno;
-            String _name;
+           // String _keyfield;
+            //String _admno;
+            //String _name;
             String connectionString = "";
             SqlDataReader rdr = null;
             SqlConnection conn = null;
