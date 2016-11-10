@@ -12,6 +12,8 @@ namespace ZahiraSIS
 {
     public partial class frmServiceFeeYrSummary : Form
     {
+
+        StudentDAO dao = new StudentDAO();
         public frmServiceFeeYrSummary()
         {
             InitializeComponent();
@@ -36,6 +38,28 @@ namespace ZahiraSIS
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
+            setName();
+            fillTable();
+
+        }
+        private void comboBox2_KeyDown(object sender, KeyEventArgs e)
+        {
+            
+            if (e.KeyCode == Keys.Enter)
+            {
+                dtStudentArrears.DataSource = null;
+                dtStudentArrears.Refresh();   
+                Console.WriteLine("on key press");
+               // String className = dao.getStudentClasses((int)comboBox2.SelectedValue).Name;
+                //comboBox1.Text = className;
+                setName();
+                fillTable();
+                
+            }
+
+        }
+
+        private void setName() {
             String name = "";
             try
             {
@@ -46,7 +70,6 @@ namespace ZahiraSIS
             {
                 Console.WriteLine("null exception:" + e1);
             }
-
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -57,44 +80,58 @@ namespace ZahiraSIS
         static DataTable dt = new DataTable();
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            String keyClass = comboBox1.SelectedValue.ToString();
+            int keyClass = (int)comboBox1.SelectedValue;
             Console.WriteLine("Selected class:" + keyClass);
+            
             //select * from student where key_class='191'
-            StudentDAO dao = new StudentDAO();
+           
+            string classCode = dao.getStudentClasses(keyClass).Code+"";
+            txtClassCode.Text = classCode;
+            setName();
 
-                       
-            comboBox2.DataSource = dao.getStudentIndexFromClass(keyClass).DefaultView;
+            comboBox2.DataSource = dao.getStudentIndexFromClass(keyClass+"").DefaultView;
             comboBox2.DisplayMember = "admno";
             comboBox2.DisplayMember.Trim();
             comboBox2.ValueMember = "name";
+
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            fillTable();
+        }
+        private void fillTable() {
             String admno = "";
-            StudentDAO dao = null;
+
             try
             {
-                dao = new StudentDAO();
-                admno = comboBox2.Text.Trim();                
+                admno = comboBox2.Text.Trim();
                 dt = dao.getStudentArrearsByIndex(admno);
                 dtStudentArrears.DataSource = dt;
 
-               
+
                 DataRow lastRow = dt.Rows[dt.Rows.Count - 1];
                 double feeRate = Double.Parse(lastRow["mfeerate"] + "");
 
                 DateTime paidTill = (DateTime)lastRow["payto"];
-                int paidMonth = paidTill.Month+1;
+                int paidYear = paidTill.Year;
+                int thisYear = DateTime.Now.Year;
+                int yearDiff = thisYear - paidYear;
+                int paidMonth = paidTill.Month + 1;
                 int thisMonth = DateTime.Now.Month;
-                Console.WriteLine("paid month:" + paidMonth + " today's month:" + thisMonth+" rate:"+feeRate);
-                double feesArrears = feeRate * (thisMonth - paidMonth);
+                Console.WriteLine("paid month:" + paidMonth + ", paid Year:" + paidYear + " today's month:" + thisMonth + ", today's year:" + thisYear + " rate:" + feeRate);
+                double feesArrears = feeRate * ((thisMonth - paidMonth) + yearDiff * 12);
 
-               paidTill= paidTill.AddMonths(1);
+                paidTill = paidTill.AddMonths(1);
                 lblArrearsDate.Text = paidTill.ToString("dd-MMM-yyyy");
-                string arrearsToDate = lastRow["payto"] + "";                
-                txtFees.Text= feeRate + "";
-                txtArrearsToDate.Text = feesArrears +"";
+                string arrearsToDate = lastRow["payto"] + "";
+                txtFees.Text = feeRate + "";
+                if (paidTill.Year > DateTime.Now.Year|| feesArrears<0) {
+                    feesArrears = 0;
+                }
+                txtArrearsToDate.Text = feesArrears + "";
+                comboBox1.Text = dao.getStudentClasses((int)lastRow["key_class"]).Name;
+                txtClassCode.Text = dao.getStudentClasses((int)lastRow["key_class"]).Code;
 
             }
             catch (Exception e1)

@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 using System.Configuration;
 using ZahiraSIS.com.zahira.bean.student;
 using System.Data;
+using ZahiraSIS.com.zahira.bean;
 
 namespace ZahiraSIS
 {
     class StudentDAO
     {
-
+        private string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Zahira_SISConnectionString"].ToString();
 
         public StudentArrearsBean getStudentArrears(String studentClass)
         {
@@ -20,12 +21,9 @@ namespace ZahiraSIS
             String _bfArrears;
             String _curArrears;
             String _curBfArrears;
+            SqlDataReader rdr = null;            
             try
-            {
-
-                String connectionString = "";
-                connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Zahira_SISConnectionString"].ToString();
-                SqlDataReader rdr = null;
+            {              
                 SqlConnection conn = new SqlConnection(connectionString);
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("SELECT SUM(bfarrears)as bfArrears, SUM(curarrears) as curArrears,SUM(curbfarres) as curBfArrears from student where key_class =" + studentClass + " group by key_class", conn);
@@ -52,14 +50,14 @@ namespace ZahiraSIS
         }
         public DataTable getStudentArrearsByIndex(String studentIndex)
         {
-            String connectionString = "";
+            
             //SqlDataReader rdr = null;
             SqlConnection conn = null;
             SqlCommand cmd = null;
             DataTable tbl = null;
             try
             {
-                connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Zahira_SISConnectionString"].ToString();
+                
                 conn = new SqlConnection(connectionString);
                 conn.Open();
                 String sql = "select trnno,trndate,paid,payfrom,payto,mfeerate,totarrears,arrearsfrm,arrearsto,key_class from mnthfeepay where mnthfeepay.key_stu ="
@@ -99,15 +97,14 @@ namespace ZahiraSIS
         /**
          * Get a DataTable of the student admission numbers when the class is given.
          **/
-        public DataTable getStudentIndexFromClass(String studentClass) {
-            String connectionString = "";
+        public DataTable getStudentIndexFromClass(String studentClass)
+        {
             //SqlDataReader rdr = null;
             SqlConnection conn = null;
             SqlCommand cmd = null;
             DataTable tbl = null;
             try
             {
-                connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Zahira_SISConnectionString"].ToString();
                 conn = new SqlConnection(connectionString);
                 conn.Open();
                 String sql = "SELECT admno, name FROM dbo.student "
@@ -117,12 +114,12 @@ namespace ZahiraSIS
                 cmd.Connection = conn;
                 cmd.CommandText = sql;
                 cmd.Parameters.Add("@Class", SqlDbType.VarChar).Value = studentClass;
-              
+
                 Console.WriteLine("SQL:" + cmd.CommandText);
                 Console.WriteLine("params:" + studentClass);
                 //  rdr = cmd.ExecuteReader();
                 tbl = new DataTable();
-                tbl.Load(cmd.ExecuteReader());                
+                tbl.Load(cmd.ExecuteReader());
             }
             catch (Exception e)
             {
@@ -147,17 +144,17 @@ namespace ZahiraSIS
 
         public DataTable getStudentArrearsByDate(String studentClass, String fromDate, String toDate)
         {
-           // String _keyfield;
+            // String _keyfield;
             //String _admno;
             //String _name;
-            String connectionString = "";
+            
             SqlDataReader rdr = null;
             SqlConnection conn = null;
             SqlCommand cmd = null;
             DataTable tbl = null;
             try
             {
-                connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Zahira_SISConnectionString"].ToString();
+            
                 conn = new SqlConnection(connectionString);
                 conn.Open();
                 String sql = "SELECT key_fld, active, mfeecnsn, admno, name, address, registerno,prntname,  key_class, bfarrears, curarrears, key_change, curbfarres, CONVERT(VARCHAR(11), admon, 106) as admon, "
@@ -167,26 +164,26 @@ namespace ZahiraSIS
                 cmd = new SqlCommand();
                 cmd.Connection = conn;
                 cmd.CommandText = sql;
-                cmd.Parameters.Add("@Class",SqlDbType.VarChar).Value=studentClass;
-                cmd.Parameters.Add("@From", SqlDbType.DateTime).Value = fromDate+ " 00:00:00.000";
+                cmd.Parameters.Add("@Class", SqlDbType.VarChar).Value = studentClass;
+                cmd.Parameters.Add("@From", SqlDbType.DateTime).Value = fromDate + " 00:00:00.000";
                 cmd.Parameters.Add("@To", SqlDbType.DateTime).Value = toDate + " 00:00:00.000"; ;
                 Console.WriteLine("SQL:" + cmd.CommandText);
                 Console.WriteLine("params:" + studentClass + " " + fromDate + " " + toDate);
-              //  rdr = cmd.ExecuteReader();
+                //  rdr = cmd.ExecuteReader();
 
-                tbl = new DataTable();                
+                tbl = new DataTable();
                 tbl.Load(cmd.ExecuteReader());
-               /* rdr.Read();
-                if (rdr.HasRows)
-                {
+                /* rdr.Read();
+                 if (rdr.HasRows)
+                 {
 
-                    _keyfield = rdr["key_fld"].ToString();
-                    _admno = rdr["admno"].ToString();
-                    _name = rdr["name"].ToString();
+                     _keyfield = rdr["key_fld"].ToString();
+                     _admno = rdr["admno"].ToString();
+                     _name = rdr["name"].ToString();
 
-                    Console.WriteLine("Data from database:" + _keyfield + ";" + _admno + ";" + _name);     
-                }
-                */
+                     Console.WriteLine("Data from database:" + _keyfield + ";" + _admno + ";" + _name);     
+                 }
+                 */
 
             }
             catch (Exception e)
@@ -198,7 +195,7 @@ namespace ZahiraSIS
                 try
                 {
                     conn.Close();
-                  // rdr.Close();
+                    // rdr.Close();
                     conn.Dispose();
                 }
                 catch (Exception e)
@@ -208,6 +205,69 @@ namespace ZahiraSIS
             }
             return tbl;
 
+        }
+
+        public StuclassBean getStudentClasses(int stuClass)
+        {
+            StuclassBean bean = null;
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            SqlDataReader rdr = null;
+            try
+            {
+                conn = new SqlConnection(connectionString);
+                conn.Open();
+                String sql = "select key_fld,key_grd,key_med,name,code,classcode,key_tea,key_fee,key_change from stuclass where key_fld=" + stuClass;
+                cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = sql;
+                //cmd.Parameters.Add("@Class", SqlDbType.Int).Value = stuClass;
+                Console.WriteLine(cmd.CommandText);
+                rdr = cmd.ExecuteReader();
+                rdr.Read();
+                //string key_fld = "";
+                if(rdr.HasRows)
+                {
+                    int key_fld = int.Parse(rdr["key_fld"]+"");
+                    int key_grd = (int)rdr["key_grd"]; 
+                    int key_med = (int)rdr["key_med"];
+                    string name = rdr["name"] + "";
+                    string code = rdr["code"] + "";
+                    string classcode = rdr["classcode"] + "";
+                    int key_tea = (int)rdr["key_tea"]; 
+                    int key_fee = (int)rdr["key_fee"]; 
+                    int key_change = (int)rdr["key_change"];                  
+                    bean = new StuclassBean();
+                   bean.Key_fld=key_fld;
+                    bean.Key_grd = key_grd;
+                    bean.Key_med = key_med;
+                    bean.Name = name;
+                    bean.Code = code;
+                    bean.Classcode = classcode;
+                    bean.Key_tea = key_tea;
+                    bean.Key_fee = key_fee;
+                    bean.Key_change = key_change;
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                try
+                {
+                    conn.Close();
+                    // rdr.Close();
+                    conn.Dispose();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            return bean;
         }
 
     }

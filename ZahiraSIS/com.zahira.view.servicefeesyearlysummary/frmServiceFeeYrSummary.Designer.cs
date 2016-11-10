@@ -1,4 +1,6 @@
-﻿namespace ZahiraSIS
+﻿using System.Windows.Forms;
+
+namespace ZahiraSIS
 {
     partial class frmServiceFeeYrSummary
     {
@@ -48,11 +50,13 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtArrearsToDate = new System.Windows.Forms.TextBox();
-            this.lblArrearsDate = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.txtClassCode = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.txtFees = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lblArrearsDate = new System.Windows.Forms.Label();
+            this.txtArrearsToDate = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.stuclassBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahiraSISDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).BeginInit();
@@ -119,6 +123,7 @@
             this.comboBox2.Size = new System.Drawing.Size(181, 21);
             this.comboBox2.TabIndex = 3;
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            this.comboBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBox2_KeyDown);
             // 
             // studentBindingSource
             // 
@@ -191,6 +196,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtClassCode);
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.txtFees);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.lblArrearsDate);
@@ -203,49 +210,67 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Current Arrears Info";
             // 
-            // label5
+            // txtClassCode
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 41);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(63, 13);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Arrears from";
+            this.txtClassCode.Enabled = false;
+            this.txtClassCode.Location = new System.Drawing.Point(182, 20);
+            this.txtClassCode.Name = "txtClassCode";
+            this.txtClassCode.ReadOnly = true;
+            this.txtClassCode.Size = new System.Drawing.Size(129, 20);
+            this.txtClassCode.TabIndex = 6;
             // 
-            // txtArrearsToDate
+            // label7
             // 
-            this.txtArrearsToDate.Enabled = false;
-            this.txtArrearsToDate.Location = new System.Drawing.Point(197, 34);
-            this.txtArrearsToDate.Name = "txtArrearsToDate";
-            this.txtArrearsToDate.ReadOnly = true;
-            this.txtArrearsToDate.Size = new System.Drawing.Size(129, 20);
-            this.txtArrearsToDate.TabIndex = 1;
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(9, 20);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(60, 13);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "Class Code";
             // 
-            // lblArrearsDate
+            // txtFees
             // 
-            this.lblArrearsDate.AutoSize = true;
-            this.lblArrearsDate.Location = new System.Drawing.Point(66, 41);
-            this.lblArrearsDate.Name = "lblArrearsDate";
-            this.lblArrearsDate.Size = new System.Drawing.Size(16, 13);
-            this.lblArrearsDate.TabIndex = 2;
-            this.lblArrearsDate.Text = "---";
+            this.txtFees.Location = new System.Drawing.Point(182, 74);
+            this.txtFees.Name = "txtFees";
+            this.txtFees.ReadOnly = true;
+            this.txtFees.Size = new System.Drawing.Size(129, 20);
+            this.txtFees.TabIndex = 4;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 66);
+            this.label6.Location = new System.Drawing.Point(6, 81);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(64, 13);
             this.label6.TabIndex = 3;
             this.label6.Text = "Mothly Fees";
             // 
-            // txtFees
+            // lblArrearsDate
             // 
-            this.txtFees.Location = new System.Drawing.Point(145, 58);
-            this.txtFees.Name = "txtFees";
-            this.txtFees.ReadOnly = true;
-            this.txtFees.Size = new System.Drawing.Size(129, 20);
-            this.txtFees.TabIndex = 4;
+            this.lblArrearsDate.AutoSize = true;
+            this.lblArrearsDate.Location = new System.Drawing.Point(75, 56);
+            this.lblArrearsDate.Name = "lblArrearsDate";
+            this.lblArrearsDate.Size = new System.Drawing.Size(16, 13);
+            this.lblArrearsDate.TabIndex = 2;
+            this.lblArrearsDate.Text = "---";
+            // 
+            // txtArrearsToDate
+            // 
+            this.txtArrearsToDate.Enabled = false;
+            this.txtArrearsToDate.Location = new System.Drawing.Point(182, 49);
+            this.txtArrearsToDate.Name = "txtArrearsToDate";
+            this.txtArrearsToDate.ReadOnly = true;
+            this.txtArrearsToDate.Size = new System.Drawing.Size(129, 20);
+            this.txtArrearsToDate.TabIndex = 1;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 56);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(63, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Arrears from";
             // 
             // frmServiceFeeYrSummary
             // 
@@ -305,5 +330,7 @@
         private System.Windows.Forms.Label lblArrearsDate;
         private System.Windows.Forms.TextBox txtArrearsToDate;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txtClassCode;
+        private System.Windows.Forms.Label label7;
     }
 }

@@ -70,7 +70,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="com.zahira.bean.student\StudentArrearsBean.cs" />
+    <Compile Include="com.zahira.bean\StuclassBean.cs" />
+    <Compile Include="com.zahira.bean\StudentArrearsBean.cs" />
     <Compile Include="com.zahira.dao.Student\StudentDAO.cs" />
     <Compile Include="com.zahira.view.promotestudents\frmPromoteStudents.cs">
       <SubType>Form</SubType>
@@ -217,6 +218,7 @@
   <ItemGroup>
     <Content Include="zahira icon.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
