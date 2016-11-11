@@ -14,6 +14,8 @@ namespace ZahiraSIS
     {
 
         StudentDAO dao = new StudentDAO();
+        static DataTable dt = new DataTable();
+
         public frmServiceFeeYrSummary()
         {
             InitializeComponent();
@@ -36,12 +38,21 @@ namespace ZahiraSIS
 
         }
 
+        /**
+         * When selecting admission numbers from the comboBox2.
+         */
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            setName();
-            fillTable();
+            //  setName();
+            //fillTable();
+            dtStudentArrears.DataSource = null;
+            dtStudentArrears.Refresh();
 
         }
+
+        /**
+         * When enter key is pressed in the comboBox2 after entering admission no. 
+         */
         private void comboBox2_KeyDown(object sender, KeyEventArgs e)
         {
             
@@ -59,25 +70,9 @@ namespace ZahiraSIS
 
         }
 
-        private void setName() {
-            String name = "";
-            try
-            {
-                name = comboBox2.SelectedValue.ToString();
-                txtName.Text = name.Trim();
-            }
-            catch (Exception e1)
-            {
-                Console.WriteLine("null exception:" + e1);
-            }
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        static DataTable dt = new DataTable();
+        /*
+         * When the comboBox1 is changed.
+         */
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             int keyClass = (int)comboBox1.SelectedValue;
@@ -96,10 +91,23 @@ namespace ZahiraSIS
 
         }
 
+        /*
+         * When the View Result button is clicked.
+         */
         private void button2_Click(object sender, EventArgs e)
         {
+            
             fillTable();
         }
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        /**
+         * Fill the data table from the comboBox2 admission number,
+         * then fill the latest fee payments on the textboxes.
+         **/
         private void fillTable() {
             String admno = "";
 
@@ -108,8 +116,6 @@ namespace ZahiraSIS
                 admno = comboBox2.Text.Trim();
                 dt = dao.getStudentArrearsByIndex(admno);
                 dtStudentArrears.DataSource = dt;
-
-
                 DataRow lastRow = dt.Rows[dt.Rows.Count - 1];
                 double feeRate = Double.Parse(lastRow["mfeerate"] + "");
 
@@ -142,21 +148,28 @@ namespace ZahiraSIS
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ExportToExcel(dtStudentArrears);
-            //try
-            //{
-            //   XLWorkbook wb = new XLWorkbook();
-            //    wb.Worksheets.Add(dt, "Student Arrears");
-            //    wb.SaveAs("F:\\Zahira SIS\\" + "DataGridViewExport.xlsx");
-            //}
-            //catch (Exception ex) {
-            //    Console.WriteLine(ex);
-            //}
-
+            ExportToExcel(dtStudentArrears);            
         }
 
         /**
-         * Move this to common
+         * Set the name of the student in the textbox from the comboBox2
+         **/
+        private void setName()
+        {
+            String name = "";
+            try
+            {
+                name = comboBox2.SelectedValue.ToString();
+                txtName.Text = name.Trim();
+            }
+            catch (Exception e1)
+            {
+                Console.WriteLine("null exception:" + e1);
+            }
+        }
+
+        /**
+         * Export to Excel
          */
         private void ExportToExcel(DataGridView grd)
         {
