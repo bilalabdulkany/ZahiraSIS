@@ -15,6 +15,9 @@ namespace ZahiraSIS
 
         StudentDAO dao = new StudentDAO();
         static DataTable dt = new DataTable();
+        bool isEnterPressed = false;
+        private static string classCode = "";
+        private int keyClass = 0;
 
         public frmServiceFeeYrSummary()
         {
@@ -43,8 +46,9 @@ namespace ZahiraSIS
          */
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //  setName();
+             setName();
             //fillTable();
+
             dtStudentArrears.DataSource = null;
             dtStudentArrears.Refresh();
 
@@ -58,14 +62,19 @@ namespace ZahiraSIS
             
             if (e.KeyCode == Keys.Enter)
             {
+                isEnterPressed = true;
                 dtStudentArrears.DataSource = null;
                 dtStudentArrears.Refresh();   
                 Console.WriteLine("on key press");
-               // String className = dao.getStudentClasses((int)comboBox2.SelectedValue).Name;
+                // String className = dao.getStudentClasses((int)comboBox2.SelectedValue).Name;
                 //comboBox1.Text = className;
                 setName();
+            
                 fillTable();
-                
+                //
+               
+
+
             }
 
         }
@@ -75,20 +84,17 @@ namespace ZahiraSIS
          */
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int keyClass = (int)comboBox1.SelectedValue;
-            Console.WriteLine("Selected class:" + keyClass);
+            dtStudentArrears.DataSource = null;
+            dtStudentArrears.Refresh();
             
-            //select * from student where key_class='191'
            
-            string classCode = dao.getStudentClasses(keyClass).Code+"";
-            txtClassCode.Text = classCode;
             setName();
-
-            comboBox2.DataSource = dao.getStudentIndexFromClass(keyClass+"").DefaultView;
+            if (!isEnterPressed) { 
+            comboBox2.DataSource = dao.getStudentIndexFromClass(keyClass + "").DefaultView;
             comboBox2.DisplayMember = "admno";
             comboBox2.DisplayMember.Trim();
             comboBox2.ValueMember = "name";
-
+        }
         }
 
         /*
@@ -96,8 +102,9 @@ namespace ZahiraSIS
          */
         private void button2_Click(object sender, EventArgs e)
         {
-            
+            setName();
             fillTable();
+            isEnterPressed = false;
         }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -117,19 +124,62 @@ namespace ZahiraSIS
                 dt = dao.getStudentArrearsByIndex(admno);
                 dtStudentArrears.DataSource = dt;
                 DataRow lastRow = dt.Rows[dt.Rows.Count - 1];
-                double feeRate = Double.Parse(lastRow["mfeerate"] + "");
+                double feeRate = 0;
 
                 DateTime paidTill = (DateTime)lastRow["payto"];
+                DateTime paidTo = paidTill;
+                DateTime todayDate = DateTime.Now;
+
+               int dateDifference = todayDate.Year - paidTo.Year;
+                //if dateDifference>=1
+                double feesArrears = 0;
+                for (int i=todayDate.Year;i>=paidTill.Year;i-- )
+                {
+                    Console.WriteLine("today:" +i);
+                    Console.WriteLine("till:" + paidTill.Year);
+                    Console.WriteLine("class code:" + classCode);
+                    //Get the grade from the students records. check primary or secondary or senior.
+                    //dao.getStudentClasses((int)lastRow["key_class"]).Code;
+
+                    string guessedClass = classCode.Substring(classCode.Length - 1, classCode.Length);
+                    Console.WriteLine("guessed class: " + guessedClass);
+                    if (i == paidTill.Year)
+                    {
+                        //If for current years' arrears.
+                        int paidMonth = paidTill.Month + 1;
+                        if (paidMonth > 12)
+                        {
+                            paidMonth = paidMonth%12;
+                        }
+                        int thisMonth = DateTime.Now.Month;
+                        int monthDiff = (thisMonth - paidMonth);
+                        if (monthDiff < 0)
+                        {
+                            monthDiff = -(monthDiff);
+                        }
+                        feeRate = Double.Parse(lastRow["mfeerate"] + "");
+                        feesArrears = feeRate*((thisMonth - paidMonth));
+                    }
+                    else
+                    {
+                        //If for other years' arrears.
+                        int feecode = dao.getStudentClasses(keyClass).Key_fee;
+                        
+                        //get the grades in order and check if primary, secondary or senior.
+                        //calculate the rates with respect to the effective year fee.         
+                        feeRate = (double)dao.getMonthFeeRevision(feecode, i + "").Rows[0]["amount"];
+                        Console.WriteLine();
+                    }
+                }
+                Console.WriteLine("Date Diff:"+dateDifference);
+                    
                 int paidYear = paidTill.Year;
                 int thisYear = DateTime.Now.Year;
                 int yearDiff = thisYear - paidYear;
-                int paidMonth = paidTill.Month + 1;
-                int thisMonth = DateTime.Now.Month;
-                Console.WriteLine("paid month:" + paidMonth + ", paid Year:" + paidYear + " today's month:" + thisMonth + ", today's year:" + thisYear + " rate:" + feeRate);
-                double feesArrears = feeRate * ((thisMonth - paidMonth) + yearDiff * 12);
-
                 paidTill = paidTill.AddMonths(1);
                 lblArrearsDate.Text = paidTill.ToString("dd-MMM-yyyy");
+               
+
                 string arrearsToDate = lastRow["payto"] + "";
                 txtFees.Text = feeRate + "";
                 if (paidTill.Year > DateTime.Now.Year|| feesArrears<0) {
@@ -137,8 +187,8 @@ namespace ZahiraSIS
                 }
                 txtArrearsToDate.Text = feesArrears + "";
                 comboBox1.Text = dao.getStudentClasses((int)lastRow["key_class"]).Name;
-                txtClassCode.Text = dao.getStudentClasses((int)lastRow["key_class"]).Code;
-
+                classCode = dao.getStudentClasses((int)lastRow["key_class"]).Code;
+                txtClassCode.Text = classCode;
             }
             catch (Exception e1)
             {
@@ -157,9 +207,17 @@ namespace ZahiraSIS
         private void setName()
         {
             String name = "";
+            keyClass = (int)comboBox1.SelectedValue;
+            Console.WriteLine("Selected class:" + keyClass);
+
+            //select * from student where key_class='191'
+
+            classCode = dao.getStudentClasses(keyClass).Code + "";
+            txtClassCode.Text = classCode;
             try
             {
-                name = comboBox2.SelectedValue.ToString();
+                if(comboBox2.Text!="")
+                name = dao.getStudentInfoFromIndex(comboBox2.Text).Name;
                 txtName.Text = name.Trim();
             }
             catch (Exception e1)

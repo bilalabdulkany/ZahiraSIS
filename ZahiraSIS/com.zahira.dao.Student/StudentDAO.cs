@@ -18,9 +18,9 @@ namespace ZahiraSIS
         public StudentArrearsBean getStudentArrears(String studentClass)
         {
             StudentArrearsBean bean = null;
-            String _bfArrears;
-            String _curArrears;
-            String _curBfArrears;
+           // String _bfArrears;
+            //String _curArrears;
+            //String _curBfArrears;
             SqlDataReader rdr = null;            
             try
             {              
@@ -32,9 +32,9 @@ namespace ZahiraSIS
                 if (rdr.HasRows)
                 {
 
-                    _bfArrears = rdr["bfArrears"].ToString();
-                    _curArrears = rdr["curArrears"].ToString();
-                    _curBfArrears = rdr["curBfArrears"].ToString();
+                     var  _bfArrears = rdr["bfArrears"].ToString();
+                    var _curArrears = rdr["curArrears"].ToString();
+                    var _curBfArrears = rdr["curBfArrears"].ToString();
                     bean = new StudentArrearsBean(_bfArrears, _curArrears, _curBfArrears);
                 }
 
@@ -67,8 +67,8 @@ namespace ZahiraSIS
                 cmd.CommandText = sql;
                 cmd.Parameters.Add("@Index", SqlDbType.VarChar).Value = studentIndex;
 
-                Console.WriteLine("SQL:" + cmd.CommandText);
-                Console.WriteLine("params:" + studentIndex);
+                //Console.WriteLine("SQL:" + cmd.CommandText);
+                Console.WriteLine("index" + studentIndex);
                 //  rdr = cmd.ExecuteReader();
                 tbl = new DataTable();
                 tbl.Load(cmd.ExecuteReader());
@@ -115,8 +115,8 @@ namespace ZahiraSIS
                 cmd.CommandText = sql;
                 cmd.Parameters.Add("@Class", SqlDbType.VarChar).Value = studentClass;
 
-                Console.WriteLine("SQL:" + cmd.CommandText);
-                Console.WriteLine("params:" + studentClass);
+                //Console.WriteLine("SQL:" + cmd.CommandText);
+                Console.WriteLine("class:" + studentClass);
                 //  rdr = cmd.ExecuteReader();
                 tbl = new DataTable();
                 tbl.Load(cmd.ExecuteReader());
@@ -142,6 +142,132 @@ namespace ZahiraSIS
 
         }
 
+        public DataTable getMonthFeeRevision(int key,String effectDate)
+        {
+            //SqlDataReader rdr = null;
+            SqlConnection conn = null;
+            DataTable tbl = null;
+            try
+            {
+                conn = new SqlConnection(connectionString);
+                conn.Open();
+                 string sql = "SELECT [key_fld],[key_mfee],[effdate],[amount],[key_change],[igadvpay] FROM[Zahira_SIS].[dbo].[mnthfeerev] where key_mfee=@Key and effdate >='"+effectDate+"-01-01' and effdate <= '"+effectDate+"-12-01'";
+                var cmd = new SqlCommand
+                {
+                    Connection = conn,
+                    CommandText = sql
+                };
+                cmd.Parameters.Add("@Key", SqlDbType.Int).Value = key;
+                Console.WriteLine("SQL:" + cmd.CommandText);
+                Console.WriteLine("date: " + effectDate);
+                //  rdr = cmd.ExecuteReader();
+                tbl = new DataTable();
+                tbl.Load(cmd.ExecuteReader());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("exception" + e.ToString());
+            }
+            finally
+            {
+                try
+                {
+                    if (conn != null)
+                    {
+                        conn.Close();
+                        // rdr.Close();
+                        conn.Dispose();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            return tbl;
+
+        }
+
+        /**
+       * Get a bean of the student details when the index is given.
+       **/
+        public StudentBean getStudentInfoFromIndex(String index)
+        {
+            SqlDataReader rdr = null;
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            StudentBean bean = null;
+            try
+            {
+                conn = new SqlConnection(connectionString);
+                conn.Open();
+                String sql =
+                    "SELECT [key_fld],[active],[enamfcnsn],[mfeecnsn],[admno],[name],[dob],[address],[registerno],[bloodgr],[comments],[prntname],[prntphone],[prntemail],[key_class],[bfarrears],[curarrears],[key_change],[curbfarres],[admon],[arrearsfrm],[arrearsto] FROM dbo.student where admno = @Index";
+                cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = sql;
+                cmd.Parameters.Add("@Index", SqlDbType.VarChar).Value = index;
+
+                //Console.WriteLine("SQL:" + cmd.CommandText);
+                Console.WriteLine("index:" + index);
+                rdr = cmd.ExecuteReader();
+
+                if (rdr.HasRows)
+                {
+                    while (rdr.Read())
+                    {
+                        var keyFld = rdr.GetInt32(0); //["key_fld"]+"";
+                        var active = rdr["active"];
+                        var enamfcnsn = rdr.GetInt32(2);
+                        var mfeecnsn = rdr.GetDecimal(3);
+                        var admno = (string) rdr["admno"];
+                        var name = rdr.GetString(5);
+                        var dob = rdr.GetDateTime(6);//.GetDateTime(6);//6
+                        var address = rdr.GetString(7);
+                        var registerno = (string) rdr["registerno"];
+                        var bloodgr = (string) rdr["bloodgr"];//9
+                        var comments = rdr.GetString(10);//10
+                        var prntname = rdr.GetString(11);//(string) rdr["prntname"];//11
+                        var prntphone = (string) rdr["prntphone"];
+                        var prntemail = (string) rdr["prntemail"];
+                        var key_class = (int) rdr.GetInt32(14);//14
+                        var bfarrears = (double) rdr.GetDecimal(15);
+                        var curarrears = (double) rdr.GetDecimal(16);
+                        var key_change = (int) rdr.GetInt32(17);
+                        var curbfarres = (double) rdr.GetDecimal(18);
+                        var admon = (DateTime)rdr.GetDateTime(19);
+                        var arrearsfrm = (DateTime)rdr.GetDateTime(20);
+                        var  arrearsto = (DateTime)rdr.GetDateTime(21);
+
+                        bean = new StudentBean((int) keyFld, (int) active, enamfcnsn, (double)mfeecnsn, admno, name, dob,
+                            address, registerno, bloodgr, comments, prntname, prntphone, prntemail, key_class, bfarrears,
+                            curarrears, key_change, curbfarres, admon, arrearsfrm, arrearsto);
+                    }
+                }
+            
+
+        }
+            catch (Exception e)
+            {
+                Console.WriteLine("exception" + e.ToString());
+                
+            }
+            finally
+            {
+                try
+                {
+                    conn.Close();
+                    rdr.Close();
+                    conn.Dispose();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            return bean;
+
+        }
         public DataTable getStudentArrearsByDate(String studentClass, String fromDate, String toDate)
         {
             // String _keyfield;
