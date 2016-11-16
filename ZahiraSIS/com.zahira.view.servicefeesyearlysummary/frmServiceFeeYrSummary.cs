@@ -88,6 +88,7 @@ namespace ZahiraSIS
             dtStudentArrears.Refresh();
 
            // setName();
+           Console.WriteLine("is enter key pressed: "+isEnterPressed);
 
             if (!isEnterPressed) {
                 //user did not click enter but selected from the list.
@@ -137,7 +138,7 @@ namespace ZahiraSIS
                 dt = dao.getStudentArrearsByIndex(admno);
                 dtStudentArrears.DataSource = dt;
                 DataRow lastRow = dt.Rows[dt.Rows.Count - 1];
-                comboBox1.Text = dao.getStudentClasses((int)lastRow["key_class"]).Name;
+                //comboBox1.Text = dao.getStudentClasses((int)lastRow["key_class"]).Name;
                 classCode = dao.getStudentClasses((int) lastRow["key_class"]).Classcode;
                 double feeRate = 0;
 
@@ -157,43 +158,87 @@ namespace ZahiraSIS
                     //Get the grade from the students records. check primary or secondary or senior.
                    char guessedClass = classCode[classCode.Length - 2];
                     Console.WriteLine("guessed class: " + guessedClass);
-                    if (i == paidTill.Year)
+                    if (i == paidTill.Year)//i == paidTill.Year&&
                     {
 
                         //If for current years' arrears.
                         //if paid till is not current year??
-                        int paidMonth = paidTill.Month + 1;
-                        if (paidMonth > 12)
+                        if (paidTill.Year == todayDate.Year)
                         {
-                            paidMonth = paidMonth%12;
+                            Console.WriteLine("calculating fee arrears for the current years'" +
+                                              " Arrears: "+feesArrears);
+                            int paidMonth = paidTill.Month + 1;
+                            if (paidMonth > 12)
+                            {
+                                paidMonth = paidMonth%12;
+                            }
+                            int thisMonth = DateTime.Now.Month;
+                            int monthDiff = (thisMonth - paidMonth);
+                            if (monthDiff < 0)
+                            {
+                                monthDiff = -(monthDiff);
+                            }
+
+                            feeRate = Double.Parse(lastRow["mfeerate"] + "");
+                            feesArrears = feeRate*((thisMonth - paidMonth)) + feesArrears;
                         }
-                        int thisMonth = DateTime.Now.Month;
-                        int monthDiff = (thisMonth - paidMonth);
-                        if (monthDiff < 0)
+                        else
                         {
-                            monthDiff = -(monthDiff);
+                            int paidMonth1 = paidTill.Month;
+                            if (paidMonth1 != 12 && paidMonth1 < 12)
+                            {
+                                paidMonth1 = 12 - paidMonth1;
+                                feeRate = Double.Parse(lastRow["mfeerate"] + "");
+                                feesArrears = feeRate * paidMonth1 + feesArrears;
+
+                            }
                         }
-                       
-                        feeRate = Double.Parse(lastRow["mfeerate"] + "");
-                        feesArrears = feeRate*((thisMonth - paidMonth))+feesArrears;
-                        Console.WriteLine("fee for "+i+"year:"+feesArrears);
+                        Console.WriteLine("fee is not paid fully for the year "+i+": "+feesArrears);
                        
                     }
                     else
                     {
                         //If for other years' arrears.
                         //Check the medium and then guess the key_fee.
-                                               
-                        int feecode = dao.getStudentClasses(keyClass).Key_fee;
-                        string input = Prompt.ShowDialog("Test", "123");
+                        Console.WriteLine("Calculating fee for other years.");
+                        //int feecode = dao.getStudentClasses(keyClass).Key_fee;
+
                         //get the grades in order and check if primary, secondary or senior.
                         //calculate the rates with respect to the effective year fee. 
                         //Also check student concessions.  
-                        Console.WriteLine(input.Trim());      
-                        feeRate = double.Parse(dao.getMonthFeeRevision(int.Parse(input.Trim()), i + "").Rows[0]["amount"].ToString());
-                       
-                        feesArrears = feeRate*12+feesArrears;
-                        Console.WriteLine("Fee rate: " + feeRate+" Arrears: "+feesArrears);
+                        string input = Prompt.ShowDialog("ClassCode: "+dao.getStudentClasses((int)comboBox1.SelectedValue).Code, "Year: " + i);
+                        Console.WriteLine(input.Trim() + " with arrears: " + feesArrears);
+                        if (i == todayDate.Year)
+                        {
+                            int paidMonth = paidTill.Month + 1;
+                            if (paidMonth > 12)
+                            {
+                                paidMonth = paidMonth % 12;
+                            }
+                            int thisMonth = DateTime.Now.Month;
+                            int monthDiff = (thisMonth - paidMonth);
+                            if (monthDiff < 0)
+                            {
+                                monthDiff = -(monthDiff);
+                            }
+
+
+                            feeRate =
+                                double.Parse(
+                                    dao.getMonthFeeRevision(int.Parse(input.Trim()), i + "").Rows[0]["amount"].ToString());
+                            feesArrears = feeRate * ((thisMonth - paidMonth)) + feesArrears;
+
+                        }
+                        else
+                        {
+                           
+                            feeRate =
+                             double.Parse(
+                                 dao.getMonthFeeRevision(int.Parse(input.Trim()), i + "").Rows[0]["amount"].ToString());
+
+                            feesArrears = feeRate*12 + feesArrears;
+                        }
+                        Console.WriteLine("Fee rate: " + feeRate + " Arrears: " + feesArrears);
 
                     }
                 }
@@ -241,6 +286,11 @@ namespace ZahiraSIS
          **/
         private void setName()
         {
+            txtClassCode.Text = "";
+            txtArrearsToDate.Text = "";
+            txtFees.Text = "";
+            txtName.Text = "";
+            lblArrearsDate.Text = "";
             String name = "";
 
             if (comboBox2.Text.Trim()!="")
