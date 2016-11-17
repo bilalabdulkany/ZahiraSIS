@@ -130,6 +130,8 @@ namespace ZahiraSIS
          * then fill the latest fee payments on the textboxes.
          **/
         private void fillTable() {
+            //TODO should display current year in the text boxes. Then must get the paid till year and continue adding for subsequent years.
+            //only current year and paid till grades are known.
             String admno = "";
             Double feesArrears = 0;
             try
@@ -148,15 +150,19 @@ namespace ZahiraSIS
 
                int dateDifference = todayDate.Year - paidTo.Year;
                 //if dateDifference>=1
-                
+                int countYear = 0;
                 for (int i=todayDate.Year;i>=paidTill.Year;i-- )
                 {
+                    countYear++;
                     Console.WriteLine("today:" +i);
                     Console.WriteLine("till:" + paidTill.Year);
+                    classCode = dao.getStudentClasses((int) comboBox1.SelectedValue).Code.Trim();
                     Console.WriteLine("class code:" + classCode+" length:"+classCode.Trim().Length);
                     
                     //Get the grade from the students records. check primary or secondary or senior.
                    char guessedClass = classCode[classCode.Length - 2];
+                int grade = int.Parse(classCode[classCode.Length - 3]+"");
+                    Console.WriteLine("Current grade:"+grade+" adding:"+(countYear-1));
                     Console.WriteLine("guessed class: " + guessedClass);
                     if (i == paidTill.Year)//i == paidTill.Year&&
                     {
@@ -206,8 +212,12 @@ namespace ZahiraSIS
                         //get the grades in order and check if primary, secondary or senior.
                         //calculate the rates with respect to the effective year fee. 
                         //Also check student concessions.  
-                        string input = Prompt.ShowDialog("ClassCode: "+dao.getStudentClasses((int)comboBox1.SelectedValue).Code, "Year: " + i);
-                        Console.WriteLine(input.Trim() + " with arrears: " + feesArrears);
+                        string input = Prompt.ShowDialog("ClassCode: "+classCode+" Years: "+countYear+"-grade:"+grade, "Year: " + i);
+                        feeRate =
+                              double.Parse(
+                                  dao.getMonthFeeRevision(int.Parse(input.Trim()), i + "").Rows[0]["amount"].ToString());
+
+                        Console.WriteLine(input.Trim() + " with arrears: " + feesArrears+" feeRate:"+feeRate);
                         if (i == todayDate.Year)
                         {
                             int paidMonth = paidTill.Month + 1;
@@ -223,19 +233,13 @@ namespace ZahiraSIS
                             }
 
 
-                            feeRate =
-                                double.Parse(
-                                    dao.getMonthFeeRevision(int.Parse(input.Trim()), i + "").Rows[0]["amount"].ToString());
-                            feesArrears = feeRate * ((thisMonth - paidMonth)) + feesArrears;
+                               feesArrears = feeRate * ((thisMonth - paidMonth)) + feesArrears;
 
                         }
                         else
                         {
                            
-                            feeRate =
-                             double.Parse(
-                                 dao.getMonthFeeRevision(int.Parse(input.Trim()), i + "").Rows[0]["amount"].ToString());
-
+                           
                             feesArrears = feeRate*12 + feesArrears;
                         }
                         Console.WriteLine("Fee rate: " + feeRate + " Arrears: " + feesArrears);
@@ -404,12 +408,12 @@ namespace ZahiraSIS
             Form prompt = new Form()
             {
                 Width = 500,
-                Height = 150,
+                Height = 170,
                 FormBorderStyle = FormBorderStyle.FixedDialog,
                 Text = caption,
                 StartPosition = FormStartPosition.CenterScreen
             };
-            Label textLabel = new Label() { Left = 50, Top = 20, Text = text };
+            Label textLabel = new Label() { Left = 50, Top = 15,Width = 350,Text = text };
             TextBox textBox = new TextBox() { Left = 50, Top = 50, Width = 400 };
             Button confirmation = new Button() { Text = "Ok", Left = 350, Width = 100, Top = 70, DialogResult = DialogResult.OK };
             confirmation.Click += (sender, e) => { prompt.Close(); };
