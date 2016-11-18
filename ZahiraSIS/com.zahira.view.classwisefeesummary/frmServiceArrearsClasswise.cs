@@ -81,9 +81,9 @@ namespace ZahiraSIS.com.zahira.view.reports
                 String selectedClass = cmbClass.SelectedValue.ToString();
                 tblStudents.DataSource = studentDAO.getStudentArrearsByDate(cmbClass.SelectedValue.ToString(), fromdate, todate);
                 bean = studentDAO.getStudentArrears(selectedClass);
-                txtBFArrears.Text = bean.getBfArrears();
-                txtCurArrears.Text = bean.getCurArrears();
-                txtCurBFArrears.Text = bean.getCurBfArrears();
+                txtBFArrears.Text = bean.bfArrears;
+                txtCurArrears.Text = bean.curArrears;
+                txtCurBFArrears.Text = bean.curBfArrears;
 
             }
             catch (System.Exception ex)

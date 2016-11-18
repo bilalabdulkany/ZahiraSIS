@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ZahiraSIS.com.zahira.bean;
+using ZahiraSIS.com.zahira.bean.student;
 
 namespace ZahiraSIS
 {
@@ -14,7 +16,7 @@ namespace ZahiraSIS
     {
 
         StudentDAO dao = new StudentDAO();
-        static DataTable dt = new DataTable();
+        //static DataTable dt = new DataTable();
         bool isEnterPressed = false;
         private static String classCode = null;
         private int keyClass = 0;
@@ -47,7 +49,7 @@ namespace ZahiraSIS
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
              setName();
-            //fillTable();
+            //getStudentArrearsInfo();
 
             dtStudentArrears.DataSource = null;
             dtStudentArrears.Refresh();
@@ -69,14 +71,8 @@ namespace ZahiraSIS
                 // String className = dao.getStudentClasses((int)comboBox2.SelectedValue).Name;
                 //comboBox1.Text = className;
                 setName();
-            
-                fillTable();
-                //
-               
-
-
+                setupArrearsFormData();
             }
-
         }
 
         /*
@@ -93,15 +89,13 @@ namespace ZahiraSIS
             if (!isEnterPressed) {
                 //user did not click enter but selected from the list.
                 Console.WriteLine(comboBox1.SelectedValue.ToString());
-                keyClass = (int)comboBox1.SelectedValue;
-                //keyClass = dao.getStudentInfoFromIndex(comboBox2.Text.Trim()).Key_class;
+                keyClass = (int)comboBox1.SelectedValue;               
                 classCode = (dao.getStudentClasses(keyClass).Code + "").Trim();
                 txtClassCode.Text = classCode;
                 comboBox2.DataSource = dao.getStudentIndexFromClass(keyClass + "").DefaultView;
             comboBox2.DisplayMember = "admno";
             comboBox2.DisplayMember.Trim();
             comboBox2.ValueMember = "name";
-           
                 
             }
             if (isEnterPressed)
@@ -116,7 +110,8 @@ namespace ZahiraSIS
         private void button2_Click(object sender, EventArgs e)
         {
             setName();
-            fillTable();
+            setupArrearsFormData();
+          //  getStudentArrearsInfo(comboBox2.Text.Trim(), dao.getStudentClasses((int)comboBox1.SelectedValue).Code.Trim());
             if(isEnterPressed)
             isEnterPressed = false;
         }
@@ -125,160 +120,20 @@ namespace ZahiraSIS
 
         }
 
-        /**
-         * Fill the data table from the comboBox2 admission number,
-         * then fill the latest fee payments on the textboxes.
-         **/
-        private void fillTable() {
-            //TODO should display current year in the text boxes. Then must get the paid till year and continue adding for subsequent years.
-            //only current year and paid till grades are known.
-            String admno = "";
-            Double feesArrears = 0;
-            try
-            {
-                admno = comboBox2.Text.Trim();
-                dt = dao.getStudentArrearsByIndex(admno);
-                dtStudentArrears.DataSource = dt;
-                DataRow lastRow = dt.Rows[dt.Rows.Count - 1];
-                //comboBox1.Text = dao.getStudentClasses((int)lastRow["key_class"]).Name;
-                classCode = dao.getStudentClasses((int) lastRow["key_class"]).Classcode;
-                double feeRate = 0;
-
-                DateTime paidTill = (DateTime)lastRow["payto"];
-                DateTime paidTo = paidTill;
-                DateTime todayDate = DateTime.Now;
-
-               int dateDifference = todayDate.Year - paidTo.Year;
-                //if dateDifference>=1
-                int countYear = 0;
-                for (int i=todayDate.Year;i>=paidTill.Year;i-- )
-                {
-                    countYear++;
-                    Console.WriteLine("today:" +i);
-                    Console.WriteLine("till:" + paidTill.Year);
-                    classCode = dao.getStudentClasses((int) comboBox1.SelectedValue).Code.Trim();
-                    Console.WriteLine("class code:" + classCode+" length:"+classCode.Trim().Length);
-                    
-                    //Get the grade from the students records. check primary or secondary or senior.
-                   char guessedClass = classCode[classCode.Length - 2];
-                int grade = int.Parse(classCode[classCode.Length - 3]+"");
-                    Console.WriteLine("Current grade:"+grade+" adding:"+(countYear-1));
-                    Console.WriteLine("guessed class: " + guessedClass);
-                    if (i == paidTill.Year)//i == paidTill.Year&&
-                    {
-
-                        //If for current years' arrears.
-                        //if paid till is not current year??
-                        if (paidTill.Year == todayDate.Year)
-                        {
-                            Console.WriteLine("calculating fee arrears for the current years'" +
-                                              " Arrears: "+feesArrears);
-                            int paidMonth = paidTill.Month + 1;
-                            if (paidMonth > 12)
-                            {
-                                paidMonth = paidMonth%12;
-                            }
-                            int thisMonth = DateTime.Now.Month;
-                            int monthDiff = (thisMonth - paidMonth);
-                            if (monthDiff < 0)
-                            {
-                                monthDiff = -(monthDiff);
-                            }
-
-                            feeRate = Double.Parse(lastRow["mfeerate"] + "");
-                            feesArrears = feeRate*((thisMonth - paidMonth)) + feesArrears;
-                        }
-                        else
-                        {
-                            int paidMonth1 = paidTill.Month;
-                            if (paidMonth1 != 12 && paidMonth1 < 12)
-                            {
-                                paidMonth1 = 12 - paidMonth1;
-                                feeRate = Double.Parse(lastRow["mfeerate"] + "");
-                                feesArrears = feeRate * paidMonth1 + feesArrears;
-
-                            }
-                        }
-                        Console.WriteLine("fee is not paid fully for the year "+i+": "+feesArrears);
-                       
-                    }
-                    else
-                    {
-                        //If for other years' arrears.
-                        //Check the medium and then guess the key_fee.
-                        Console.WriteLine("Calculating fee for other years.");
-                        //int feecode = dao.getStudentClasses(keyClass).Key_fee;
-
-                        //get the grades in order and check if primary, secondary or senior.
-                        //calculate the rates with respect to the effective year fee. 
-                        //Also check student concessions.  
-                        string input = Prompt.ShowDialog("ClassCode: "+classCode+" Years: "+countYear+"-grade:"+grade, "Year: " + i);
-                        feeRate =
-                              double.Parse(
-                                  dao.getMonthFeeRevision(int.Parse(input.Trim()), i + "").Rows[0]["amount"].ToString());
-
-                        Console.WriteLine(input.Trim() + " with arrears: " + feesArrears+" feeRate:"+feeRate);
-                        if (i == todayDate.Year)
-                        {
-                            int paidMonth = paidTill.Month + 1;
-                            if (paidMonth > 12)
-                            {
-                                paidMonth = paidMonth % 12;
-                            }
-                            int thisMonth = DateTime.Now.Month;
-                            int monthDiff = (thisMonth - paidMonth);
-                            if (monthDiff < 0)
-                            {
-                                monthDiff = -(monthDiff);
-                            }
-
-
-                               feesArrears = feeRate * ((thisMonth - paidMonth)) + feesArrears;
-
-                        }
-                        else
-                        {
-                           
-                           
-                            feesArrears = feeRate*12 + feesArrears;
-                        }
-                        Console.WriteLine("Fee rate: " + feeRate + " Arrears: " + feesArrears);
-
-                    }
-                }
-                
-                paidTill = paidTill.AddMonths(1);
-                if (paidTill.Year > DateTime.Now.Year || feesArrears < 0)
-                {
-                    Console.WriteLine("resetting to 0");
-                    if (dateDifference == 0)
-                    {
-                        feesArrears = 0;
-                    }
-                }
-                Console.WriteLine("Date Diff:"+dateDifference+" arrears: "+feesArrears);
-                    
-                //int paidYear = paidTill.Year;
-                //int thisYear = DateTime.Now.Year;
-               // int yearDiff = thisYear - paidYear;
-                
-                lblArrearsDate.Text = paidTill.ToString("dd-MMM-yyyy");
-               
-
-                string arrearsToDate = lastRow["payto"] + "";
-                txtFees.Text = feeRate + "";
-               
-                txtArrearsToDate.Text = feesArrears + "";
-                
-                Console.WriteLine("resetting class code:"+classCode);
-                classCode = dao.getStudentClasses((int)lastRow["key_class"]).Code;
-                txtClassCode.Text = classCode;
-            }
-            catch (Exception e1)
-            {
-                Console.WriteLine("error: " + e1);
-            }
+        private void setupArrearsFormData()
+        {
+            StuclassBean classBean = dao.getStudentClasses((int)comboBox1.SelectedValue);
+            classCode = classBean.Code.Trim();
+            StudentArrearsBean bean = dao.getStudentArrearsInfo(comboBox2.Text.Trim(), classCode);
+            dtStudentArrears.DataSource = bean.stPaidData;
+            txtClassCode.Text = classCode;
+            txtArrearsToDate.Text = bean.curArrears;
+            lblArrearsDate.Text = bean.paidTill.ToString("dd-MMM-yyyy");
+            txtFees.Text = dao.getMonthFeeRevision(classBean.Key_fee, DateTime.Now.Year + "").Rows[0]["amount"].ToString();
+            //
         }
+
+        
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -329,9 +184,7 @@ namespace ZahiraSIS
             }
                 Console.WriteLine("Selected class:" + keyClass);
 
-            //select * from student where key_class='191'
-
-          
+            
            
         }
 

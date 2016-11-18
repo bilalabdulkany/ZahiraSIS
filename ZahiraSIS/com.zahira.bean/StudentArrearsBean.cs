@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,10 +9,17 @@ namespace ZahiraSIS.com.zahira.bean.student
 {
     class StudentArrearsBean
     {
-        
-        private String bfArrears;
-        private String curArrears;
-        private String curBfArrears;
+        public DateTime paidTill { get; set; }
+        public DataTable stPaidData { get; set; }
+        public string curArrears { get; set; }
+
+        public string bfArrears { get; set; }
+
+        public string curBfArrears { get; set; }
+
+        public StudentArrearsBean()
+        {
+        }
 
         public StudentArrearsBean(String bfArrears, String curArrears, String curBfArrears)
         {
@@ -20,31 +28,7 @@ namespace ZahiraSIS.com.zahira.bean.student
             this.curBfArrears = curBfArrears;
         }
 
-        public String getBfArrears() {
-            return this.bfArrears;
-        }
-        public String getCurArrears()
-        {
-            return this.curArrears;
-        }
-        public String getCurBfArrears()
-        {
-            return this.curBfArrears;
-        }
-
-        public void setBfArrears(String bfArrears)
-        {
-            this.bfArrears=bfArrears;
-        }
-
-        public void setCurArrears( String curArrears)
-        {
-            this.curArrears=curArrears;
-        }
-        public void setCurBfArrears(String curBfArrears)
-        {
-            this.curBfArrears=curBfArrears;
-        }
+       
 
     }
 }

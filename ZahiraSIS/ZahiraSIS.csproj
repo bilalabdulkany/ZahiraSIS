@@ -74,17 +74,18 @@
     <Compile Include="com.zahira.bean\StuclassBean.cs" />
     <Compile Include="com.zahira.bean\StudentArrearsBean.cs" />
     <Compile Include="com.zahira.bean\StudentBean.cs" />
-    <Compile Include="com.zahira.dao.Student\StudentDAO.cs" />
+    <Compile Include="com.zahira.dao\ClassDAO.cs" />
+    <Compile Include="com.zahira.dao\StudentDAO.cs" />
     <Compile Include="com.zahira.view.promotestudents\frmPromoteStudents.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="com.zahira.view.promotestudents\frmPromoteStudents.Designer.cs">
       <DependentUpon>frmPromoteStudents.cs</DependentUpon>
     </Compile>
-    <Compile Include="com.zahira.view.reports\frmServiceArrearsClasswise.cs">
+    <Compile Include="com.zahira.view.classwisefeesummary\frmServiceArrearsClasswise.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="com.zahira.view.reports\frmServiceArrearsClasswise.Designer.cs">
+    <Compile Include="com.zahira.view.classwisefeesummary\frmServiceArrearsClasswise.Designer.cs">
       <DependentUpon>frmServiceArrearsClasswise.cs</DependentUpon>
     </Compile>
     <Compile Include="com.zahira.view.servicefeesyearlysummary\frmServiceFeeYrSummary.cs">
@@ -125,7 +126,7 @@
     <EmbeddedResource Include="com.zahira.view.promotestudents\frmPromoteStudents.resx">
       <DependentUpon>frmPromoteStudents.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="com.zahira.view.reports\frmServiceArrearsClasswise.resx">
+    <EmbeddedResource Include="com.zahira.view.classwisefeesummary\frmServiceArrearsClasswise.resx">
       <DependentUpon>frmServiceArrearsClasswise.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="com.zahira.view.servicefeesyearlysummary\frmServiceFeeYrSummary.resx">

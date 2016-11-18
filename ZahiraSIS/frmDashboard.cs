@@ -127,5 +127,11 @@ namespace ZahiraSIS
             frmServiceFeeYrSummary formSummary = new frmServiceFeeYrSummary();
             formSummary.Show();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            frmClassReport classReport = new frmClassReport();
+            classReport.Show();
+        }
     }
 }
