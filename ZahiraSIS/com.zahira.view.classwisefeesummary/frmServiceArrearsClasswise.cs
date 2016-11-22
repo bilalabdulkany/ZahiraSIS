@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZahiraSIS.com.zahira.bean.student;
+using ZahiraSIS.com.zahira.common;
 
 namespace ZahiraSIS.com.zahira.view.reports
 {
@@ -54,8 +55,9 @@ namespace ZahiraSIS.com.zahira.view.reports
 
         private void button2_Click(object sender, EventArgs e)
         {
-            String fromdate=null;
-            String todate=null;
+            string fromdate=null;
+            string todate=null;
+            StudentDAO dao  = new StudentDAO();
             try
             {
                 //TODO fill datatable with Lists. also check the date range.
@@ -78,12 +80,16 @@ namespace ZahiraSIS.com.zahira.view.reports
                // this.studentTableAdapter.FillByClass(this.zahira_SISDataSet.student, new System.Nullable<int>(((int)(System.Convert.ChangeType(cmbClass.SelectedValue, typeof(int))))));
                 StudentArrearsBean bean = null;
                 StudentDAO studentDAO = new StudentDAO();
-                String selectedClass = cmbClass.SelectedValue.ToString();
-                tblStudents.DataSource = studentDAO.getStudentArrearsByDate(cmbClass.SelectedValue.ToString(), fromdate, todate);
-                bean = studentDAO.getStudentArrears(selectedClass);
-                txtBFArrears.Text = bean.bfArrears;
-                txtCurArrears.Text = bean.curArrears;
-                txtCurBFArrears.Text = bean.curBfArrears;
+                int selectedClass1 = (int)cmbClass.SelectedValue;
+                string classCode = (dao.getStudentClasses(selectedClass1).Code).Trim();
+                StudentArrearsBean arrearsBean = studentDAO.getStudentArrearsByDate(classCode,
+                    fromdate, todate);
+                tblStudents.DataSource = arrearsBean.stPaidData;
+                //TODO return a StudentArrearsBean.
+                //bean = studentDAO.getStudentArrears(selectedClass);
+                //txtBFArrears.Text = bean.bfArrears;
+                txtCurArrears.Text = arrearsBean.curArrears;
+                //txtCurBFArrears.Text = bean.curBfArrears;
 
             }
             catch (System.Exception ex)
@@ -99,6 +105,7 @@ namespace ZahiraSIS.com.zahira.view.reports
 
         private void button1_Click(object sender, EventArgs e)
         {
+            new Common().ExportToExcel(tblStudents);
 
         }
     }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZahiraSIS.com.zahira.bean;
 using ZahiraSIS.com.zahira.bean.student;
+using ZahiraSIS.com.zahira.common;
 
 namespace ZahiraSIS
 {
@@ -122,14 +123,22 @@ namespace ZahiraSIS
 
         private void setupArrearsFormData()
         {
-            StuclassBean classBean = dao.getStudentClasses((int)comboBox1.SelectedValue);
-            classCode = classBean.Code.Trim();
-            StudentArrearsBean bean = dao.getStudentArrearsInfo(comboBox2.Text.Trim(), classCode);
-            dtStudentArrears.DataSource = bean.stPaidData;
-            txtClassCode.Text = classCode;
-            txtArrearsToDate.Text = bean.curArrears;
-            lblArrearsDate.Text = bean.paidTill.ToString("dd-MMM-yyyy");
-            txtFees.Text = dao.getMonthFeeRevision(classBean.Key_fee, DateTime.Now.Year + "").Rows[0]["amount"].ToString();
+            try
+            {
+                StuclassBean classBean = dao.getStudentClasses((int) comboBox1.SelectedValue);
+                classCode = classBean.Code.Trim();
+                StudentArrearsBean bean = dao.getStudentArrearsInfo(comboBox2.Text.Trim(), classCode, true);
+                dtStudentArrears.DataSource = bean.stPaidData;
+                txtClassCode.Text = classCode;
+                txtArrearsToDate.Text = bean.curArrears;
+                lblArrearsDate.Text = bean.paidTill.ToString("dd-MMM-yyyy");
+                txtFees.Text =
+                    dao.getMonthFeeRevision(classBean.Key_fee, DateTime.Now.Year + "").Rows[0]["amount"].ToString();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
             //
         }
 
@@ -137,7 +146,7 @@ namespace ZahiraSIS
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ExportToExcel(dtStudentArrears);            
+            new Common().ExportToExcel(dtStudentArrears);            
         }
 
         /**
@@ -188,70 +197,7 @@ namespace ZahiraSIS
            
         }
 
-        /**
-         * Export to Excel
-         */
-        private void ExportToExcel(DataGridView grd)
-        {
-            // Creating a Excel object. 
-            Microsoft.Office.Interop.Excel._Application excel = new Microsoft.Office.Interop.Excel.Application();
-            Microsoft.Office.Interop.Excel._Workbook workbook = excel.Workbooks.Add(Type.Missing);
-            Microsoft.Office.Interop.Excel._Worksheet worksheet = null;
-
-            try
-            {
-
-                worksheet = workbook.ActiveSheet;
-
-                worksheet.Name = "ExportedFromDatGrid";
-
-                int cellRowIndex = 1;
-                int cellColumnIndex = 1;
-
-                //Loop through each row and read value from each column. 
-                for (int i = 0; i < grd.Rows.Count - 1; i++)
-                {
-                    for (int j = 0; j < grd.Columns.Count; j++)
-                    {
-                        // Excel index starts from 1,1. As first Row would have the Column headers, adding a condition check. 
-                        if (cellRowIndex == 1)
-                        {
-                            worksheet.Cells[cellRowIndex, cellColumnIndex] = grd.Columns[j].HeaderText;
-                        }
-                        else
-                        {
-                            worksheet.Cells[cellRowIndex, cellColumnIndex] = grd.Rows[i].Cells[j].Value.ToString();
-                        }
-                        cellColumnIndex++;
-                    }
-                    cellColumnIndex = 1;
-                    cellRowIndex++;
-                }
-
-                //Getting the location and file name of the excel to save from user. 
-                SaveFileDialog saveDialog = new SaveFileDialog();
-                saveDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
-                saveDialog.FilterIndex = 2;
-
-                if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    workbook.SaveAs(saveDialog.FileName);
-                    MessageBox.Show("Export Successful");
-                }
-            }
-            catch (System.Exception ex)
-            {
-                Console.WriteLine(ex);
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                excel.Quit();
-                workbook = null;
-                excel = null;
-            }
-
-        }
+        
     }
 
     public static class Prompt

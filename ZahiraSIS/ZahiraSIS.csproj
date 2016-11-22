@@ -74,6 +74,7 @@
     <Compile Include="com.zahira.bean\StuclassBean.cs" />
     <Compile Include="com.zahira.bean\StudentArrearsBean.cs" />
     <Compile Include="com.zahira.bean\StudentBean.cs" />
+    <Compile Include="com.zahira.common\Common.cs" />
     <Compile Include="com.zahira.dao\ClassDAO.cs" />
     <Compile Include="com.zahira.dao\StudentDAO.cs" />
     <Compile Include="com.zahira.view.promotestudents\frmPromoteStudents.cs">
