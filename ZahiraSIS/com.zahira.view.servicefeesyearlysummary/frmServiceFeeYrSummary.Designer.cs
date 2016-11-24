@@ -121,7 +121,7 @@ namespace ZahiraSIS
             this.comboBox2.Location = new System.Drawing.Point(101, 53);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(181, 21);
-            this.comboBox2.TabIndex = 3;
+            this.comboBox2.TabIndex = 2;
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             this.comboBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.comboBox2_KeyDown);
             // 
@@ -148,7 +148,7 @@ namespace ZahiraSIS
             this.txtName.Location = new System.Drawing.Point(104, 87);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(177, 20);
-            this.txtName.TabIndex = 5;
+            this.txtName.TabIndex = 3;
             // 
             // studentBindingSource1
             // 
@@ -170,7 +170,7 @@ namespace ZahiraSIS
             this.button1.Location = new System.Drawing.Point(560, 340);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
+            this.button1.TabIndex = 5;
             this.button1.Text = "Export";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -180,7 +180,7 @@ namespace ZahiraSIS
             this.button2.Location = new System.Drawing.Point(184, 113);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(97, 23);
-            this.button2.TabIndex = 8;
+            this.button2.TabIndex = 4;
             this.button2.Text = "View Results";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);

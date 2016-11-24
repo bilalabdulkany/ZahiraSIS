@@ -93,7 +93,7 @@ namespace ZahiraSIS
                 keyClass = (int)comboBox1.SelectedValue;               
                 classCode = (dao.getStudentClasses(keyClass).Code + "").Trim();
                 txtClassCode.Text = classCode;
-                comboBox2.DataSource = dao.getStudentIndexFromClass(keyClass + "").DefaultView;
+                comboBox2.DataSource = dao.getStudentIndexFromClass(classCode + "").DefaultView;
             comboBox2.DisplayMember = "admno";
             comboBox2.DisplayMember.Trim();
             comboBox2.ValueMember = "name";
@@ -127,7 +127,7 @@ namespace ZahiraSIS
             {
                 StuclassBean classBean = dao.getStudentClasses((int) comboBox1.SelectedValue);
                 classCode = classBean.Code.Trim();
-                StudentArrearsBean bean = dao.getStudentArrearsInfo(comboBox2.Text.Trim(), classCode, true);
+                StudentArrearsBean bean = dao.getStudentArrearsInfo(comboBox2.Text.Trim(), classCode, false);
                 dtStudentArrears.DataSource = bean.stPaidData;
                 txtClassCode.Text = classCode;
                 txtArrearsToDate.Text = bean.curArrears;
@@ -196,8 +196,17 @@ namespace ZahiraSIS
             
            
         }
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                Hide();
+            }
+        }
 
-        
+
     }
 
     public static class Prompt

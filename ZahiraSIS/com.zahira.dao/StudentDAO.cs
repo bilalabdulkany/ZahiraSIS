@@ -464,6 +464,7 @@ namespace ZahiraSIS
                     if (paidTill.Year == 1899)
                     {
                         Console.WriteLine("data is not properly recorded");
+                        feesArrears = 0;
                         break;
                     }
                     countYear++;
@@ -537,7 +538,18 @@ namespace ZahiraSIS
                         }
                         else
                         {
-                            feeRate = this.guessClassAndFee(classCode, countYear);
+                            int yearsToReduce = 0;
+                            int key_fee = 0;
+                            if (countYear != 1)
+                            {
+                                yearsToReduce = todayDate.Year - i;
+                            }
+                            //i is this year but the students class is based on this year so reduce one year.
+                            key_fee = this.guessClassAndFee(classCode, countYear,yearsToReduce);
+                            feeRate =
+                                double.Parse(
+                                    this.getMonthFeeRevision(key_fee, i + "").Rows[0]["amount"].ToString
+                                        ());
                         }
                         if (i == todayDate.Year)
                         {
@@ -585,7 +597,8 @@ namespace ZahiraSIS
 
         /*TODO guess the fee rate given the current class
          */
-        private int guessClassAndFee(string classCode,int countYear)
+
+        private int guessClassAndFee(string classCode, int countYear, int yearsToReduce)
         {
             //TODO check if the grade should be reversed or not - addition or subtraction.
             /*
@@ -605,15 +618,24 @@ key_fld	code    	name
 27	    0001T     	0001T Primary                                     
              
              */
-             ClassDAO clsDao= new ClassDAO();
+            ClassDAO clsDao = new ClassDAO();
             char guessedClass = classCode[classCode.Length - 2];
             string grade = classCode.Substring(0, classCode.Length - 2);
-            if (grade.Length == 1)
+            if (!grade.Equals("1"))
+            {
+                int reduceYear = int.Parse(grade) - yearsToReduce;
+            
+            grade = reduceYear.ToString();
+        }
+        if (
+
+        grade.Length == 1)
             {
                 grade = "0"+grade;
-                Console.WriteLine("concat:"+grade);
+                
             }
-            int key_fee = (int)clsDao.GetStudentClassFee(guessedClass.ToString(), grade).Rows[0]["key_fld"];
+            Console.WriteLine("grade:" + grade+" medium:"+guessedClass);
+            int key_fee = (int)clsDao.GetStudentClassFee( grade, guessedClass.ToString()).Rows[0]["key_fee"];
             Console.WriteLine("***grade: "+grade);
             Console.WriteLine("***Current grade:" + grade + " adding:" + (countYear - 1));
 

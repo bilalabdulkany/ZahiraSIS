@@ -121,7 +121,7 @@
             this.txtTeacherName.Location = new System.Drawing.Point(113, 70);
             this.txtTeacherName.Name = "txtTeacherName";
             this.txtTeacherName.Size = new System.Drawing.Size(251, 20);
-            this.txtTeacherName.TabIndex = 3;
+            this.txtTeacherName.TabIndex = 2;
             // 
             // teacherBindingSource
             // 
@@ -214,7 +214,7 @@
             this.button1.Location = new System.Drawing.Point(229, 295);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 9;
+            this.button1.TabIndex = 4;
             this.button1.Text = "Export";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -224,7 +224,7 @@
             this.button2.Location = new System.Drawing.Point(229, 96);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(106, 23);
-            this.button2.TabIndex = 10;
+            this.button2.TabIndex = 3;
             this.button2.Text = "View Students";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
