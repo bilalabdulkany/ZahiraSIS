@@ -71,13 +71,7 @@ namespace ZahiraSIS.com.zahira.view.reports
                     todate = dateTimePicker2.Value.ToString("yyyy-MM-dd");
                     
                 }
-                /**
-                 * SELECT key_fld, active, enamfcnsn, mfeecnsn, admno, name, dob, address, registerno, bloodgr, comments, prntname, prntphone, prntemail,
-                 *  key_class, bfarrears, curarrears, key_change, curbfarres, admon,
-                 *   arrearsfrm, arrearsto FROM dbo.student
-                 *   where key_class = @ClassKey and arrearsfrm =@from arrearsto <= @to
-                 **/
-               // this.studentTableAdapter.FillByClass(this.zahira_SISDataSet.student, new System.Nullable<int>(((int)(System.Convert.ChangeType(cmbClass.SelectedValue, typeof(int))))));
+               
                 StudentArrearsBean bean = null;
                 StudentDAO studentDAO = new StudentDAO();
                 int selectedClass1 = (int)cmbClass.SelectedValue;
@@ -85,12 +79,7 @@ namespace ZahiraSIS.com.zahira.view.reports
                 StudentArrearsBean arrearsBean = studentDAO.getStudentArrearsByDate(classCode,
                     fromdate, todate);
                 tblStudents.DataSource = arrearsBean.stPaidData;
-                //TODO return a StudentArrearsBean.
-                //bean = studentDAO.getStudentArrears(selectedClass);
-                //txtBFArrears.Text = bean.bfArrears;
                 txtCurArrears.Text = arrearsBean.curArrears;
-                //txtCurBFArrears.Text = bean.curBfArrears;
-
             }
             catch (System.Exception ex)
             {

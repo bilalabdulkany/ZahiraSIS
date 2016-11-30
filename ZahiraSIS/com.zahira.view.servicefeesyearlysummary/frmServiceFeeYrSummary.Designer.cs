@@ -57,6 +57,7 @@ namespace ZahiraSIS
             this.lblArrearsDate = new System.Windows.Forms.Label();
             this.txtArrearsToDate = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.txtBreakdown = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.stuclassBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahiraSISDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).BeginInit();
@@ -161,13 +162,13 @@ namespace ZahiraSIS
             this.dtStudentArrears.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtStudentArrears.Location = new System.Drawing.Point(26, 184);
             this.dtStudentArrears.Name = "dtStudentArrears";
-            this.dtStudentArrears.Size = new System.Drawing.Size(609, 150);
+            this.dtStudentArrears.Size = new System.Drawing.Size(609, 120);
             this.dtStudentArrears.TabIndex = 6;
             this.dtStudentArrears.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(560, 340);
+            this.button1.Location = new System.Drawing.Point(560, 310);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 5;
@@ -272,11 +273,20 @@ namespace ZahiraSIS
             this.label5.TabIndex = 0;
             this.label5.Text = "Arrears from";
             // 
+            // txtBreakdown
+            // 
+            this.txtBreakdown.Location = new System.Drawing.Point(26, 311);
+            this.txtBreakdown.Multiline = true;
+            this.txtBreakdown.Name = "txtBreakdown";
+            this.txtBreakdown.Size = new System.Drawing.Size(380, 78);
+            this.txtBreakdown.TabIndex = 11;
+            // 
             // frmServiceFeeYrSummary
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(647, 396);
+            this.ClientSize = new System.Drawing.Size(647, 401);
+            this.Controls.Add(this.txtBreakdown);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.button2);
@@ -332,5 +342,6 @@ namespace ZahiraSIS
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtClassCode;
         private System.Windows.Forms.Label label7;
+        private TextBox txtBreakdown;
     }
 }

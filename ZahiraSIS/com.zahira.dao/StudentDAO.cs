@@ -439,6 +439,8 @@ namespace ZahiraSIS
             StudentArrearsBean arrearsBean = null;
             Double feesArrears = 0;
             DataTable dt = null;
+           Dictionary<int,string> arrearsMap=new Dictionary<int,string>();
+
             try
             {
                 arrearsBean = new StudentArrearsBean();
@@ -494,6 +496,7 @@ namespace ZahiraSIS
                             }
                             feeRate = Double.Parse(lastRow["mfeerate"] + "");
                             feesArrears = feeRate * ((thisMonth - paidMonth)) + feesArrears;
+                            arrearsMap[i] = feeRate+"|"+ (thisMonth - paidMonth) + "|"+feeRate*monthDiff;
                         }
                         else
                         {
@@ -508,6 +511,7 @@ namespace ZahiraSIS
                                 Console.WriteLine("paid till month: " + paidMonth1);
                                 Console.WriteLine("fee Rate:"+feeRate);
                                 Console.WriteLine("arrears:"+feesArrears);
+                                arrearsMap[i] = feeRate + "|" + paidMonth1 + "|" + feeRate*paidMonth1;
                             }
                         }
                         Console.WriteLine("fee is not paid fully for the year " + i + ": " + feesArrears);
@@ -550,7 +554,9 @@ namespace ZahiraSIS
                                 double.Parse(
                                     this.getMonthFeeRevision(key_fee, i + "").Rows[0]["amount"].ToString
                                         ());
+                           
                         }
+                        
                         if (i == todayDate.Year)
                         {
                             //i == todayDate.Year and i!=paidTill.Year-- but there are arrears
@@ -568,10 +574,12 @@ namespace ZahiraSIS
                             Console.WriteLine("arrears:" + feesArrears);
                             feesArrears = feeRate * monthDiff + feesArrears;
                             Console.WriteLine("arrears:"+feesArrears);
+                            arrearsMap[i] = feeRate + "|" + monthDiff + "|" + feeRate*monthDiff;
                         }
                         else
                         {
                             feesArrears = feeRate * 12 + feesArrears;
+                            arrearsMap[i] = feeRate + "|" + 12 + "|" + feeRate*12;
                         }
                         Console.WriteLine("Fee rate: " + feeRate + " Arrears: " + feesArrears);
                     }
@@ -587,6 +595,12 @@ namespace ZahiraSIS
                 }
                 Console.WriteLine("Date Diff:" + dateDifference + " arrears: " + feesArrears);
                 arrearsBean.curArrears = feesArrears + "";
+                arrearsBean.arrearsMap = arrearsMap;
+                foreach (KeyValuePair<int, string> kvp in arrearsMap)
+                {
+                    //textBox3.Text += ("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+                    Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+                }
             }
             catch (Exception e1)
             {

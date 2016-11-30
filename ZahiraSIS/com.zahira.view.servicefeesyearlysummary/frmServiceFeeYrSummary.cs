@@ -125,6 +125,7 @@ namespace ZahiraSIS
         {
             try
             {
+                txtBreakdown.Text = "";
                 StuclassBean classBean = dao.getStudentClasses((int) comboBox1.SelectedValue);
                 classCode = classBean.Code.Trim();
                 StudentArrearsBean bean = dao.getStudentArrearsInfo(comboBox2.Text.Trim(), classCode, false);
@@ -134,6 +135,15 @@ namespace ZahiraSIS
                 lblArrearsDate.Text = bean.paidTill.ToString("dd-MMM-yyyy");
                 txtFees.Text =
                     dao.getMonthFeeRevision(classBean.Key_fee, DateTime.Now.Year + "").Rows[0]["amount"].ToString();
+                String lines = null;
+                foreach (KeyValuePair<int, string> kvp in bean.arrearsMap)
+                {
+                    //textBox3.Text += ("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+                    lines = "Year =" + kvp.Key + " fee rate: " + kvp.Value.Split('|')[0]+" months paid: "+ kvp.Value.Split('|')[1]+" total: "+ kvp.Value.Split('|')[2];
+                    txtBreakdown.AppendText(lines);
+                    txtBreakdown.AppendText(Environment.NewLine);
+                }
+                 
             }
             catch (Exception e)
             {

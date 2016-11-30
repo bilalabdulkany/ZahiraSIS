@@ -77,6 +77,12 @@
     <Compile Include="com.zahira.common\Common.cs" />
     <Compile Include="com.zahira.dao\ClassDAO.cs" />
     <Compile Include="com.zahira.dao\StudentDAO.cs" />
+    <Compile Include="com.zahira.view.alstudentfees\frmALStudentFee.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="com.zahira.view.alstudentfees\frmALStudentFee.Designer.cs">
+      <DependentUpon>frmALStudentFee.cs</DependentUpon>
+    </Compile>
     <Compile Include="com.zahira.view.promotestudents\frmPromoteStudents.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,6 +130,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Zahira_SISDataSet.xsd</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="com.zahira.view.alstudentfees\frmALStudentFee.resx">
+      <DependentUpon>frmALStudentFee.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="com.zahira.view.promotestudents\frmPromoteStudents.resx">
       <DependentUpon>frmPromoteStudents.cs</DependentUpon>
     </EmbeddedResource>
