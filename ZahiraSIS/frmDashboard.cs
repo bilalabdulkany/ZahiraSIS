@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZahiraSIS.com.zahira.view.promotestudents;
+using FoxProUpdate;
 
 namespace ZahiraSIS
 {
@@ -132,6 +133,13 @@ namespace ZahiraSIS
         {
             frmClassReport classReport = new frmClassReport();
             classReport.Show();
+        }
+
+        private void syncBackupToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            FoxProUpdate.Form1 foxProSync = new FoxProUpdate.Form1();
+            foxProSync.Show();
+
         }
     }
 }

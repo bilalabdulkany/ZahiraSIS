@@ -61,12 +61,7 @@ namespace ZahiraSIS.com.zahira.view.reports
             try
             {
                 //TODO fill datatable with Lists. also check the date range.
-                if (dateTimePicker1.Value != null) {
-                    fromdate=dateTimePicker1.Value.ToString("yyyy-MM-dd");
-                    Console.WriteLine(fromdate);
-
-                }
-                if (dateTimePicker2.Value != null)
+               if (dateTimePicker2.Value != null)
                 {
                     todate = dateTimePicker2.Value.ToString("yyyy-MM-dd");
                     
@@ -106,6 +101,11 @@ namespace ZahiraSIS.com.zahira.view.reports
                 e.Cancel = true;
                 Hide();
             }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

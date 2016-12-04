@@ -38,9 +38,7 @@
             this.stuclassBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.stuclassTableAdapter = new ZahiraSIS.Zahira_SISDataSetTableAdapters.stuclassTableAdapter();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.studentTableAdapter = new ZahiraSIS.Zahira_SISDataSetTableAdapters.studentTableAdapter();
             this.label4 = new System.Windows.Forms.Label();
@@ -98,7 +96,7 @@
             this.cmbClass.DataSource = this.stuclassBindingSource;
             this.cmbClass.DisplayMember = "name";
             this.cmbClass.FormattingEnabled = true;
-            this.cmbClass.Location = new System.Drawing.Point(140, 4);
+            this.cmbClass.Location = new System.Drawing.Point(140, 39);
             this.cmbClass.Name = "cmbClass";
             this.cmbClass.Size = new System.Drawing.Size(251, 21);
             this.cmbClass.TabIndex = 12;
@@ -113,47 +111,31 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(56, 12);
+            this.label1.Location = new System.Drawing.Point(83, 47);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(32, 13);
             this.label1.TabIndex = 11;
             this.label1.Text = "Class";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // stuclassTableAdapter
             // 
             this.stuclassTableAdapter.ClearBeforeFill = true;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(56, 40);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 13);
-            this.label2.TabIndex = 17;
-            this.label2.Text = "From Date";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(56, 67);
+            this.label3.Location = new System.Drawing.Point(83, 74);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(46, 13);
             this.label3.TabIndex = 18;
             this.label3.Text = "To Date";
             // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(140, 40);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 19;
-            // 
             // dateTimePicker2
             // 
             this.dateTimePicker2.Location = new System.Drawing.Point(140, 67);
             this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker2.Size = new System.Drawing.Size(251, 20);
             this.dateTimePicker2.TabIndex = 20;
             // 
             // studentTableAdapter
@@ -224,9 +206,7 @@
             this.Controls.Add(this.txtBFArrears);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.dateTimePicker2);
-            this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tblStudents);
@@ -251,9 +231,7 @@
         private System.Windows.Forms.DataGridView tblStudents;
         private System.Windows.Forms.ComboBox cmbClass;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.DateTimePicker dateTimePicker2;
         private Zahira_SISDataSetTableAdapters.studentTableAdapter studentTableAdapter;
         private System.Windows.Forms.Label label4;

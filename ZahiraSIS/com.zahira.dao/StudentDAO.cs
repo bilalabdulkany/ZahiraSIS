@@ -274,8 +274,7 @@ namespace ZahiraSIS
         public StudentArrearsBean getStudentArrearsByDate(string studentClass, string fromDate, string toDate)
         {
         //TODO should return a datatable containing all the students' arrears info, till date, and the sum of the arrears.
-
-            
+        
             SqlDataReader rdr = null;
             SqlConnection conn = null;
             SqlCommand cmd = null;
@@ -304,7 +303,7 @@ namespace ZahiraSIS
                         cumArrears = cumArrears + double.Parse(arrearsBean.curArrears);
                         //Call fillTable. Then add all the fees to a bean.
                         //Its better if FillTable returns a bean consisting of student's arrears.
-                        Console.WriteLine("cum arrears: " + cumArrears);
+                        Console.WriteLine("cum. arrears: " + cumArrears);
                     }
                     catch (Exception ex)
                     {
@@ -427,14 +426,13 @@ namespace ZahiraSIS
         }
 
         /**
-         * Fill the data table from the comboBox2 admission number,
+         * Fill the data table from the admission number,
          * then fill the latest fee payments on the textboxes.
          **/
         public StudentArrearsBean getStudentArrearsInfo(string admNo, string classCode,bool guessClass)
         {
             /**
-             * TODO Must get guessedClass
-             * only current year and paid till grades are known.
+             *  only current year and paid till grades are known.
              **/
             StudentArrearsBean arrearsBean = null;
             Double feesArrears = 0;
