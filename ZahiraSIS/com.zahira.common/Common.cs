@@ -29,7 +29,7 @@ namespace ZahiraSIS.com.zahira.common
                 int cellColumnIndex = 1;
 
                 //Loop through each row and read value from each column. 
-                for (int i = 0; i < grd.Rows.Count - 1; i++)
+                for (int i = 0; i < grd.Rows.Count; i++)
                 {
                     for (int j = 0; j < grd.Columns.Count; j++)
                     {
@@ -40,7 +40,7 @@ namespace ZahiraSIS.com.zahira.common
                         }
                         else
                         {
-                            worksheet.Cells[cellRowIndex, cellColumnIndex] = grd.Rows[i].Cells[j].Value.ToString();
+                            worksheet.Cells[cellRowIndex, cellColumnIndex] = grd.Rows[i-1].Cells[j].Value.ToString();
                         }
                         cellColumnIndex++;
                     }
@@ -50,7 +50,7 @@ namespace ZahiraSIS.com.zahira.common
 
                 //Getting the location and file name of the excel to save from user. 
                 SaveFileDialog saveDialog = new SaveFileDialog();
-                saveDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
+                saveDialog.Filter = "Excel files (*.xlsx)|*.xlsx";
                 saveDialog.FilterIndex = 2;
 
                 if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)

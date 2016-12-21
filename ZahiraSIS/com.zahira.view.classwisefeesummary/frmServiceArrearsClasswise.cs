@@ -14,6 +14,7 @@ namespace ZahiraSIS.com.zahira.view.reports
 {
     public partial class frmServiceArrearsClasswise : Form
     {
+        ClassDAO clsDao = new ClassDAO();
         public frmServiceArrearsClasswise()
         {
             InitializeComponent();
@@ -22,15 +23,32 @@ namespace ZahiraSIS.com.zahira.view.reports
 
         private void cmbClass_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
 
         }
 
         private void frmServiceArrearsClasswise_Load(object sender, EventArgs e)
         {
             // TODO: This line of code loads data into the 'zahira_SISDataSet.student' table. You can move, or remove it, as needed.
-            this.studentTableAdapter.Fill(this.zahira_SISDataSet.student);
+            //this.studentTableAdapter.Fill(this.zahira_SISDataSet.student);
             // TODO: This line of code loads data into the 'zahira_SISDataSet.stuclass' table. You can move, or remove it, as needed.
-            this.stuclassTableAdapter.Fill(this.zahira_SISDataSet.stuclass);
+            // this.stuclassTableAdapter.Fill(this.zahira_SISDataSet.stuclass);
+
+            Console.WriteLine("select changed:");
+            cmbClassType.DataSource = clsDao.GetClassByType();
+            cmbClassType.DisplayMember = "description";
+            cmbClassType.DisplayMember.Trim();
+            cmbClassType.ValueMember = "statuscode";
+            cmbClassType.Refresh();
+            cmbClass.DataSource = clsDao.GetClass("ACT");
+            cmbClass.DisplayMember = "name";
+            cmbClass.ValueMember = "key_fld";
+            cmbClass.Refresh();
+
+
+
+
+
 
         }
 
@@ -44,7 +62,7 @@ namespace ZahiraSIS.com.zahira.view.reports
             try
             {
                 object ParameterName = new object();
-                this.studentTableAdapter.FillBy(this.zahira_SISDataSet.student, ParameterName);
+               // this.studentTableAdapter.FillBy(this.zahira_SISDataSet.student, ParameterName);
             }
             catch (System.Exception ex)
             {
@@ -71,7 +89,7 @@ namespace ZahiraSIS.com.zahira.view.reports
                 StudentDAO studentDAO = new StudentDAO();
                 int selectedClass1 = (int)cmbClass.SelectedValue;
                 string classCode = (dao.getStudentClasses(selectedClass1).Code).Trim();
-                StudentArrearsBean arrearsBean = studentDAO.getStudentArrearsByDate(classCode,
+                StudentArrearsBean arrearsBean = studentDAO.getStudentArrearsByDatePerClass(classCode,
                     fromdate, todate);
                 tblStudents.DataSource = arrearsBean.stPaidData;
                 txtCurArrears.Text = arrearsBean.curArrears;
@@ -105,6 +123,22 @@ namespace ZahiraSIS.com.zahira.view.reports
 
         private void label1_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void cmbClassType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedType = "ACT";
+
+            if (!cmbClassType.SelectedValue.Equals(null))
+            {
+                selectedType = cmbClassType.SelectedValue.ToString();
+                Console.WriteLine(selectedType);
+            }
+            cmbClass.DataSource = clsDao.GetClass(selectedType);
+            cmbClass.DisplayMember = "name";
+            cmbClass.ValueMember = "key_fld";
+            cmbClass.Refresh();
 
         }
     }

@@ -9,6 +9,91 @@ namespace ZahiraSIS
         private string connectionString =
             System.Configuration.ConfigurationManager.ConnectionStrings["Zahira_SISConnectionString"].ToString();
 
+        public DataTable GetClassByType() {
+            SqlConnection conn = null;
+            DataTable tbl = null;
+            try
+            {
+                conn = new SqlConnection(connectionString);
+                conn.Open();
+                string selectClass = "select statuscode, description from status";
+                var cmd = new SqlCommand {
+                    Connection = conn,CommandText=selectClass
+                };
+                Console.WriteLine("SQL:" + cmd.CommandText);
+                tbl = new DataTable();
+                tbl.Load(cmd.ExecuteReader());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("exception" + e.ToString());
+            }
+            finally
+            {
+                try
+                {
+                    if (conn != null)
+                    {
+                        conn.Close();
+                        // rdr.Close();
+                        conn.Dispose();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            return tbl;
+        }
+
+        public DataTable GetClass(string type)
+        {
+            SqlConnection conn = null;
+            DataTable tbl = null;
+            try
+            {
+                conn = new SqlConnection(connectionString);
+                conn.Open();
+                string selectClass = "select * from stuclass where status=@Type";
+                var cmd = new SqlCommand
+                {
+                    Connection = conn,
+                    CommandText = selectClass
+            };
+                cmd.Parameters.Add("@Type", SqlDbType.VarChar).Value = type;
+
+                Console.WriteLine("SQL:" + cmd.CommandText);
+                tbl = new DataTable();
+                tbl.Load(cmd.ExecuteReader());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("exception" + e.ToString());
+            }
+            finally
+            {
+                try
+                {
+                    if (conn != null)
+                    {
+                        conn.Close();
+                        // rdr.Close();
+                        conn.Dispose();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            return tbl;
+
+
+        }
+
+
+
 
         public DataTable GetStudentClassFee(string grade, string medium)
         {

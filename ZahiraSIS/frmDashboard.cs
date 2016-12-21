@@ -18,7 +18,7 @@ namespace ZahiraSIS
         public frmDashboard()
         {
             InitializeComponent();
-            //outputToFile();
+          //  outputToFile();
             Console.WriteLine("Accessed Dashboard");
         }
         /**

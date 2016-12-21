@@ -47,6 +47,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.txtCurBFArrears = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.cmbClassType = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.tblStudents)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).BeginInit();
@@ -133,6 +135,8 @@
             // 
             // dateTimePicker2
             // 
+            this.dateTimePicker2.CustomFormat = "dd-MMM-yyyy";
+            this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateTimePicker2.Location = new System.Drawing.Point(140, 67);
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(251, 20);
@@ -194,11 +198,31 @@
             this.label6.TabIndex = 25;
             this.label6.Text = "Current BF Arrears";
             // 
+            // cmbClassType
+            // 
+            this.cmbClassType.FormattingEnabled = true;
+            this.cmbClassType.Location = new System.Drawing.Point(487, 36);
+            this.cmbClassType.Name = "cmbClassType";
+            this.cmbClassType.Size = new System.Drawing.Size(121, 21);
+            this.cmbClassType.TabIndex = 27;
+            this.cmbClassType.SelectedIndexChanged += new System.EventHandler(this.cmbClassType_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(450, 44);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(31, 13);
+            this.label2.TabIndex = 28;
+            this.label2.Text = "Type";
+            // 
             // frmServiceArrearsClasswise
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(681, 386);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.cmbClassType);
             this.Controls.Add(this.txtCurBFArrears);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtCurArrears);
@@ -244,5 +268,7 @@
         public System.Windows.Forms.BindingSource stuclassBindingSource;
         public Zahira_SISDataSetTableAdapters.stuclassTableAdapter stuclassTableAdapter;
         public System.Windows.Forms.BindingSource studentBindingSource;
+        private System.Windows.Forms.ComboBox cmbClassType;
+        private System.Windows.Forms.Label label2;
     }
 }

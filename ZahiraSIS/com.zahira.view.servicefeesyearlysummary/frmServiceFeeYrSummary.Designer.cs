@@ -58,6 +58,7 @@ namespace ZahiraSIS
             this.txtArrearsToDate = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtBreakdown = new System.Windows.Forms.TextBox();
+            this.dtpAsAt = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.stuclassBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahiraSISDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).BeginInit();
@@ -206,6 +207,7 @@ namespace ZahiraSIS
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Location = new System.Drawing.Point(303, 12);
             this.groupBox1.Name = "groupBox1";
+            this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.groupBox1.Size = new System.Drawing.Size(332, 153);
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
@@ -281,11 +283,22 @@ namespace ZahiraSIS
             this.txtBreakdown.Size = new System.Drawing.Size(380, 78);
             this.txtBreakdown.TabIndex = 11;
             // 
+            // dtpAsAt
+            // 
+            this.dtpAsAt.CustomFormat = "dd-MMM-yyyy";
+            this.dtpAsAt.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpAsAt.Location = new System.Drawing.Point(26, 115);
+            this.dtpAsAt.Name = "dtpAsAt";
+            this.dtpAsAt.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.dtpAsAt.Size = new System.Drawing.Size(152, 20);
+            this.dtpAsAt.TabIndex = 12;
+            // 
             // frmServiceFeeYrSummary
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(647, 401);
+            this.Controls.Add(this.dtpAsAt);
             this.Controls.Add(this.txtBreakdown);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label4);
@@ -343,5 +356,6 @@ namespace ZahiraSIS
         private System.Windows.Forms.TextBox txtClassCode;
         private System.Windows.Forms.Label label7;
         private TextBox txtBreakdown;
+        private DateTimePicker dtpAsAt;
     }
 }

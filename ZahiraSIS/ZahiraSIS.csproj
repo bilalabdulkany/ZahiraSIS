@@ -57,10 +57,13 @@
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ZahiraRelease|AnyCPU'">
+    <OutputPath>bin\ZahiraRelease\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FoxProUpdate, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>F:\Zahira SIS\Progress 1\Firnaz\FoxProUpdate-V1.0\FoxProUpdate\FoxProUpdate\bin\Release\FoxProUpdate.exe</HintPath>
+      <HintPath>..\..\FoxProUpdate\FoxProUpdate\bin\Release\FoxProUpdate.exe</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />

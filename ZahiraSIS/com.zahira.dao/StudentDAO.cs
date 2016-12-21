@@ -61,7 +61,7 @@ namespace ZahiraSIS
                 conn = new SqlConnection(connectionString);
                 conn.Open();
                 String sql = "select trnno,trndate,paid,payfrom,payto,mfeerate,totarrears,arrearsfrm,arrearsto,key_class from mnthfeepay where mnthfeepay.key_stu ="
-  + "(select key_fld from student where admno = @Index)";
+  + "(select key_fld from student where admno = @Index) order by trnno";
                 cmd = new SqlCommand();
                 cmd.Connection = conn;
                 cmd.CommandText = sql;
@@ -271,10 +271,8 @@ namespace ZahiraSIS
             return bean;
 
         }
-        public StudentArrearsBean getStudentArrearsByDate(string studentClass, string fromDate, string toDate)
+        public StudentArrearsBean getStudentArrearsByDatePerClass(string studentClass, string fromDate, string toDate)
         {
-        //TODO should return a datatable containing all the students' arrears info, till date, and the sum of the arrears.
-        
             SqlDataReader rdr = null;
             SqlConnection conn = null;
             SqlCommand cmd = null;
@@ -297,7 +295,7 @@ namespace ZahiraSIS
                     string admno = classwiseStudents.Rows[i]["admno"].ToString().Trim();
                     try
                     {
-                        arrearsBean = this.getStudentArrearsInfo(admno, studentClass, false);
+                        arrearsBean = this.getStudentArrearsInfo(admno, studentClass, null, false);
                         classwiseStudents.Rows[i]["Arrears"] = arrearsBean.curArrears;
                         classwiseStudents.Rows[i]["PaidTill"] = arrearsBean.paidTill.ToString("dd-MMM-yyyy");
                         cumArrears = cumArrears + double.Parse(arrearsBean.curArrears);
@@ -318,27 +316,7 @@ namespace ZahiraSIS
 
                 string sql = "";
 
-
-               /* String sql = "SELECT key_fld, active, mfeecnsn, admno, name, address, registerno,prntname,  key_class, bfarrears, curarrears, key_change, curbfarres, CONVERT(VARCHAR(11), admon, 106) as admon, "
-                     + "CONVERT(VARCHAR(11), arrearsfrm, 106) as arrearsfrm, CONVERT(VARCHAR(11), arrearsto, 106) as arrearsto FROM dbo.student "
-                      + "where key_class = @Class and arrearsfrm >= @From and arrearsto <= @To"
-                      + " order by arrearsfrm asc";
-    */            
-               /* cmd = new SqlCommand();
-                cmd.Connection = conn;
-                cmd.CommandText = sql;
-                cmd.Parameters.Add("@Class", SqlDbType.VarChar).Value = studentClass;
-                cmd.Parameters.Add("@From", SqlDbType.DateTime).Value = fromDate + " 00:00:00.000";
-                cmd.Parameters.Add("@To", SqlDbType.DateTime).Value = toDate + " 00:00:00.000"; ;
-                Console.WriteLine("SQL:" + cmd.CommandText);
-                Console.WriteLine("params:" + studentClass + " " + fromDate + " " + toDate);
-                //  rdr = cmd.ExecuteReader();
                 
-                tbl = new DataTable();
-                tbl.Load(cmd.ExecuteReader());
-               
-                tbl = classwiseStudents;*/
-
             }
             catch (Exception e)
             {
@@ -428,9 +406,14 @@ namespace ZahiraSIS
         /**
          * Fill the data table from the admission number,
          * then fill the latest fee payments on the textboxes.
+         * 
+         * @param admNo string
+         * @param classCode string 
+         * @param guessClass bool
          **/
-        public StudentArrearsBean getStudentArrearsInfo(string admNo, string classCode,bool guessClass)
+        public StudentArrearsBean getStudentArrearsInfo(string admNo, string classCode, DateTime? asAt, bool guessClass)
         {
+            //TODO need to add as-at months-year
             /**
              *  only current year and paid till grades are known.
              **/
@@ -444,7 +427,7 @@ namespace ZahiraSIS
                 arrearsBean = new StudentArrearsBean();
 
                 dt = new DataTable();
-                dt = this.getStudentArrearsByIndex(admNo);
+                dt = getStudentArrearsByIndex(admNo);
                 arrearsBean.stPaidData = dt;
                 DataRow lastRow = dt.Rows[dt.Rows.Count - 1];
                 double feeRate = 0;
@@ -452,6 +435,10 @@ namespace ZahiraSIS
                 arrearsBean.paidTill = paidTill;
                 DateTime paidTo = paidTill;
                 DateTime todayDate = DateTime.Now;
+                if (asAt.HasValue) {
+                    todayDate = (DateTime)asAt;
+                }
+                
                 int dateDifference = todayDate.Year - paidTo.Year;
                 int countYear = 0;
                 char guessedClass = classCode[classCode.Length - 2];
@@ -461,8 +448,11 @@ namespace ZahiraSIS
                 
                 for (int i = todayDate.Year; i >= paidTill.Year; i--)
                 {
+                    /**Loop from the current year to the paid till year and find out the arrears amount.
+                     */
                     if (paidTill.Year == 1899)
                     {
+                        //the data is not recorded properly due to corruption.
                         Console.WriteLine("data is not properly recorded");
                         feesArrears = 0;
                         break;
@@ -472,12 +462,11 @@ namespace ZahiraSIS
                     Console.WriteLine("till:" + paidTill.Year);
                     Console.WriteLine("class code:" + classCode + " length:" + classCode.Trim().Length);
                     
-                    //Get the grade from the students records. check primary or secondary or senior.
-                    if (i == paidTill.Year) //i == paidTill.Year&&
-                    {
+                   if (i == paidTill.Year) 
+                    {//Paid till year is in the current loop. 
+
                         //If for current years' arrears.
-                        //if paid till is not current year??
-                        if (paidTill.Year == todayDate.Year)
+                       if (paidTill.Year == todayDate.Year)
                         {
                             Console.WriteLine("calculating fee arrears for the current years'" +
                                               " Arrears: " + feesArrears);
@@ -486,7 +475,7 @@ namespace ZahiraSIS
                             {
                                 paidMonth = paidMonth % 12;
                             }
-                            int thisMonth = DateTime.Now.Month;
+                            int thisMonth = todayDate.Month+1;
                             int monthDiff = (thisMonth - paidMonth);
                             if (monthDiff < 0)
                             {
@@ -497,11 +486,11 @@ namespace ZahiraSIS
                             arrearsMap[i] = feeRate+"|"+ (thisMonth - paidMonth) + "|"+feeRate*monthDiff;
                         }
                         else
-                        {
+                        { // paid till year is not the current year.
                             int paidMonth1 = paidTill.Month;
                             if (paidMonth1 != 12 && paidMonth1 < 12)
                             {
-                                
+                             //calculate the remaining months in this year to be paid.   
                                 paidMonth1 = 12 - paidMonth1;
                                 feeRate = Double.Parse(lastRow["mfeerate"] + "");
                                 Console.WriteLine("arrears before:" + feesArrears);
@@ -560,9 +549,9 @@ namespace ZahiraSIS
                             //i == todayDate.Year and i!=paidTill.Year-- but there are arrears
                             Console.WriteLine("Calculating fee for this year:"+i);
                         
-                            int thisMonth = DateTime.Now.Month;
+                            int thisMonth = todayDate.Month;
                             
-                            int monthDiff = (thisMonth - 1);
+                            int monthDiff = (thisMonth - 1)+1;
                             if (monthDiff < 0)
                             {
                                 monthDiff = -(monthDiff);
@@ -583,7 +572,7 @@ namespace ZahiraSIS
                     }
                 }
                 paidTill = paidTill.AddMonths(1);
-                if (paidTill.Year > DateTime.Now.Year || feesArrears < 0)
+                if (paidTill.Year > todayDate.Year || feesArrears < 0)
                 {
                     Console.WriteLine("resetting to 0");
                     if (dateDifference == 0)
@@ -612,24 +601,6 @@ namespace ZahiraSIS
 
         private int guessClassAndFee(string classCode, int countYear, int yearsToReduce)
         {
-            //TODO check if the grade should be reversed or not - addition or subtraction.
-            /*
-key_fld	code    	name
-6	    1         	Praimary 2 -5                                     
-7	    2         	Junior 6-8                                        
-8	    3         	Senior 9-11                                       
-9	    4         	English (2-5)                                     
-14	    5         	A / L (Tam & Sin)                                 
-15	    0000      	Left Student Fees                                 
-16	    1ST       	Primary 1                                         
-17	    6         	Sinhala/ English                                  
-18	    1E        	1 English Primary                                 
-24	    E2        	6-13  English                                     
-25	    0001E     	0001E Primary                                     
-26	    0001S     	0001S Primary                                     
-27	    0001T     	0001T Primary                                     
-             
-             */
             ClassDAO clsDao = new ClassDAO();
             char guessedClass = classCode[classCode.Length - 2];
             string grade = classCode.Substring(0, classCode.Length - 2);
@@ -642,10 +613,9 @@ key_fld	code    	name
         if (
 
         grade.Length == 1)
-            {
+           {
                 grade = "0"+grade;
-                
-            }
+           }
             Console.WriteLine("grade:" + grade+" medium:"+guessedClass);
             int key_fee = (int)clsDao.GetStudentClassFee( grade, guessedClass.ToString()).Rows[0]["key_fee"];
             Console.WriteLine("***grade: "+grade);

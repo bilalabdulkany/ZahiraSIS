@@ -128,7 +128,8 @@ namespace ZahiraSIS
                 txtBreakdown.Text = "";
                 StuclassBean classBean = dao.getStudentClasses((int) comboBox1.SelectedValue);
                 classCode = classBean.Code.Trim();
-                StudentArrearsBean bean = dao.getStudentArrearsInfo(comboBox2.Text.Trim(), classCode, false);
+                DateTime asAt = dtpAsAt.Value;
+                StudentArrearsBean bean = dao.getStudentArrearsInfo(comboBox2.Text.Trim(), classCode,asAt, false);
                 dtStudentArrears.DataSource = bean.stPaidData;
                 txtClassCode.Text = classCode;
                 txtArrearsToDate.Text = bean.curArrears;
