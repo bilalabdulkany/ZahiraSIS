@@ -49,10 +49,13 @@
             this.label6 = new System.Windows.Forms.Label();
             this.cmbClassType = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tsStatus = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.tblStudents)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stuclassBindingSource)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button2
@@ -216,11 +219,29 @@
             this.label2.TabIndex = 28;
             this.label2.Text = "Type";
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 364);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(681, 22);
+            this.statusStrip1.TabIndex = 29;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // tsStatus
+            // 
+            this.tsStatus.Name = "tsStatus";
+            this.tsStatus.Size = new System.Drawing.Size(35, 17);
+            this.tsStatus.Text = "Done";
+            this.tsStatus.Click += new System.EventHandler(this.toolStripStatusLabel1_Click);
+            // 
             // frmServiceArrearsClasswise
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(681, 386);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cmbClassType);
             this.Controls.Add(this.txtCurBFArrears);
@@ -243,6 +264,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.stuclassBindingSource)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -270,5 +293,7 @@
         public System.Windows.Forms.BindingSource studentBindingSource;
         private System.Windows.Forms.ComboBox cmbClassType;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel tsStatus;
     }
 }

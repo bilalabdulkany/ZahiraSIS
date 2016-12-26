@@ -73,30 +73,35 @@ namespace ZahiraSIS.com.zahira.view.reports
 
         private void button2_Click(object sender, EventArgs e)
         {
+            tsStatus.Text = "Loading...";
             string fromdate=null;
             string todate=null;
             StudentDAO dao  = new StudentDAO();
             try
             {
                 //TODO fill datatable with Lists. also check the date range.
-               if (dateTimePicker2.Value != null)
+                if (dateTimePicker2.Value != null)
                 {
                     todate = dateTimePicker2.Value.ToString("yyyy-MM-dd");
-                    
+
                 }
-               
+
                 StudentArrearsBean bean = null;
                 StudentDAO studentDAO = new StudentDAO();
                 int selectedClass1 = (int)cmbClass.SelectedValue;
                 string classCode = (dao.getStudentClasses(selectedClass1).Code).Trim();
                 StudentArrearsBean arrearsBean = studentDAO.getStudentArrearsByDatePerClass(classCode,
                     fromdate, todate);
+
                 tblStudents.DataSource = arrearsBean.stPaidData;
                 txtCurArrears.Text = arrearsBean.curArrears;
             }
             catch (System.Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+            finally {
+                tsStatus.Text = "Done";
             }
         }
 
@@ -139,6 +144,11 @@ namespace ZahiraSIS.com.zahira.view.reports
             cmbClass.DisplayMember = "name";
             cmbClass.ValueMember = "key_fld";
             cmbClass.Refresh();
+
+        }
+
+        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
+        {
 
         }
     }

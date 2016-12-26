@@ -130,21 +130,29 @@ namespace ZahiraSIS
                 classCode = classBean.Code.Trim();
                 DateTime asAt = dtpAsAt.Value;
                 StudentArrearsBean bean = dao.getStudentArrearsInfo(comboBox2.Text.Trim(), classCode,asAt, false);
-                dtStudentArrears.DataSource = bean.stPaidData;
-                txtClassCode.Text = classCode;
-                txtArrearsToDate.Text = bean.curArrears;
-                lblArrearsDate.Text = bean.paidTill.ToString("dd-MMM-yyyy");
-                txtFees.Text =
-                    dao.getMonthFeeRevision(classBean.Key_fee, DateTime.Now.Year + "").Rows[0]["amount"].ToString();
-                String lines = null;
-                foreach (KeyValuePair<int, string> kvp in bean.arrearsMap)
+                if (bean != null)
                 {
-                    //textBox3.Text += ("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
-                    lines = "Year =" + kvp.Key + " fee rate: " + kvp.Value.Split('|')[0]+" months paid: "+ kvp.Value.Split('|')[1]+" total: "+ kvp.Value.Split('|')[2];
-                    txtBreakdown.AppendText(lines);
-                    txtBreakdown.AppendText(Environment.NewLine);
+                    dtStudentArrears.DataSource = bean.stPaidData;
+                    txtClassCode.Text = classCode;
+                    txtArrearsToDate.Text = bean.curArrears;
+                    lblArrearsDate.Text = bean.paidTill.ToString("dd-MMM-yyyy");
+                    txtFees.Text =
+                        dao.getMonthFeeRevision(classBean.Key_fee, DateTime.Now.Year + "").Rows[0]["amount"].ToString();
+                    if (bean.studentConcession == true) {
+                        txtFees.Text = "0.00";
+                        lblArrearsDate.Text = "fee concession";
+                    } else { 
+                    String lines = null;
+                    foreach (KeyValuePair<int, string> kvp in bean.arrearsMap)
+                    {
+                        //textBox3.Text += ("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+                        lines = "Year =" + kvp.Key + " fee rate: " + kvp.Value.Split('|')[0] + " months paid: " + kvp.Value.Split('|')[1] + " total: " + kvp.Value.Split('|')[2];
+                        txtBreakdown.AppendText(lines);
+                        txtBreakdown.AppendText(Environment.NewLine);
+                    }
                 }
-                 
+                }
+                
             }
             catch (Exception e)
             {

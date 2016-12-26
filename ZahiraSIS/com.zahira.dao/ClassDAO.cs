@@ -55,7 +55,7 @@ namespace ZahiraSIS
             {
                 conn = new SqlConnection(connectionString);
                 conn.Open();
-                string selectClass = "select * from stuclass where status=@Type";
+                string selectClass = "select * from stuclass where status=@Type order by code";
                 var cmd = new SqlCommand
                 {
                     Connection = conn,

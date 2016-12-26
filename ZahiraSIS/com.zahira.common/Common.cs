@@ -27,9 +27,9 @@ namespace ZahiraSIS.com.zahira.common
 
                 int cellRowIndex = 1;
                 int cellColumnIndex = 1;
-
+                int i = 0;
                 //Loop through each row and read value from each column. 
-                for (int i = 0; i < grd.Rows.Count; i++)
+                for (i=0; i < grd.Rows.Count; i++)
                 {
                     for (int j = 0; j < grd.Columns.Count; j++)
                     {
@@ -47,6 +47,13 @@ namespace ZahiraSIS.com.zahira.common
                     cellColumnIndex = 1;
                     cellRowIndex++;
                 }
+                i++;
+                //
+                worksheet.Cells[cellRowIndex + 4, cellColumnIndex] = "Full Arrears: 123456789";
+                worksheet.Cells[cellRowIndex + 4, cellColumnIndex].Font.Bold = true;
+
+                worksheet.Cells[cellRowIndex + 4, cellColumnIndex+1] = "BFF : 56789";
+                worksheet.Cells[cellRowIndex + 4, cellColumnIndex + 1].Font.Bold = true;
 
                 //Getting the location and file name of the excel to save from user. 
                 SaveFileDialog saveDialog = new SaveFileDialog();

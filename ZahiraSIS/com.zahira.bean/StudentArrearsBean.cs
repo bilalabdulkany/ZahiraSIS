@@ -15,6 +15,7 @@ namespace ZahiraSIS.com.zahira.bean.student
         public string bfArrears { get; set; }
         public string curBfArrears { get; set; }
         public Dictionary<int, string> arrearsMap { get; set; }
+        public bool studentConcession { get; set; }
 
         public StudentArrearsBean()
         {
