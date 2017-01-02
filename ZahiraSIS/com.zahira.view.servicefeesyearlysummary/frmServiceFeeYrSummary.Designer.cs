@@ -59,6 +59,7 @@ namespace ZahiraSIS
             this.label5 = new System.Windows.Forms.Label();
             this.txtBreakdown = new System.Windows.Forms.TextBox();
             this.dtpAsAt = new System.Windows.Forms.DateTimePicker();
+            this.txtKeyClass = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.stuclassBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahiraSISDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).BeginInit();
@@ -198,6 +199,7 @@ namespace ZahiraSIS
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtKeyClass);
             this.groupBox1.Controls.Add(this.txtClassCode);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.txtFees);
@@ -293,6 +295,14 @@ namespace ZahiraSIS
             this.dtpAsAt.Size = new System.Drawing.Size(152, 20);
             this.dtpAsAt.TabIndex = 12;
             // 
+            // txtKeyClass
+            // 
+            this.txtKeyClass.Location = new System.Drawing.Point(12, 127);
+            this.txtKeyClass.Name = "txtKeyClass";
+            this.txtKeyClass.Size = new System.Drawing.Size(100, 20);
+            this.txtKeyClass.TabIndex = 7;
+            this.txtKeyClass.Visible = false;
+            // 
             // frmServiceFeeYrSummary
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -357,5 +367,6 @@ namespace ZahiraSIS
         private System.Windows.Forms.Label label7;
         private TextBox txtBreakdown;
         private DateTimePicker dtpAsAt;
+        private TextBox txtKeyClass;
     }
 }

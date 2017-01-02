@@ -460,7 +460,7 @@ namespace ZahiraSIS
 
                 int dateDifference = todayDate.Year - paidTo.Year;
                 int countYear = 0;
-                char guessedClass = classCode[classCode.Length - 2];
+                string guessedClass = GetMedium(classCode.Trim());// classCode[classCode.Length - 2];
                 int grade = int.Parse(classCode[classCode.Length - 3] + ""); //FIXME 2 or 3
                 Console.WriteLine("Current grade:" + grade + " adding:" + (countYear - 1));
                 Console.WriteLine("guessed class: " + guessedClass);
@@ -649,7 +649,7 @@ namespace ZahiraSIS
             }
             catch (Exception e)
             {
-
+                Console.WriteLine(e);
             }
             return false;
         }
@@ -657,7 +657,7 @@ namespace ZahiraSIS
         private int guessClassAndFee(string classCode, int countYear, int yearsToReduce)
         {
             ClassDAO clsDao = new ClassDAO();
-            char guessedClass = classCode[classCode.Length - 2];
+            string guessedClass = this.GetMedium(classCode); //classCode[classCode.Length - 2];
             string grade = classCode.Substring(0, classCode.Length - 2);
             if (!grade.Equals("1"))
             {
@@ -679,6 +679,38 @@ namespace ZahiraSIS
             Console.WriteLine("***key_fee: " + key_fee);
 
             return key_fee;
+        }
+
+        private string GetMedium(string classCode) {
+            string medium = null;
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            SqlDataReader rdr = null;
+            try
+            {
+                conn = new SqlConnection(connectionString);
+                conn.Open();
+                String sql = "select m.code from stuclass s left join medium m on m.key_fld = s.key_med where s.code = @Class";
+  
+                cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = sql;
+                cmd.Parameters.Add("@Class", SqlDbType.VarChar).Value = classCode;
+
+                Console.WriteLine(cmd.CommandText);
+                rdr = cmd.ExecuteReader();
+                rdr.Read();
+                //string key_fld = "";
+                if (rdr.HasRows)
+                {
+                    medium = rdr["code"].ToString();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return medium;
         }
 
 

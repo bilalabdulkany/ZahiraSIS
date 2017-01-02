@@ -93,6 +93,7 @@ namespace ZahiraSIS
                 keyClass = (int)comboBox1.SelectedValue;               
                 classCode = (dao.getStudentClasses(keyClass).Code + "").Trim();
                 txtClassCode.Text = classCode;
+
                 comboBox2.DataSource = dao.getStudentIndexFromClass(classCode + "").DefaultView;
             comboBox2.DisplayMember = "admno";
             comboBox2.DisplayMember.Trim();
@@ -126,7 +127,7 @@ namespace ZahiraSIS
             try
             {
                 txtBreakdown.Text = "";
-                StuclassBean classBean = dao.getStudentClasses((int) comboBox1.SelectedValue);
+                StuclassBean classBean = dao.getStudentClasses(int.Parse(txtKeyClass.Text.Trim()));
                 classCode = classBean.Code.Trim();
                 DateTime asAt = dtpAsAt.Value;
                 StudentArrearsBean bean = dao.getStudentArrearsInfo(comboBox2.Text.Trim(), classCode,asAt, false);
@@ -137,7 +138,7 @@ namespace ZahiraSIS
                     txtArrearsToDate.Text = bean.curArrears;
                     lblArrearsDate.Text = bean.paidTill.ToString("dd-MMM-yyyy");
                     txtFees.Text =
-                        dao.getMonthFeeRevision(classBean.Key_fee, DateTime.Now.Year + "").Rows[0]["amount"].ToString();
+                        dao.getMonthFeeRevision(classBean.Key_fee, asAt.Year + "").Rows[0]["amount"].ToString();
                     if (bean.studentConcession == true) {
                         txtFees.Text = "0.00";
                         lblArrearsDate.Text = "fee concession";
@@ -203,7 +204,12 @@ namespace ZahiraSIS
                 try
                 {
                     keyClass = dao.getStudentInfoFromIndex(comboBox2.Text.Trim()).Key_class;
-                    comboBox1.Text = dao.getStudentClasses(keyClass).Name;
+                    StuclassBean classBean = dao.getStudentClasses(keyClass);
+                    comboBox1.Text = classBean.Name;
+                    txtClassCode.Text = classBean.Code;
+                    txtKeyClass.Text = classBean.Key_fld+"";
+
+                    Console.WriteLine("key class is:" + classBean.Key_fld);
                 }
                 catch (Exception e)
                 {
