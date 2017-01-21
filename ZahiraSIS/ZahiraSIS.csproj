@@ -60,10 +60,34 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ZahiraRelease|AnyCPU'">
     <OutputPath>bin\ZahiraRelease\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ZahiraRelease|x86'">
+    <OutputPath>bin\x86\ZahiraRelease\</OutputPath>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FoxProUpdate, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\FoxProUpdate\FoxProUpdate\bin\Release\FoxProUpdate.exe</HintPath>
+      <HintPath>..\..\FoxProUpdate\FoxProUpdate\bin\x86\Release\FoxProUpdate.exe</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
@@ -91,6 +115,12 @@
     </Compile>
     <Compile Include="com.zahira.view.alstudentfees\frmALStudentFee.Designer.cs">
       <DependentUpon>frmALStudentFee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="com.zahira.view.gradewisesummary\frmServiceArrearsGradewise.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="com.zahira.view.gradewisesummary\frmServiceArrearsGradewise.Designer.cs">
+      <DependentUpon>frmServiceArrearsGradewise.cs</DependentUpon>
     </Compile>
     <Compile Include="com.zahira.view.promotestudents\frmPromoteStudents.cs">
       <SubType>Form</SubType>
@@ -141,6 +171,9 @@
     </Compile>
     <EmbeddedResource Include="com.zahira.view.alstudentfees\frmALStudentFee.resx">
       <DependentUpon>frmALStudentFee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="com.zahira.view.gradewisesummary\frmServiceArrearsGradewise.resx">
+      <DependentUpon>frmServiceArrearsGradewise.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="com.zahira.view.promotestudents\frmPromoteStudents.resx">
       <DependentUpon>frmPromoteStudents.cs</DependentUpon>

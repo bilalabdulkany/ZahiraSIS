@@ -1,6 +1,6 @@
 ﻿namespace ZahiraSIS.com.zahira.view.reports
 {
-    partial class frmServiceArrearsClasswise
+    partial class frmServiceArrearsGradewise
     {
         /// <summary>
         /// Required designer variable.
@@ -51,9 +51,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tsStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.button3 = new System.Windows.Forms.Button();
+            this.chkSelectedClasses = new System.Windows.Forms.CheckedListBox();
+            this.cmbMedium = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.tblStudents)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).BeginInit();
@@ -63,17 +66,17 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(285, 103);
+            this.button2.Location = new System.Drawing.Point(401, 200);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(106, 23);
             this.button2.TabIndex = 16;
-            this.button2.Text = "View Results";
+            this.button2.Text = "&View Results";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(432, 337);
+            this.button1.Location = new System.Drawing.Point(432, 422);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 15;
@@ -84,7 +87,7 @@
             // tblStudents
             // 
             this.tblStudents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tblStudents.Location = new System.Drawing.Point(59, 148);
+            this.tblStudents.Location = new System.Drawing.Point(59, 233);
             this.tblStudents.Name = "tblStudents";
             this.tblStudents.Size = new System.Drawing.Size(448, 150);
             this.tblStudents.TabIndex = 14;
@@ -133,7 +136,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(83, 74);
+            this.label3.Location = new System.Drawing.Point(83, 210);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(46, 13);
             this.label3.TabIndex = 18;
@@ -143,7 +146,7 @@
             // 
             this.dateTimePicker2.CustomFormat = "dd-MMM-yyyy";
             this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker2.Location = new System.Drawing.Point(140, 67);
+            this.dateTimePicker2.Location = new System.Drawing.Point(140, 203);
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(251, 20);
             this.dateTimePicker2.TabIndex = 20;
@@ -155,7 +158,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(59, 305);
+            this.label4.Location = new System.Drawing.Point(59, 390);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(56, 13);
             this.label4.TabIndex = 21;
@@ -164,7 +167,7 @@
             // 
             // txtBFArrears
             // 
-            this.txtBFArrears.Location = new System.Drawing.Point(59, 322);
+            this.txtBFArrears.Location = new System.Drawing.Point(59, 407);
             this.txtBFArrears.Name = "txtBFArrears";
             this.txtBFArrears.ReadOnly = true;
             this.txtBFArrears.Size = new System.Drawing.Size(100, 20);
@@ -172,7 +175,7 @@
             // 
             // txtCurArrears
             // 
-            this.txtCurArrears.Location = new System.Drawing.Point(165, 322);
+            this.txtCurArrears.Location = new System.Drawing.Point(165, 407);
             this.txtCurArrears.Name = "txtCurArrears";
             this.txtCurArrears.ReadOnly = true;
             this.txtCurArrears.Size = new System.Drawing.Size(100, 20);
@@ -181,7 +184,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(165, 305);
+            this.label5.Location = new System.Drawing.Point(165, 390);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(77, 13);
             this.label5.TabIndex = 23;
@@ -189,7 +192,7 @@
             // 
             // txtCurBFArrears
             // 
-            this.txtCurBFArrears.Location = new System.Drawing.Point(271, 322);
+            this.txtCurBFArrears.Location = new System.Drawing.Point(271, 407);
             this.txtCurBFArrears.Name = "txtCurBFArrears";
             this.txtCurBFArrears.ReadOnly = true;
             this.txtCurBFArrears.Size = new System.Drawing.Size(100, 20);
@@ -198,11 +201,11 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(271, 305);
+            this.label6.Location = new System.Drawing.Point(271, 390);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(76, 13);
+            this.label6.Size = new System.Drawing.Size(97, 13);
             this.label6.TabIndex = 25;
-            this.label6.Text = "Last Year Paid";
+            this.label6.Text = "Fee Paid This Year";
             // 
             // cmbClassType
             // 
@@ -226,27 +229,44 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 364);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 462);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(681, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(689, 22);
             this.statusStrip1.TabIndex = 29;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // tsStatus
             // 
             this.tsStatus.Name = "tsStatus";
-            this.tsStatus.Size = new System.Drawing.Size(35, 17);
-            this.tsStatus.Text = "Done";
+            this.tsStatus.Size = new System.Drawing.Size(55, 17);
+            this.tsStatus.Text = "Progress:";
             this.tsStatus.Click += new System.EventHandler(this.toolStripStatusLabel1_Click);
             // 
-            // button3
+            // chkSelectedClasses
             // 
-            this.button3.Location = new System.Drawing.Point(398, 103);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(109, 23);
-            this.button3.TabIndex = 30;
-            this.button3.Text = "Cancel";
-            this.button3.UseVisualStyleBackColor = true;
+            this.chkSelectedClasses.FormattingEnabled = true;
+            this.chkSelectedClasses.Location = new System.Drawing.Point(140, 124);
+            this.chkSelectedClasses.Name = "chkSelectedClasses";
+            this.chkSelectedClasses.Size = new System.Drawing.Size(251, 64);
+            this.chkSelectedClasses.TabIndex = 30;
+            // 
+            // cmbMedium
+            // 
+            this.cmbMedium.FormattingEnabled = true;
+            this.cmbMedium.Location = new System.Drawing.Point(140, 82);
+            this.cmbMedium.Name = "cmbMedium";
+            this.cmbMedium.Size = new System.Drawing.Size(251, 21);
+            this.cmbMedium.TabIndex = 31;
+            this.cmbMedium.SelectedIndexChanged += new System.EventHandler(this.cmbMedium_SelectedIndexChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(83, 90);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(44, 13);
+            this.label7.TabIndex = 32;
+            this.label7.Text = "Medium";
             // 
             // backgroundWorker1
             // 
@@ -258,18 +278,31 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(162, 371);
+            this.progressBar1.Location = new System.Drawing.Point(163, 469);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(499, 10);
-            this.progressBar1.TabIndex = 31;
+            this.progressBar1.Size = new System.Drawing.Size(500, 10);
+            this.progressBar1.TabIndex = 33;
             // 
-            // frmServiceArrearsClasswise
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(513, 200);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(106, 23);
+            this.button3.TabIndex = 34;
+            this.button3.Text = "&Cancel";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // frmServiceArrearsGradewise
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(681, 386);
-            this.Controls.Add(this.progressBar1);
+            this.ClientSize = new System.Drawing.Size(689, 484);
             this.Controls.Add(this.button3);
+            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.cmbMedium);
+            this.Controls.Add(this.chkSelectedClasses);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cmbClassType);
@@ -286,9 +319,9 @@
             this.Controls.Add(this.tblStudents);
             this.Controls.Add(this.cmbClass);
             this.Controls.Add(this.label1);
-            this.Name = "frmServiceArrearsClasswise";
-            this.Text = "Fees Arrears - Class Wise";
-            this.Load += new System.EventHandler(this.frmServiceArrearsClasswise_Load);
+            this.Name = "frmServiceArrearsGradewise";
+            this.Text = "Fees Arrears - Grade Wise";
+            this.Load += new System.EventHandler(this.frmServiceArrearsGradewise_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tblStudents)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).EndInit();
@@ -324,8 +357,11 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel tsStatus;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.CheckedListBox chkSelectedClasses;
+        private System.Windows.Forms.ComboBox cmbMedium;
+        private System.Windows.Forms.Label label7;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Button button3;
     }
 }

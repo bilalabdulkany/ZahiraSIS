@@ -130,15 +130,16 @@ namespace ZahiraSIS
                 StuclassBean classBean = dao.getStudentClasses(int.Parse(txtKeyClass.Text.Trim()));
                 classCode = classBean.Code.Trim();
                 DateTime asAt = dtpAsAt.Value;
-                StudentArrearsBean bean = dao.getStudentArrearsInfo(comboBox2.Text.Trim(), classCode,asAt, false);
+                StudentArrearsBean bean = dao.NewForwardBalance(comboBox2.Text.Trim(), classCode,asAt, false);
                 if (bean != null)
                 {
                     dtStudentArrears.DataSource = bean.stPaidData;
                     txtClassCode.Text = classCode;
                     txtArrearsToDate.Text = bean.curArrears;
-                    lblArrearsDate.Text = bean.paidTill.ToString("dd-MMM-yyyy");
+                    lblArrearsDate.Text = bean.arrearsTo.ToString("dd-MMM-yyyy");
                     txtFees.Text =
-                        dao.getMonthFeeRevision(classBean.Key_fee, asAt.Year + "").Rows[0]["amount"].ToString();
+                        dao.getMonthFeeRevision(classBean.Key_fee, asAt.Year).Rows[0]["amount"].ToString();
+                    txtPaid.Text=bean.feePaidLastYear+"";
                     if (bean.studentConcession == true) {
                         txtFees.Text = "0.00";
                         lblArrearsDate.Text = "fee concession";
@@ -166,7 +167,7 @@ namespace ZahiraSIS
 
         private void button1_Click(object sender, EventArgs e)
         {
-            new Common().ExportToExcel(dtStudentArrears);            
+            new Common().ExportToExcel(dtStudentArrears,Double.Parse(txtArrearsToDate.Text),0);            
         }
 
         /**
@@ -199,11 +200,12 @@ namespace ZahiraSIS
                 }
             }
             //(int)comboBox1.SelectedValue;
+            keyClass = dao.getStudentInfoFromIndex(comboBox2.Text.Trim()).Key_class;
+
             if (isEnterPressed)
             {
                 try
                 {
-                    keyClass = dao.getStudentInfoFromIndex(comboBox2.Text.Trim()).Key_class;
                     StuclassBean classBean = dao.getStudentClasses(keyClass);
                     comboBox1.Text = classBean.Name;
                     txtClassCode.Text = classBean.Code;

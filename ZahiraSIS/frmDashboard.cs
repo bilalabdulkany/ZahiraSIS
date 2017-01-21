@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZahiraSIS.com.zahira.view.promotestudents;
+using ZahiraSIS.com.zahira.view.reports;
 using FoxProUpdate;
 
 namespace ZahiraSIS
@@ -140,6 +141,11 @@ namespace ZahiraSIS
             FoxProUpdate.Form1 foxProSync = new FoxProUpdate.Form1();
             foxProSync.Show();
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            new frmServiceArrearsGradewise().Show();
         }
     }
 }

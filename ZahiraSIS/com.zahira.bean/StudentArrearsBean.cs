@@ -9,7 +9,9 @@ namespace ZahiraSIS.com.zahira.bean.student
 {
     class StudentArrearsBean
     {
+        public double feePaidLastYear { get; set; }
         public DateTime paidTill { get; set; }
+        public DateTime arrearsTo { get; set; }
         public DataTable stPaidData { get; set; }
         public string curArrears { get; set; }
         public string bfArrears { get; set; }

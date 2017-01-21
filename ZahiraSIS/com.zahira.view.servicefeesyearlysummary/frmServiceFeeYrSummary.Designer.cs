@@ -50,6 +50,7 @@ namespace ZahiraSIS
             this.button2 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtKeyClass = new System.Windows.Forms.TextBox();
             this.txtClassCode = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtFees = new System.Windows.Forms.TextBox();
@@ -59,7 +60,8 @@ namespace ZahiraSIS
             this.label5 = new System.Windows.Forms.Label();
             this.txtBreakdown = new System.Windows.Forms.TextBox();
             this.dtpAsAt = new System.Windows.Forms.DateTimePicker();
-            this.txtKeyClass = new System.Windows.Forms.TextBox();
+            this.txtPaid = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.stuclassBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahiraSISDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).BeginInit();
@@ -199,6 +201,8 @@ namespace ZahiraSIS
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtPaid);
+            this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.txtKeyClass);
             this.groupBox1.Controls.Add(this.txtClassCode);
             this.groupBox1.Controls.Add(this.label7);
@@ -214,6 +218,14 @@ namespace ZahiraSIS
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Current Arrears Info";
+            // 
+            // txtKeyClass
+            // 
+            this.txtKeyClass.Location = new System.Drawing.Point(12, 127);
+            this.txtKeyClass.Name = "txtKeyClass";
+            this.txtKeyClass.Size = new System.Drawing.Size(100, 20);
+            this.txtKeyClass.TabIndex = 7;
+            this.txtKeyClass.Visible = false;
             // 
             // txtClassCode
             // 
@@ -244,7 +256,7 @@ namespace ZahiraSIS
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 81);
+            this.label6.Location = new System.Drawing.Point(9, 77);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(70, 13);
             this.label6.TabIndex = 3;
@@ -295,13 +307,22 @@ namespace ZahiraSIS
             this.dtpAsAt.Size = new System.Drawing.Size(152, 20);
             this.dtpAsAt.TabIndex = 12;
             // 
-            // txtKeyClass
+            // txtPaid
             // 
-            this.txtKeyClass.Location = new System.Drawing.Point(12, 127);
-            this.txtKeyClass.Name = "txtKeyClass";
-            this.txtKeyClass.Size = new System.Drawing.Size(100, 20);
-            this.txtKeyClass.TabIndex = 7;
-            this.txtKeyClass.Visible = false;
+            this.txtPaid.Location = new System.Drawing.Point(182, 100);
+            this.txtPaid.Name = "txtPaid";
+            this.txtPaid.ReadOnly = true;
+            this.txtPaid.Size = new System.Drawing.Size(129, 20);
+            this.txtPaid.TabIndex = 9;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(9, 100);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(76, 13);
+            this.label8.TabIndex = 8;
+            this.label8.Text = "Paid Last Year";
             // 
             // frmServiceFeeYrSummary
             // 
@@ -368,5 +389,7 @@ namespace ZahiraSIS
         private TextBox txtBreakdown;
         private DateTimePicker dtpAsAt;
         private TextBox txtKeyClass;
+        private TextBox txtPaid;
+        private Label label8;
     }
 }

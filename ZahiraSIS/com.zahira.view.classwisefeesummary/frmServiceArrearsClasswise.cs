@@ -14,7 +14,12 @@ namespace ZahiraSIS.com.zahira.view.reports
 {
     public partial class frmServiceArrearsClasswise : Form
     {
+
+        private volatile DataTable totalDatatable = null;
+        private double currArrears = 0;
+        private double totalPaid = 0;
         ClassDAO clsDao = new ClassDAO();
+        int selectedClass1 = 0;
         public frmServiceArrearsClasswise()
         {
             InitializeComponent();
@@ -45,7 +50,7 @@ namespace ZahiraSIS.com.zahira.view.reports
             cmbClass.ValueMember = "key_fld";
             cmbClass.Refresh();
 
-
+            button3.Enabled = false;
 
 
 
@@ -73,35 +78,23 @@ namespace ZahiraSIS.com.zahira.view.reports
 
         private void button2_Click(object sender, EventArgs e)
         {
-            tsStatus.Text = "Loading...";
-            string fromdate=null;
-            string todate=null;
-            StudentDAO dao  = new StudentDAO();
-            try
+            selectedClass1 = (int)cmbClass.SelectedValue;
+            //tsStatus.Text = "User Cancelled";
+
+            tblStudents.DataSource = null;
+            tblStudents.Refresh();
+            txtCurArrears.Text = "0";
+            txtCurBFArrears.Text = "0";
+            if (totalDatatable != null)
             {
-                //TODO fill datatable with Lists. also check the date range.
-                if (dateTimePicker2.Value != null)
-                {
-                    todate = dateTimePicker2.Value.ToString("yyyy-MM-dd");
-
-                }
-
-                StudentArrearsBean bean = null;
-                StudentDAO studentDAO = new StudentDAO();
-                int selectedClass1 = (int)cmbClass.SelectedValue;
-                string classCode = (dao.getStudentClasses(selectedClass1).Code).Trim();
-                StudentArrearsBean arrearsBean = studentDAO.getStudentArrearsByDatePerClass(classCode,
-                    fromdate, todate);
-
-                tblStudents.DataSource = arrearsBean.stPaidData;
-                txtCurArrears.Text = arrearsBean.curArrears;
+                totalDatatable.Reset();
             }
-            catch (System.Exception ex)
+            if (!backgroundWorker1.IsBusy)
             {
-                System.Windows.Forms.MessageBox.Show(ex.Message);
-            }
-            finally {
-                tsStatus.Text = "Done";
+
+                button2.Enabled = false;
+                button3.Enabled = true;
+                backgroundWorker1.RunWorkerAsync();
             }
         }
 
@@ -112,7 +105,7 @@ namespace ZahiraSIS.com.zahira.view.reports
 
         private void button1_Click(object sender, EventArgs e)
         {
-            new Common().ExportToExcel(tblStudents);
+            new Common().ExportToExcel(tblStudents,Double.Parse(txtCurArrears.Text), Double.Parse(txtCurBFArrears.Text));
 
         }
 
@@ -150,6 +143,71 @@ namespace ZahiraSIS.com.zahira.view.reports
         private void toolStripStatusLabel1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+            string fromdate = null;
+            string todate = null;
+            StudentDAO dao = new StudentDAO();
+            totalDatatable = new DataTable();
+            backgroundWorker1.ReportProgress(0);
+            try
+            {
+                //TODO fill datatable with Lists. also check the date range.
+                if (dateTimePicker2.Value != null)
+                {
+                    todate = dateTimePicker2.Value.ToString("yyyy-MM-dd");
+
+                }
+
+                //StudentArrearsBean bean = null;
+                StudentDAO studentDAO = new StudentDAO();
+                
+                string classCode = (dao.getStudentClasses(selectedClass1).Code).Trim();
+                StudentArrearsBean arrearsBean = studentDAO.getStudentArrearsByDatePerClass(classCode,
+                    fromdate, todate);
+
+                totalDatatable = arrearsBean.stPaidData;
+                currArrears = Double.Parse(arrearsBean.curArrears);
+                totalPaid += arrearsBean.feePaidLastYear;
+                backgroundWorker1.ReportProgress(100);
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+
+        }
+
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            tsStatus.Text = e.ProgressPercentage + "%";
+            progressBar1.Value = e.ProgressPercentage;
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            try
+            {
+
+                //TODO fill datatable with Lists. also check the date range.
+                tblStudents.Refresh();
+                tblStudents.DataSource = totalDatatable;
+                tblStudents.Refresh();
+                txtCurArrears.Text = currArrears + "";
+                txtCurBFArrears.Text = totalPaid + "";
+                currArrears = 0;
+                totalPaid = 0;
+                button2.Enabled = true;
+                button3.Enabled = false;
+
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
         }
     }
 }

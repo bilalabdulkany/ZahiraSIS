@@ -11,7 +11,7 @@ namespace ZahiraSIS.com.zahira.common
         /**
         * Export to Excel
         */
-        public void ExportToExcel(DataGridView grd)
+        public void ExportToExcel(DataGridView grd,double fullArrears,double lastYearPay)
         {
             // Creating a Excel object. 
             Microsoft.Office.Interop.Excel._Application excel = new Microsoft.Office.Interop.Excel.Application();
@@ -49,10 +49,10 @@ namespace ZahiraSIS.com.zahira.common
                 }
                 i++;
                 //
-                worksheet.Cells[cellRowIndex + 4, cellColumnIndex] = "Full Arrears: 123456789";
+                worksheet.Cells[cellRowIndex + 4, cellColumnIndex+1] = "Full Arrears: "+ fullArrears;
                 worksheet.Cells[cellRowIndex + 4, cellColumnIndex].Font.Bold = true;
 
-                worksheet.Cells[cellRowIndex + 4, cellColumnIndex+1] = "BFF : 56789";
+                worksheet.Cells[cellRowIndex + 4, cellColumnIndex+2] = "Fee Paid Totally Last year:"+lastYearPay;
                 worksheet.Cells[cellRowIndex + 4, cellColumnIndex + 1].Font.Bold = true;
 
                 //Getting the location and file name of the excel to save from user. 
