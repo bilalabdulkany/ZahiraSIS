@@ -13,23 +13,20 @@ namespace ZahiraSIS.com.zahira.reports
 {
     public partial class StudentReceiptViewer : Form
     {
-        ReportParameter p1 = new ReportParameter("TrnNo", "1234");
 
-
-
-        // ReportParameter p2 = new ReportParameter("TrnDate", new DateTime().ToShortDateString());
-
-        ReportParameter p3 = new ReportParameter("AdmNo", "19941");
-
-        ReportParameter p4 = new ReportParameter("Name", "M. Bilal Abdulkany");
-
-        ReportParameter p5 = new ReportParameter("Paid", "19000");
-
-        ReportParameter p6 = new ReportParameter("Arrears", "19000");
-
-        public StudentReceiptViewer()
+        String TrnNo, AdmNo,name, paid, Arrears,ClassCode=null;
+        public StudentReceiptViewer(String TrnNo,String AdmNo,String Name,String paid, String Arrears,String ClassCode)
         {
             InitializeComponent();
+            this.name = Name;
+            this.ClassCode = ClassCode;
+            this.TrnNo = TrnNo;
+            this.AdmNo = AdmNo;
+            this.Arrears = Arrears;
+            this.paid = paid;
+
+        }
+        public StudentReceiptViewer() {
         }
 
         private void StudentReceiptViewer_Load(object sender, EventArgs e)
@@ -39,10 +36,20 @@ namespace ZahiraSIS.com.zahira.reports
         }
 
         private void setupParameters() {
+            ReportParameter p1 = new ReportParameter("TrnNo", TrnNo);
+            // ReportParameter p2 = new ReportParameter("TrnDate", new DateTime().ToShortDateString());
 
-          
+            ReportParameter p3 = new ReportParameter("AdmNo", AdmNo);
 
-            this.reportViewer1.LocalReport.SetParameters(new ReportParameter[] { p1, p3, p4,p5,p6 });
+            ReportParameter p4 = new ReportParameter("Name", name);
+
+            ReportParameter p5 = new ReportParameter("Paid", paid);
+
+            ReportParameter p6 = new ReportParameter("Arrears", Arrears);
+
+            ReportParameter p7 = new ReportParameter("Code", ClassCode);
+
+            this.reportViewer1.LocalReport.SetParameters(new ReportParameter[] { p1, p3, p4,p5,p6,p7 });
             this.reportViewer1.RefreshReport();
 
         }

@@ -233,9 +233,9 @@ namespace ZahiraSIS
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(9, 100);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(76, 13);
+            this.label8.Size = new System.Drawing.Size(55, 13);
             this.label8.TabIndex = 8;
-            this.label8.Text = "Paid Last Year";
+            this.label8.Text = "Total Paid";
             // 
             // txtKeyClass
             // 

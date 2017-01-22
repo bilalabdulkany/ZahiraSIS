@@ -200,9 +200,9 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(271, 305);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(76, 13);
+            this.label6.Size = new System.Drawing.Size(55, 13);
             this.label6.TabIndex = 25;
-            this.label6.Text = "Last Year Paid";
+            this.label6.Text = "Total Paid";
             // 
             // cmbClassType
             // 

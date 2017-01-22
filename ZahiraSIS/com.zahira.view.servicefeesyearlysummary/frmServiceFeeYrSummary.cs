@@ -238,7 +238,7 @@ namespace ZahiraSIS
 
         private void button3_Click(object sender, EventArgs e)
         {
-            StudentReceiptViewer rp = new StudentReceiptViewer();
+            StudentReceiptViewer rp = new StudentReceiptViewer("123",comboBox2.Text,txtName.Text,txtPaid.Text,txtArrearsToDate.Text, txtClassCode.Text);
             rp.Show();
         }
     }

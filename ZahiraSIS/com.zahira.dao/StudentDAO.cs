@@ -832,7 +832,7 @@ namespace ZahiraSIS
                 Console.WriteLine("fee: " + feeRate);
 
                 StudentArrearsBean calculatedBean = calculateArrears(arrearsToFromStudent, todayDate, feesArrears, classCode, totalArrearsFromStudent, feeRate);
-                if (arrearsBean.paidTill.Month == todayDate.Month)
+                if (!arrearsBean.paidTill.Equals(new DateTime())&&arrearsBean.paidTill.Month == todayDate.Month)
                 {
                     if (totalPaid < feeRate ) {
                         paidLess = true;
@@ -852,9 +852,19 @@ namespace ZahiraSIS
                         calculatedBean.curArrears = mnthFeeArrears.ToString();
                     }
                 }
+                else {
+                    //no record in the monthfeepaid table, and feeArrears is 0 in student table.
+                    if (arrearsTo.Year > todayDate.Year) {
+                        feesArrears = -(feeRate * 12+feesArrears);
+                        feesArrears= Double.Parse(calculatedBean.curArrears)+feesArrears;
+                        calculatedBean.curArrears = feesArrears.ToString();
+                    }
+                }
+                
                 // calculatedBean = calculateArrears(arrearsTo, todayDate, feesArrears, classCode, totalArrearsFromStudent, feeRate);
 
                 arrearsTo = arrearsTo.AddMonths(1);
+                    if(!IsMonthFeeNull)
                     feesArrears = Double.Parse(calculatedBean.curArrears);
                     if (arrearsTo.Year > todayDate.Year || feesArrears < 0)
                     {
