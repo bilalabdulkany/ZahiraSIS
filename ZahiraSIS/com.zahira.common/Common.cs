@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -47,13 +48,22 @@ namespace ZahiraSIS.com.zahira.common
                     cellColumnIndex = 1;
                     cellRowIndex++;
                 }
-                i++;
+                // i++;
                 //
-                worksheet.Cells[cellRowIndex + 4, cellColumnIndex+1] = "Full Arrears: "+ fullArrears;
-                worksheet.Cells[cellRowIndex + 4, cellColumnIndex].Font.Bold = true;
+               //Range cells = workbook.Worksheets[1].Cells;
+                //cells.Cells[1,1].EntireColumn.NumberFormat = "@";
+                worksheet.Columns[1].NumberFormat = "@";
+                worksheet.Cells[cellRowIndex + 4, cellColumnIndex+1] = "Full Arrears: ";
+                worksheet.Cells[cellRowIndex + 4, cellColumnIndex + 2] = fullArrears;
+                worksheet.Cells[cellRowIndex + 4, cellColumnIndex+1].Font.Bold = true;
+                worksheet.Cells[cellRowIndex + 4, cellColumnIndex + 2].Font.Bold = true;
+                
 
-                worksheet.Cells[cellRowIndex + 4, cellColumnIndex+2] = "Fee Paid Totally Last year:"+lastYearPay;
-                worksheet.Cells[cellRowIndex + 4, cellColumnIndex + 1].Font.Bold = true;
+
+                worksheet.Cells[cellRowIndex + 5, cellColumnIndex+1] = "Tot. Fee Paid:";
+                worksheet.Cells[cellRowIndex + 5, cellColumnIndex + 1].Font.Bold = true;
+                worksheet.Cells[cellRowIndex + 5, cellColumnIndex + 2] = lastYearPay;
+                worksheet.Cells[cellRowIndex + 5, cellColumnIndex + 2].Font.Bold = true;
 
                 //Getting the location and file name of the excel to save from user. 
                 SaveFileDialog saveDialog = new SaveFileDialog();

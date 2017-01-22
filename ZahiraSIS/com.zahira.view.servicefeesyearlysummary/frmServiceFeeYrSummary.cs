@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using ZahiraSIS.com.zahira.bean;
 using ZahiraSIS.com.zahira.bean.student;
 using ZahiraSIS.com.zahira.common;
+using ZahiraSIS.com.zahira.reports;
 
 namespace ZahiraSIS
 {
@@ -139,7 +140,7 @@ namespace ZahiraSIS
                     lblArrearsDate.Text = bean.arrearsTo.ToString("dd-MMM-yyyy");
                     txtFees.Text =
                         dao.getMonthFeeRevision(classBean.Key_fee, asAt.Year).Rows[0]["amount"].ToString();
-                    txtPaid.Text=bean.feePaidLastYear+"";
+                    txtPaid.Text=bean.feePaidForTheYear+"";
                     if (bean.studentConcession == true) {
                         txtFees.Text = "0.00";
                         lblArrearsDate.Text = "fee concession";
@@ -193,14 +194,16 @@ namespace ZahiraSIS
 
                     name = dao.getStudentInfoFromIndex(comboBox2.Text).Name;
                     txtName.Text = name.Trim();
+                    keyClass = dao.getStudentInfoFromIndex(comboBox2.Text.Trim()).Key_class;
                 }
                 catch (Exception e1)
                 {
                     Console.WriteLine("null exception:" + e1);
+                    MessageBox.Show(null,"Admission Number Not Found!","Warning");
                 }
             }
             //(int)comboBox1.SelectedValue;
-            keyClass = dao.getStudentInfoFromIndex(comboBox2.Text.Trim()).Key_class;
+           
 
             if (isEnterPressed)
             {
@@ -233,7 +236,11 @@ namespace ZahiraSIS
             }
         }
 
-
+        private void button3_Click(object sender, EventArgs e)
+        {
+            StudentReceiptViewer rp = new StudentReceiptViewer();
+            rp.Show();
+        }
     }
 
     public static class Prompt

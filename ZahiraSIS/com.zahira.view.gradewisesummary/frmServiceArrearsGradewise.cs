@@ -272,7 +272,7 @@ namespace ZahiraSIS.com.zahira.view.reports
                         fromdate, todate);
                     DataRow row = totalDatatable.NewRow();
                     currArrears += Double.Parse(arrearsBean.curArrears);
-                    totalPaid += arrearsBean.feePaidLastYear;
+                    totalPaid += arrearsBean.feePaidForTheYear;
                     row["Class"] = selectedText;
                     row["Arrears"] = arrearsBean.curArrears;
                     // tblStudents.DataSource = arrearsBean.stPaidData;               

@@ -171,7 +171,7 @@ namespace ZahiraSIS.com.zahira.view.reports
 
                 totalDatatable = arrearsBean.stPaidData;
                 currArrears = Double.Parse(arrearsBean.curArrears);
-                totalPaid += arrearsBean.feePaidLastYear;
+                totalPaid += arrearsBean.feePaidForTheYear;
                 backgroundWorker1.ReportProgress(100);
             }
             catch (System.Exception ex)

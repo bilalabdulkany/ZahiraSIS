@@ -50,6 +50,8 @@ namespace ZahiraSIS
             this.button2 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtPaid = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.txtKeyClass = new System.Windows.Forms.TextBox();
             this.txtClassCode = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -60,8 +62,7 @@ namespace ZahiraSIS
             this.label5 = new System.Windows.Forms.Label();
             this.txtBreakdown = new System.Windows.Forms.TextBox();
             this.dtpAsAt = new System.Windows.Forms.DateTimePicker();
-            this.txtPaid = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.stuclassBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahiraSISDataSetBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).BeginInit();
@@ -219,6 +220,23 @@ namespace ZahiraSIS
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Current Arrears Info";
             // 
+            // txtPaid
+            // 
+            this.txtPaid.Location = new System.Drawing.Point(182, 100);
+            this.txtPaid.Name = "txtPaid";
+            this.txtPaid.ReadOnly = true;
+            this.txtPaid.Size = new System.Drawing.Size(129, 20);
+            this.txtPaid.TabIndex = 9;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(9, 100);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(76, 13);
+            this.label8.TabIndex = 8;
+            this.label8.Text = "Paid Last Year";
+            // 
             // txtKeyClass
             // 
             this.txtKeyClass.Location = new System.Drawing.Point(12, 127);
@@ -307,28 +325,22 @@ namespace ZahiraSIS
             this.dtpAsAt.Size = new System.Drawing.Size(152, 20);
             this.dtpAsAt.TabIndex = 12;
             // 
-            // txtPaid
+            // button3
             // 
-            this.txtPaid.Location = new System.Drawing.Point(182, 100);
-            this.txtPaid.Name = "txtPaid";
-            this.txtPaid.ReadOnly = true;
-            this.txtPaid.Size = new System.Drawing.Size(129, 20);
-            this.txtPaid.TabIndex = 9;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(9, 100);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(76, 13);
-            this.label8.TabIndex = 8;
-            this.label8.Text = "Paid Last Year";
+            this.button3.Location = new System.Drawing.Point(413, 309);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(110, 23);
+            this.button3.TabIndex = 13;
+            this.button3.Text = "Generate Receipt";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // frmServiceFeeYrSummary
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(647, 401);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.dtpAsAt);
             this.Controls.Add(this.txtBreakdown);
             this.Controls.Add(this.groupBox1);
@@ -391,5 +403,6 @@ namespace ZahiraSIS
         private TextBox txtKeyClass;
         private TextBox txtPaid;
         private Label label8;
+        private Button button3;
     }
 }
