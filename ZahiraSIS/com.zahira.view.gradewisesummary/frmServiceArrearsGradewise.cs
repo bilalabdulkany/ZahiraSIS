@@ -264,12 +264,12 @@ namespace ZahiraSIS.com.zahira.view.reports
                     DataRowView castedItem = itemChecked as DataRowView;
                     int selectedClass1 = (int)castedItem["sfield"];//nt)cmbClass.SelectedValue;
                     string selectedText = (string)castedItem["sname"];
-                    Console.WriteLine("item:" + selectedClass1 + " text:" + selectedText);
+                    //Console.WriteLine("item:" + selectedClass1 + " text:" + selectedText);
 
 
                     string classCode = (studentDAO.getStudentClasses(selectedClass1).Code).Trim();
                     StudentArrearsBean arrearsBean = studentDAO.getStudentArrearsByDatePerClass(classCode,
-                        fromdate, todate);
+                        fromdate, todate,false);
                     DataRow row = totalDatatable.NewRow();
                     currArrears += Double.Parse(arrearsBean.curArrears);
                     totalPaid += arrearsBean.feePaidForTheYear;
@@ -299,6 +299,18 @@ namespace ZahiraSIS.com.zahira.view.reports
         private void button3_Click(object sender, EventArgs e)
         {
             backgroundWorker1.CancelAsync();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            bool flag = false;
+            if (checkBox1.Checked == true) {
+                flag = true;
+            }
+            for (int i = 0; i < chkSelectedClasses.Items.Count; i++)
+            {
+                chkSelectedClasses.SetItemChecked(i, flag);
+            }
         }
     }
 }

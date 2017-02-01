@@ -131,7 +131,7 @@ namespace ZahiraSIS
                 StuclassBean classBean = dao.getStudentClasses(int.Parse(txtKeyClass.Text.Trim()));
                 classCode = classBean.Code.Trim();
                 DateTime asAt = dtpAsAt.Value;
-                StudentArrearsBean bean = dao.NewForwardBalance(comboBox2.Text.Trim(), classCode,asAt, false);
+                StudentArrearsBean bean = dao.NewForwardBalance(comboBox2.Text.Trim(), classCode,asAt, false,true);
                 if (bean != null)
                 {
                     dtStudentArrears.DataSource = bean.stPaidData;
@@ -148,8 +148,8 @@ namespace ZahiraSIS
                     String lines = null;
                     foreach (KeyValuePair<int, string> kvp in bean.arrearsMap)
                     {
-                        //textBox3.Text += ("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
-                        lines = "Year =" + kvp.Key + " fee rate: " + kvp.Value.Split('|')[0] + " months paid: " + kvp.Value.Split('|')[1] + " total: " + kvp.Value.Split('|')[2];
+                            //textBox3.Text += ("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+                            lines = "Year =" + kvp.Key + " fee rate: " + kvp.Value.Split('|')[1]; //+ " months paid: " + kvp.Value.Split('|')[1] + " total: " + kvp.Value.Split('|')[2];
                         txtBreakdown.AppendText(lines);
                         txtBreakdown.AppendText(Environment.NewLine);
                     }

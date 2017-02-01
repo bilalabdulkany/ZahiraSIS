@@ -167,7 +167,7 @@ namespace ZahiraSIS.com.zahira.view.reports
                 
                 string classCode = (dao.getStudentClasses(selectedClass1).Code).Trim();
                 StudentArrearsBean arrearsBean = studentDAO.getStudentArrearsByDatePerClass(classCode,
-                    fromdate, todate);
+                    fromdate, todate,true);
 
                 totalDatatable = arrearsBean.stPaidData;
                 currArrears = Double.Parse(arrearsBean.curArrears);

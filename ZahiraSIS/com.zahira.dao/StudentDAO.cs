@@ -271,12 +271,12 @@ namespace ZahiraSIS
             return bean;
 
         }
-        public StudentArrearsBean getStudentArrearsByDatePerClass(string studentClass, string fromDate, string toDate)
+        public StudentArrearsBean getStudentArrearsByDatePerClass(string studentClass, string fromDate, string toDate,bool logging)
         {
-            SqlDataReader rdr = null;
+        //    SqlDataReader rdr = null;
             SqlConnection conn = null;
-            SqlCommand cmd = null;
-            DataTable tbl = null;
+          //  SqlCommand cmd = null;
+            //DataTable tbl = null;
             StudentArrearsBean arrearsBean = null;
             StudentArrearsBean cumArrearsBean = null;
             try
@@ -289,6 +289,7 @@ namespace ZahiraSIS
                 classwiseStudents.Columns.Add("PaidTill");
                 classwiseStudents.Columns.Add("Total Fee paid this year");
                 int stlen = classwiseStudents.Rows.Count;
+                if(logging)
                 Console.WriteLine("Total students: " + stlen);
                 double cumArrears = 0;
                 double totalPaid = 0;
@@ -297,7 +298,7 @@ namespace ZahiraSIS
                     string admno = classwiseStudents.Rows[i]["admno"].ToString().Trim();
                     try
                     {
-                        arrearsBean = this.NewForwardBalance(admno, studentClass, DateTime.Parse(toDate), false);
+                        arrearsBean = this.NewForwardBalance(admno, studentClass, DateTime.Parse(toDate), false,false);
                         if (arrearsBean != null)
                         {
                             classwiseStudents.Rows[i]["Arrears"] = arrearsBean.curArrears;
@@ -308,7 +309,7 @@ namespace ZahiraSIS
                             totalPaid =totalPaid+arrearsBean.feePaidForTheYear;
                             //Call fillTable. Then add all the fees to a bean.
                             //Its better if FillTable returns a bean consisting of student's arrears.
-                            Console.WriteLine("cum. arrears: " + cumArrears);
+                            if(logging)Console.WriteLine("cum. arrears: " + cumArrears);
                         }
                         else {
                             //Student on fee concession.
@@ -336,20 +337,7 @@ namespace ZahiraSIS
             {
                 Console.WriteLine("exception" + e.ToString());
             }
-            finally
-            {
-                try
-                {
-                    //conn.Close();
-                    // rdr.Close();
-                    //conn.Dispose();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-
-            }
+            
             return cumArrearsBean;
 
         }
@@ -554,7 +542,7 @@ namespace ZahiraSIS
                         else
                         {
                             int yearsToReduce = 0;
-                            int key_fee = 0;
+                            //int key_fee = 0;
                             if (countYear != 1)
                             {
                                 yearsToReduce = todayDate.Year - i;
@@ -661,6 +649,7 @@ namespace ZahiraSIS
             ClassDAO clsDao = new ClassDAO();
             int yearsToReduce = currentYear - arrearsYear;
             double feeRate = 0;
+            classCode = classCode.Trim();
             string guessedClass = this.GetMedium(classCode); //classCode[classCode.Length - 2];
             string grade = classCode.Substring(0, classCode.Length - 2);
             if (!grade.Equals("1"))
@@ -720,7 +709,7 @@ namespace ZahiraSIS
         }
 
 
-        public StudentArrearsBean NewForwardBalance(string admNo, string classCode, DateTime? asAt, bool guessClass) {
+        public StudentArrearsBean NewForwardBalance(string admNo, string classCode, DateTime? asAt, bool guessClass,bool logging) {
             /**
              * TODO
              * Check Student table for the current arrears and 
@@ -751,15 +740,17 @@ namespace ZahiraSIS
                 //This below statement is for wrongly added student info!
                 DateTime arrearsFromFromStudent = bean.Arrearsfrm;
 
-              /*  if (arrearsFromFromStudent > arrearsToFromStudent)
+                /*  if (arrearsFromFromStudent > arrearsToFromStudent)
+                  {
+                      //arrearsFromFromStudent=arrearsFromFromStudent.
+                      arrearsToFromStudent = arrearsFromFromStudent.AddMonths(-1);
+                  }*/
+                if (logging)
                 {
-                    //arrearsFromFromStudent=arrearsFromFromStudent.
-                    arrearsToFromStudent = arrearsFromFromStudent.AddMonths(-1);
-                }*/
-                Console.WriteLine("net arrears in Student: " + totalArrearsFromStudent);
+                    Console.WriteLine("net arrears in Student: " + totalArrearsFromStudent);
 
-                Console.WriteLine("arrears to date in student: " + arrearsToFromStudent.ToString("dd-MMM-yyyy"));
-
+                    Console.WriteLine("arrears to date in student: " + arrearsToFromStudent.ToString("dd-MMM-yyyy"));
+                }
                 if (CheckStudentConcessions(admNo, classCode) == true)
                 {
                     arrearsBean.curArrears = totalArrearsFromStudent+"";
@@ -773,6 +764,7 @@ namespace ZahiraSIS
                 Boolean surplusPaid = false;
                 Boolean paidLess = false;
                 Boolean IsMonthFeeNull = false;
+                DataRow lastRowMnthFee = null;
                 if (asAt.HasValue)
                 {
                     todayDate = (DateTime)asAt;
@@ -784,17 +776,20 @@ namespace ZahiraSIS
                 }
                 try
                 {
-                    DataRow lastRow = dt.Rows[dt.Rows.Count - 1];
+                    lastRowMnthFee = dt.Rows[dt.Rows.Count - 1];
 
-                    arrearsTo = (DateTime)lastRow["arrearsto"];
-                    DateTime arrearsFrom= (DateTime)lastRow["arrearsfrm"];
-                
-                    Console.WriteLine("arrears to date in mnthfee: " + arrearsTo.ToString("dd-MMM-yyyy"));
-                    double totalArrears = Double.Parse(lastRow["totarrears"].ToString());
-                    totalPaid = Double.Parse(lastRow["paid"].ToString());
+                    arrearsTo = (DateTime)lastRowMnthFee["arrearsto"];
+                    DateTime arrearsFrom= (DateTime)lastRowMnthFee["arrearsfrm"];               
+                    
+                    double totalArrears = Double.Parse(lastRowMnthFee["totarrears"].ToString());
+                    totalPaid = Double.Parse(lastRowMnthFee["paid"].ToString());
                     double netArrears = totalArrears - totalPaid;
-                    Console.WriteLine("net arrears in mnthfee: " + netArrears);
-                    arrearsBean.paidTill = (DateTime)lastRow["payto"];
+                    if (logging)
+                    {
+                        Console.WriteLine("arrears to date in mnthfee: " + arrearsTo.ToString("dd-MMM-yyyy"));
+                        Console.WriteLine("net arrears in mnthfee: " + netArrears);
+                    }
+                        arrearsBean.paidTill = (DateTime)lastRowMnthFee["payto"];
                     paidTo = arrearsTo;
                     //Corrections on mnthfeetable
                     if (arrearsFrom > arrearsTo) arrearsTo = arrearsFrom;                
@@ -809,6 +804,7 @@ namespace ZahiraSIS
                     if (arrearsTo < arrearsToFromStudent) arrearsTo = arrearsToFromStudent;
                     if (arrearsBean.paidTill > todayDate)
                     { surplusPaid = true;
+                        if(totalPaid==0)
                         totalPaid = GetFeePaidForTheYear(todayDate.Year, admNo);
                     }
                     
@@ -831,7 +827,7 @@ namespace ZahiraSIS
                 feeRate = this.guessClassAndFee(classCode, todayDate.Year, arrearsToFromStudent.Year);             
                 Console.WriteLine("fee: " + feeRate);
 
-                StudentArrearsBean calculatedBean = calculateArrears(arrearsToFromStudent, todayDate, feesArrears, classCode, totalArrearsFromStudent, feeRate);
+                StudentArrearsBean calculatedBean = calculateArrears(arrearsToFromStudent, todayDate, feesArrears, classCode, totalArrearsFromStudent, feeRate,logging);
                 if (!arrearsBean.paidTill.Equals(new DateTime())&&arrearsBean.paidTill.Month == todayDate.Month)
                 {
                     if (totalPaid < feeRate ) {
@@ -869,39 +865,52 @@ namespace ZahiraSIS
                     if (arrearsTo.Year > todayDate.Year || feesArrears < 0)
                     {
                     //negatives should be omitted here, and taken into another column
-                        Console.WriteLine("resetting to 0");
+         //               Console.WriteLine("resetting to 0");
                         if (dateDifference == 0)
                         {
                             feesArrears = 0;
                         }
                     }
+                    if(logging)
                     Console.WriteLine("Date Diff:" + dateDifference + " arrears: " + feesArrears);
-                    arrearsBean.curArrears = calculatedBean.curArrears;//feesArrears + "";
-                    arrearsBean.arrearsMap = calculatedBean.arrearsMap;//arrearsMap;
+                    arrearsBean.curArrears = calculatedBean.curArrears;//feesArrears + "";                  
                     arrearsBean.feePaidForTheYear = GetFeePaidForTheYear(todayDate.Year,admNo);
 
                 //Put all the fees to arrears map
-                if (arrearsBean.paidTill != null) {
+                if (arrearsBean.paidTill != null&&lastRowMnthFee["key_class"]!=null) {
+                  //  int keyClass = int.Parse(lastRowMnthFee["key_class"].ToString());
+                    //String code=getStudentClasses(keyClass).Code;
+                    arrearsMap.Clear();
+                    for (int year = arrearsBean.paidTill.Year; year <= todayDate.Year; year++)
+                    {
+                        double FeeRate = guessClassAndFee(classCode, todayDate.Year, year);
+                        arrearsMap[year] = "Arrears Year: "+year + " | Rate: " + FeeRate;
+                    }
 
+                   // calculatedBean.arrearsMap = arrearsMap;
                 }
+                arrearsBean.arrearsMap = arrearsMap;
 
-                foreach (KeyValuePair<int, string> kvp in arrearsMap)
+                if (logging)
+                {
+                    foreach (KeyValuePair<int, string> kvp in arrearsMap)
                     {
                         //textBox3.Text += ("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
                         Console.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
                     }
+                }
                 
               
             }
             catch (Exception e1)
             {
-                Console.WriteLine("error: " + e1);
+                Console.WriteLine("error: ", e1);
             }
             return arrearsBean;
         }
 
 
-        private StudentArrearsBean calculateArrears(DateTime arrearsTo,DateTime todayDate,double feesArrears,string classCode,double netArrears, double feeRate) {
+        private StudentArrearsBean calculateArrears(DateTime arrearsTo,DateTime todayDate,double feesArrears,string classCode,double netArrears, double feeRate,bool logging) {
             StudentArrearsBean bean = new StudentArrearsBean();
             int countYear = 0;
             //double feeRate=0;
@@ -913,21 +922,24 @@ namespace ZahiraSIS
                 if (arrearsTo.Year == 1899)
                 {
                     //the data is not recorded properly due to corruption.
-                    Console.WriteLine("data is not properly recorded");
+                    //Console.WriteLine("data is not properly recorded");
                     feesArrears = 0;
                     break;
                 }
                 countYear++;
-                Console.WriteLine("today:" + i);
-                Console.WriteLine("till:" + arrearsTo.Year);
-                Console.WriteLine("class code:" + classCode + " length:" + classCode.Trim().Length);
-
+                if (logging)
+                {
+                    Console.WriteLine("today:" + i);
+                    Console.WriteLine("till:" + arrearsTo.Year);
+                    Console.WriteLine("class code:" + classCode + " length:" + classCode.Trim().Length);
+                }
                 if (i == arrearsTo.Year)
                 {//Paid till year is in the current loop. 
 
                     //If for current years' arrears.
                     if (arrearsTo.Year == todayDate.Year)
                     {
+                        if(logging)
                         Console.WriteLine("calculating fee arrears for the current years'" +
                                           " Arrears: " + feesArrears);
                         int paidMonth = arrearsTo.Month;
@@ -960,21 +972,26 @@ namespace ZahiraSIS
 
                             //Get the fee rate for the year
                             
-                            feeRate = this.guessClassAndFee(classCode, todayDate.Year, i);                           
+                            feeRate = this.guessClassAndFee(classCode, todayDate.Year, i);
 
                             //feeRate = Double.Parse(lastRow["mfeerate"] + "");
+                            if(logging)
                             Console.WriteLine("arrears before:" + feesArrears);
                             feesArrears = feeRate * paidMonth1 + feesArrears + netArrears;
-                            Console.WriteLine("paid till month: " + paidMonth1);
-                            Console.WriteLine("fee Rate:" + feeRate);
-                            Console.WriteLine("arrears:" + feesArrears);
-                            arrearsMap[i] = feeRate + "|" + paidMonth1 + "|" + feeRate * paidMonth1;
+                            if (logging)
+                            {
+                                Console.WriteLine("paid till month: " + paidMonth1);
+                                Console.WriteLine("fee Rate:" + feeRate);
+                                Console.WriteLine("arrears:" + feesArrears);
+                            }
+                                arrearsMap[i] = feeRate + "|" + paidMonth1 + "|" + feeRate * paidMonth1;
                         }
                         else
                         {
                             feesArrears = netArrears + feesArrears;
                         }
                     }
+                    if(logging)
                     Console.WriteLine("fee is not paid fully for the year " + i + ": " + feesArrears);
 
                 }
@@ -982,24 +999,19 @@ namespace ZahiraSIS
                 {
                     //If for other years' arrears.
                     //Check the medium and then guess the key_fee.
+                    if(logging)
                     Console.WriteLine("Calculating fee for other years.");
                     //int feecode = dao.getStudentClasses(keyClass).Key_fee;
                                         //calculate the rates with respect to the effective year fee. 
                     //Also check student concessions.  
                    
-                    
-                      /*  int yearsToReduce = 0;
-                        int key_fee = 0;
-                        if (countYear != 1)
-                        {
-                            yearsToReduce = todayDate.Year - i;
-                        }*/
                     //i is this year but the students class is based on this year so reduce one year.
                     feeRate = this.guessClassAndFee(classCode, todayDate.Year, i);
                        
                     if (i == todayDate.Year)
                     {
                         //i == todayDate.Year and i!=paidTill.Year-- but there are arrears
+                        if(logging)
                         Console.WriteLine("Calculating fee for this year:" + i);
 
                         int thisMonth = todayDate.Month;
@@ -1009,10 +1021,14 @@ namespace ZahiraSIS
                         {
                             monthDiff = -(monthDiff);
                         }
-                        Console.WriteLine("month diff: " + monthDiff);
-                        Console.WriteLine("fee Rate:" + feeRate);
-                        Console.WriteLine("arrears:" + feesArrears);
-                        feesArrears = feeRate * monthDiff + feesArrears;                        
+                        if (logging)
+                        {
+                            Console.WriteLine("month diff: " + monthDiff);
+                            Console.WriteLine("fee Rate:" + feeRate);
+                            Console.WriteLine("arrears:" + feesArrears);
+                        }
+                            feesArrears = feeRate * monthDiff + feesArrears;
+                        if(logging)
                         Console.WriteLine("arrears:" + feesArrears);
                         arrearsMap[i] = feeRate + "|" + monthDiff + "|" + feeRate * monthDiff;
                         break;
@@ -1024,6 +1040,7 @@ namespace ZahiraSIS
                         feesArrears = feeRate * 12 + feesArrears;
                         arrearsMap[i] = feeRate + "|" + 12 + "|" + feeRate * 12;
                     }
+                    if(logging)
                     Console.WriteLine("Fee rate: " + feeRate + " Arrears: " + feesArrears);
                 }
             }
@@ -1058,7 +1075,7 @@ namespace ZahiraSIS
             }
             catch (Exception e)
             {
-
+                Console.WriteLine("exception", e);
             }
             return paidAmount;
             }
