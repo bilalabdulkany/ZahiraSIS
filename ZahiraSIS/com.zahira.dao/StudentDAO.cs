@@ -68,7 +68,7 @@ namespace ZahiraSIS
                 cmd.Parameters.Add("@Index", SqlDbType.VarChar).Value = studentIndex;
 
                 //Console.WriteLine("SQL:" + cmd.CommandText);
-                Console.WriteLine("index" + studentIndex);
+                //Console.WriteLine("index" + studentIndex);
                 //  rdr = cmd.ExecuteReader();
                 tbl = new DataTable();
                 tbl.Load(cmd.ExecuteReader());
@@ -116,7 +116,7 @@ namespace ZahiraSIS
                 cmd.Parameters.Add("@Class", SqlDbType.VarChar).Value = studentClass;
 
                 //Console.WriteLine("SQL:" + cmd.CommandText);
-                Console.WriteLine("*class:" + studentClass);
+               // Console.WriteLine("*class:" + studentClass);
                 //  rdr = cmd.ExecuteReader();
                 tbl = new DataTable();
                 tbl.Load(cmd.ExecuteReader());
@@ -161,8 +161,8 @@ namespace ZahiraSIS
                     CommandText = sql
                 };
                 cmd.Parameters.Add("@Key", SqlDbType.Int).Value = key;
-                Console.WriteLine("SQL:" + cmd.CommandText);
-                Console.WriteLine("date: " + effectYear);
+                //Console.WriteLine("SQL:" + cmd.CommandText);
+                //Console.WriteLine("date: " + effectYear);
                 //  rdr = cmd.ExecuteReader();
                 tbl = new DataTable();
                 tbl.Load(cmd.ExecuteReader());
@@ -212,7 +212,7 @@ namespace ZahiraSIS
                 cmd.Parameters.Add("@Index", SqlDbType.VarChar).Value = index;
 
                 //Console.WriteLine("SQL:" + cmd.CommandText);
-                Console.WriteLine("index:" + index);
+               // Console.WriteLine("index:" + index);
                 rdr = cmd.ExecuteReader();
 
                 if (rdr.HasRows)
@@ -357,7 +357,7 @@ namespace ZahiraSIS
                 cmd.Connection = conn;
                 cmd.CommandText = sql;
                 //cmd.Parameters.Add("@Class", SqlDbType.Int).Value = stuClass;
-                Console.WriteLine(cmd.CommandText);
+               // Console.WriteLine(cmd.CommandText);
                 rdr = cmd.ExecuteReader();
                 rdr.Read();
                 //string key_fld = "";
@@ -625,7 +625,7 @@ namespace ZahiraSIS
                 cmd.CommandText = sql;                
                 cmd.Parameters.Add("@Admno", SqlDbType.VarChar).Value = admno;
 
-                Console.WriteLine(cmd.CommandText);
+               // Console.WriteLine(cmd.CommandText);
                 rdr = cmd.ExecuteReader();
                 rdr.Read();
                 //string key_fld = "";
@@ -663,10 +663,10 @@ namespace ZahiraSIS
             {
                 grade = "0" + grade;
             }
-            Console.WriteLine("grade:" + grade + " medium:" + guessedClass);
+            //Console.WriteLine("grade:" + grade + " medium:" + guessedClass);
             int key_fee = (int)clsDao.GetStudentClassFee(grade, guessedClass.ToString()).Rows[0]["key_fee"];
-            Console.WriteLine("***grade: " + grade);
-            Console.WriteLine("***key_fee: " + key_fee);
+            //Console.WriteLine("***grade: " + grade);
+            //Console.WriteLine("***key_fee: " + key_fee);
             int thisYear = DateTime.Now.Year;
             if (arrearsYear > thisYear) {
                 arrearsYear = thisYear;
@@ -692,7 +692,7 @@ namespace ZahiraSIS
                 cmd.CommandText = sql;
                 cmd.Parameters.Add("@Class", SqlDbType.VarChar).Value = classCode;
 
-                Console.WriteLine(cmd.CommandText);
+              //  Console.WriteLine(cmd.CommandText);
                 rdr = cmd.ExecuteReader();
                 rdr.Read();
                 //string key_fld = "";

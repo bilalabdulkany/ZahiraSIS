@@ -21,7 +21,7 @@ namespace ZahiraSIS
                 var cmd = new SqlCommand {
                     Connection = conn,CommandText=selectClass
                 };
-                Console.WriteLine("SQL:" + cmd.CommandText);
+                //Console.WriteLine("SQL:" + cmd.CommandText);
                 tbl = new DataTable();
                 tbl.Load(cmd.ExecuteReader());
             }
@@ -62,7 +62,7 @@ namespace ZahiraSIS
                     Connection = conn,
                     CommandText = selectClass
                 };
-                Console.WriteLine("SQL:" + cmd.CommandText);
+              //  Console.WriteLine("SQL:" + cmd.CommandText);
                 tbl = new DataTable();
                 tbl.Load(cmd.ExecuteReader());
             }
@@ -104,7 +104,7 @@ namespace ZahiraSIS
                     Connection = conn,
                     CommandText = selectClass
                 };
-                Console.WriteLine("SQL:" + cmd.CommandText);
+                //Console.WriteLine("SQL:" + cmd.CommandText);
                 tbl = new DataTable();
                 tbl.Load(cmd.ExecuteReader());
             }
@@ -150,7 +150,7 @@ namespace ZahiraSIS
                 };
                 cmd.Parameters.Add("@Type", SqlDbType.VarChar).Value = type;
 
-                Console.WriteLine("SQL:" + cmd.CommandText);
+            //    Console.WriteLine("SQL:" + cmd.CommandText);
                 tbl = new DataTable();
                 tbl.Load(cmd.ExecuteReader());
             }
@@ -200,7 +200,7 @@ namespace ZahiraSIS
                 cmd.Parameters.Add("@Grade", SqlDbType.Int).Value = grade;
                 cmd.Parameters.Add("@Medium", SqlDbType.Int).Value = medium;
 
-                Console.WriteLine("SQL:" + cmd.CommandText);
+                //Console.WriteLine("SQL:" + cmd.CommandText);
                 tbl = new DataTable();
                 tbl.Load(cmd.ExecuteReader());
             }
@@ -253,8 +253,58 @@ namespace ZahiraSIS
                 };
                 cmd.Parameters.Add("@Medium", SqlDbType.VarChar).Value = medium;
                 cmd.Parameters.Add("@Grade", SqlDbType.VarChar).Value = grade;
-                Console.WriteLine("SQL:" + cmd.CommandText);
+               // Console.WriteLine("SQL:" + cmd.CommandText);
                 
+                //  rdr = cmd.ExecuteReader();
+                tbl = new DataTable();
+                tbl.Load(cmd.ExecuteReader());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("exception" + e.ToString());
+            }
+            finally
+            {
+                try
+                {
+                    if (conn != null)
+                    {
+                        conn.Close();
+                        // rdr.Close();
+                        conn.Dispose();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            return tbl;
+        }
+
+
+        public DataTable GetAllActiveClasses()
+        {
+            //SqlDataReader rdr = null;
+            SqlConnection conn = null;
+            DataTable tbl = null;
+            try
+            {
+                conn = new SqlConnection(connectionString);
+                conn.Open();
+                string selectClass =
+                    "select s.key_fld,s.name,m.code as medium,s.code as classcode,s.key_fee,g.code as grade,g.name as gradename from stuclass s "+
+                    "left join grade g on s.key_grd = g.key_fld "+
+                    "left join  medium m on m.key_fld = s.key_med "+
+                    "where s.status = 'ACT'";
+                var cmd = new SqlCommand
+                {
+                    Connection = conn,
+                    CommandText = selectClass
+                };
+                
+                // Console.WriteLine("SQL:" + cmd.CommandText);
+
                 //  rdr = cmd.ExecuteReader();
                 tbl = new DataTable();
                 tbl.Load(cmd.ExecuteReader());

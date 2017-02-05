@@ -156,6 +156,12 @@
     <Compile Include="com.zahira.view.classwisefeesummary\frmServiceArrearsClasswise.Designer.cs">
       <DependentUpon>frmServiceArrearsClasswise.cs</DependentUpon>
     </Compile>
+    <Compile Include="com.zahira.view.schoolwisefeesummary\frmServiceArrearsSchoolwise.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="com.zahira.view.schoolwisefeesummary\frmServiceArrearsSchoolwise.Designer.cs">
+      <DependentUpon>frmServiceArrearsSchoolwise.cs</DependentUpon>
+    </Compile>
     <Compile Include="com.zahira.view.servicefeesyearlysummary\frmServiceFeeYrSummary.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -206,6 +212,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="com.zahira.view.classwisefeesummary\frmServiceArrearsClasswise.resx">
       <DependentUpon>frmServiceArrearsClasswise.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="com.zahira.view.schoolwisefeesummary\frmServiceArrearsSchoolwise.resx">
+      <DependentUpon>frmServiceArrearsSchoolwise.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="com.zahira.view.servicefeesyearlysummary\frmServiceFeeYrSummary.resx">
       <DependentUpon>frmServiceFeeYrSummary.cs</DependentUpon>

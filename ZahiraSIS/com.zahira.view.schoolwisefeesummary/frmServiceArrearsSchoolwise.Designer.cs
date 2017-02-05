@@ -1,6 +1,6 @@
-﻿namespace ZahiraSIS.com.zahira.view.reports
+﻿namespace ZahiraSIS.com.zahira.view.schoolwise
 {
-    partial class frmServiceArrearsClasswise
+    partial class frmServiceArrearsSchoolwise
     {
         /// <summary>
         /// Required designer variable.
@@ -263,7 +263,7 @@
             this.progressBar1.Size = new System.Drawing.Size(499, 10);
             this.progressBar1.TabIndex = 31;
             // 
-            // frmServiceArrearsClasswise
+            // frmServiceArrearsSchoolwise
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -286,9 +286,9 @@
             this.Controls.Add(this.tblStudents);
             this.Controls.Add(this.cmbClass);
             this.Controls.Add(this.label1);
-            this.Name = "frmServiceArrearsClasswise";
-            this.Text = "Fees Arrears -Class wise";
-            this.Load += new System.EventHandler(this.frmServiceArrearsClasswise_Load);
+            this.Name = "frmServiceArrearsSchoolwise";
+            this.Text = "Fees Arrears -School wise";
+            this.Load += new System.EventHandler(this.frmServiceArrearsSchoolwise_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tblStudents)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).EndInit();
