@@ -14,6 +14,9 @@ namespace ZahiraSIS
     class StudentDAO
     {
         private string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Zahira_SISConnectionString"].ToString();
+        public readonly String COLUMN_PAIDTILL= "PaidTill";
+        public readonly String COLUMN_TOTAL_PAID= "Total Fee paid this year";
+        public readonly String COLUMN_ARREARS = "Arrears";
 
         public StudentArrearsBean getStudentArrears(String studentClass)
         {
@@ -281,13 +284,12 @@ namespace ZahiraSIS
             StudentArrearsBean cumArrearsBean = null;
             try
             {
-
                 conn = new SqlConnection(connectionString);
                 conn.Open();
                 var classwiseStudents = this.getStudentIndexFromClass(studentClass.Trim());
-                classwiseStudents.Columns.Add("Arrears");
-                classwiseStudents.Columns.Add("PaidTill");
-                classwiseStudents.Columns.Add("Total Fee paid this year");
+                classwiseStudents.Columns.Add(COLUMN_ARREARS);
+                classwiseStudents.Columns.Add(COLUMN_PAIDTILL);
+                classwiseStudents.Columns.Add(COLUMN_TOTAL_PAID);
                 int stlen = classwiseStudents.Rows.Count;
                 if(logging)
                 Console.WriteLine("Total students: " + stlen);
@@ -301,9 +303,9 @@ namespace ZahiraSIS
                         arrearsBean = this.NewForwardBalance(admno, studentClass, DateTime.Parse(toDate), false,false);
                         if (arrearsBean != null)
                         {
-                            classwiseStudents.Rows[i]["Arrears"] = arrearsBean.curArrears;
-                            classwiseStudents.Rows[i]["Total Fee paid this year"] = arrearsBean.feePaidForTheYear;
-                            classwiseStudents.Rows[i]["PaidTill"] = arrearsBean.paidTill.ToString("dd-MMM-yyyy");
+                            classwiseStudents.Rows[i][COLUMN_ARREARS] = arrearsBean.curArrears;
+                            classwiseStudents.Rows[i][COLUMN_TOTAL_PAID] = arrearsBean.feePaidForTheYear;
+                            classwiseStudents.Rows[i][COLUMN_PAIDTILL] = arrearsBean.paidTill.ToString("dd-MMM-yyyy");
 
                             cumArrears = cumArrears + double.Parse(arrearsBean.curArrears);
                             totalPaid =totalPaid+arrearsBean.feePaidForTheYear;
@@ -313,9 +315,9 @@ namespace ZahiraSIS
                         }
                         else {
                             //Student on fee concession.
-                            classwiseStudents.Rows[i]["Arrears"] = "0";
-                            classwiseStudents.Rows[i]["PaidTill"] = "0";
-                            classwiseStudents.Rows[i]["Total Fee paid this year"] = "0";
+                            classwiseStudents.Rows[i][COLUMN_ARREARS] = "0";
+                            classwiseStudents.Rows[i][COLUMN_PAIDTILL] = "0";
+                            classwiseStudents.Rows[i][COLUMN_TOTAL_PAID] = "0";
                             cumArrears = 0;
                             totalPaid = 0;
                         }

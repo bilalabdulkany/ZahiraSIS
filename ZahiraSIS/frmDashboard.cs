@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using ZahiraSIS.com.zahira.view.promotestudents;
 using ZahiraSIS.com.zahira.view.reports;
 using FoxProUpdate;
+using ZahiraSIS.com.zahira.view.schoolwise;
 
 namespace ZahiraSIS
 {
@@ -146,6 +147,11 @@ namespace ZahiraSIS
         private void button3_Click(object sender, EventArgs e)
         {
             new frmServiceArrearsGradewise().Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            new frmServiceArrearsSchoolwise().Show();
         }
     }
 }

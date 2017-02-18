@@ -20,6 +20,9 @@ namespace ZahiraSIS.com.zahira.view.schoolwise
         private double totalPaid = 0;
         ClassDAO clsDao = new ClassDAO();
         int selectedClass1 = 0;
+        public readonly String COLUMN_CLASS = "Class";
+        public readonly String COLUMN_TOTAL_PAID = "Total Fee paid this year";
+        public readonly String COLUMN_ARREARS = "Arrears";
         public frmServiceArrearsSchoolwise()
         {
             InitializeComponent();
@@ -78,7 +81,7 @@ namespace ZahiraSIS.com.zahira.view.schoolwise
 
         private void button2_Click(object sender, EventArgs e)
         {
-            selectedClass1 = (int)cmbClass.SelectedValue;
+            //selectedClass1 = (int)cmbClass.SelectedValue;
             //tsStatus.Text = "User Cancelled";
 
             tblStudents.DataSource = null;
@@ -152,6 +155,10 @@ namespace ZahiraSIS.com.zahira.view.schoolwise
             string todate = null;
             StudentDAO dao = new StudentDAO();
             totalDatatable = new DataTable();
+            if (totalDatatable.Rows.Count != 0) {
+                totalDatatable.Clear();
+            }
+           
             backgroundWorker1.ReportProgress(0);
             List<StudentArrearsBean> stBeanList = null;
             try
@@ -165,17 +172,32 @@ namespace ZahiraSIS.com.zahira.view.schoolwise
 
 
                 //TODO the Student bean should be taken from ClassDAO and output the 
-                //student bean.                
+                //student bean.     
+                DataTable AllClasses = clsDao.GetAllActiveClasses();
+                totalDatatable.Columns.Add(COLUMN_ARREARS);
+                totalDatatable.Columns.Add(COLUMN_CLASS);
+                totalDatatable.Columns.Add(COLUMN_TOTAL_PAID);
 
-                string classCode = (dao.getStudentClasses(selectedClass1).Code).Trim();
-                StudentArrearsBean arrearsBean = dao.getStudentArrearsByDatePerClass(classCode,
-                    fromdate, todate,true);
+
+                int ClassLen = AllClasses.Rows.Count;
+                for (int i = 0; i < ClassLen; i++) {
+                    string classCode = AllClasses.Rows[i]["classcode"].ToString().Trim();
+                    StudentArrearsBean arrearsBean = dao.getStudentArrearsByDatePerClass(classCode,
+                        fromdate, todate, true);
+                    //totalDatatable = arrearsBean.stPaidData;
+                    double classArrears= Double.Parse(arrearsBean.curArrears);
+                    totalDatatable.Rows[i][COLUMN_CLASS] = classCode;
+                    totalDatatable.Rows[i][COLUMN_ARREARS] = classArrears;
+                    totalDatatable.Rows[i][COLUMN_TOTAL_PAID] = arrearsBean.feePaidForTheYear;
+                    currArrears += classArrears;
+                    totalPaid += arrearsBean.feePaidForTheYear;
+                    stBeanList.Add(arrearsBean);
+                    backgroundWorker1.ReportProgress((i+1)/(ClassLen+1)*100);
+                }               
                 
-                totalDatatable = arrearsBean.stPaidData;
-                currArrears = Double.Parse(arrearsBean.curArrears);
-                totalPaid += arrearsBean.feePaidForTheYear;
+                
                 //Data Table end
-                backgroundWorker1.ReportProgress(100);
+                
             }
             catch (System.Exception ex)
             {
