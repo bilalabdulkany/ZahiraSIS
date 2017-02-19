@@ -49,11 +49,7 @@ namespace ZahiraSIS.com.zahira.view.schoolwise
             tblStudents.Columns[0].Name=COLUMN_CLASS;
             tblStudents.Columns[1].Name = COLUMN_ARREARS;
             tblStudents.Columns[2].Name = COLUMN_TOTAL_PAID;
-
-
-
-
-
+            
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -145,9 +141,7 @@ namespace ZahiraSIS.com.zahira.view.schoolwise
             string todate = null;
             StudentDAO dao = new StudentDAO();
             totalDatatable = new DataTable();
-            if (totalDatatable.Rows.Count != 0) {
-                totalDatatable.Clear();
-            }
+           
            
            
             List<StudentArrearsBean> stBeanList = null;

@@ -17,6 +17,7 @@ namespace ZahiraSIS.com.zahira.view.reports
         private volatile DataTable totalDatatable = null;
         private  double currArrears = 0;
         private double totalPaid = 0;
+        StudentDAO studentDAO = new StudentDAO();
 
         ClassDAO clsDao = new ClassDAO();
         public frmServiceArrearsGradewise()
@@ -60,8 +61,11 @@ namespace ZahiraSIS.com.zahira.view.reports
             cmbMedium.DataSource = clsDao.GetMedium();
             cmbMedium.DisplayMember = "name";
             cmbMedium.ValueMember = "key_fld";
+            tblStudents.ColumnCount = 2;
+            tblStudents.Columns[0].Name="Class";
+            tblStudents.Columns[1].Name="Arrears";
             cmbMedium.Refresh();
-            button3.Enabled = false;
+            btCancel.Enabled = false;
 
         }
 
@@ -86,21 +90,20 @@ namespace ZahiraSIS.com.zahira.view.reports
 
         private void button2_Click(object sender, EventArgs e)
         {
-            tsStatus.Text = "User Cancelled";
-            tblStudents.DataSource = null;
             tblStudents.Refresh();
             txtCurArrears.Text = "";
             txtCurBFArrears.Text = "";
-            if (totalDatatable != null)
-            {
-                totalDatatable.Reset();
-            }
+            
+            
+           
             if (!backgroundWorker1.IsBusy)
             {
-               
-                button2.Enabled = false;
-                button3.Enabled = true;
-                backgroundWorker1.RunWorkerAsync();
+                tsStatus.Text = "Loading..";
+                tblStudents.Rows.Clear();
+                StudentArrearsBean stuBean = new StudentArrearsBean();
+                btExecute.Enabled = false;
+                btCancel.Enabled = true;
+                backgroundWorker1.RunWorkerAsync(stuBean);
             }
 
         }
@@ -121,6 +124,12 @@ namespace ZahiraSIS.com.zahira.view.reports
             base.OnFormClosing(e);
             if (e.CloseReason == CloseReason.UserClosing)
             {
+                if (backgroundWorker1.IsBusy)
+                {
+                    backgroundWorker1.CancelAsync();
+                    btCancel.Enabled = false;
+                    btExecute.Enabled = true;
+                }
                 e.Cancel = true;
                 Hide();
             }
@@ -179,9 +188,7 @@ namespace ZahiraSIS.com.zahira.view.reports
                 {
                     
                     //TODO fill datatable with Lists. also check the date range.
-                    tblStudents.Refresh();
-                    tblStudents.DataSource = totalDatatable;
-                    tblStudents.Refresh();                   
+                                
                     txtCurArrears.Text = currArrears + "";
                     txtCurBFArrears.Text = totalPaid + "";
                     currArrears = 0;
@@ -193,44 +200,44 @@ namespace ZahiraSIS.com.zahira.view.reports
                     System.Windows.Forms.MessageBox.Show(ex.Message);
                 }
 
-                tsStatus.Text = "Done";               
+                        
             }
             else if (e.Cancelled)
             {
-                tsStatus.Text = "User Cancelled";
+               
                 tblStudents.Refresh();
                 txtCurArrears.Text = currArrears + "";
-                totalDatatable.Reset();
+                progressBar1.Value = 0;
             }
             else {
                 tsStatus.Text = "An Error Occurred";               
             }
-            button2.Enabled = true;
-            button3.Enabled = false;
+            btExecute.Enabled = true;
+            btCancel.Enabled = false;
         }
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            tsStatus.Text = e.ProgressPercentage + "%";
-            progressBar1.Value = e.ProgressPercentage;
+            if (!backgroundWorker1.CancellationPending)
+            {
+                StudentArrearsBean bean = (StudentArrearsBean)e.UserState;
+                if (bean != null)
+                {
+                    tblStudents.Rows.Add(bean.classCode, bean.curArrears, bean.feePaidForTheYear);
+                }
+                tsStatus.Text = e.ProgressPercentage + "%";
+                progressBar1.Value = e.ProgressPercentage;
+                txtCurArrears.Text = currArrears + "";
+                txtCurBFArrears.Text = totalPaid + "";
+            }
+           
 
 
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-           // DataGridView view = tblStudents;
-            BackgroundWorker sendingWorker = (BackgroundWorker)sender;
-            totalDatatable = new DataTable();
-            progressBar1.BeginInvoke((MethodInvoker)delegate ()
-            {
-                progressBar1.Value = 0;
-                backgroundWorker1.ReportProgress(0);
-                progressBar1.Refresh();
-
-            });
-           
-                tsStatus.Text = "Loading...";
+    
                 string fromdate = null;
                 string todate = null;
                 if (dateTimePicker2.Value != null)
@@ -238,29 +245,18 @@ namespace ZahiraSIS.com.zahira.view.reports
                     todate = dateTimePicker2.Value.ToString("yyyy-MM-dd");
 
                 }
-
-              
-                
-                StudentDAO studentDAO = new StudentDAO();
+           
             //  var totalDatatable = new DataTable();
-            totalDatatable.Columns.Add("Class");
-                totalDatatable.Columns.Add("Arrears");
+           
                // double curArrears = 0;
                 int count = chkSelectedClasses.CheckedItems.Count;
             int k = 0;
             foreach (object itemChecked in chkSelectedClasses.CheckedItems)
                 {
-                if (!sendingWorker.CancellationPending)
+                if (!backgroundWorker1.CancellationPending)
                 {
                     
-                    progressBar1.BeginInvoke((MethodInvoker)delegate ()
-                    {
-
-                        backgroundWorker1.ReportProgress((k * 100) / count);
-
-                        progressBar1.Refresh();
-
-                    });
+                    
                     DataRowView castedItem = itemChecked as DataRowView;
                     int selectedClass1 = (int)castedItem["sfield"];//nt)cmbClass.SelectedValue;
                     string selectedText = (string)castedItem["sname"];
@@ -270,35 +266,50 @@ namespace ZahiraSIS.com.zahira.view.reports
                     string classCode = (studentDAO.getStudentClasses(selectedClass1).Code).Trim();
                     StudentArrearsBean arrearsBean = studentDAO.getStudentArrearsByDatePerClass(classCode,
                         fromdate, todate,false);
-                    DataRow row = totalDatatable.NewRow();
+
+                    StudentArrearsBean aBean = (StudentArrearsBean)e.Argument;
+                    //DataRow row = totalDatatable.NewRow();
+                    aBean.classCode = classCode;
+                    aBean.curArrears = arrearsBean.curArrears;
+                    aBean.feePaidForTheYear = arrearsBean.feePaidForTheYear;
+                    decimal pct = ((decimal)k * 100 / (decimal)(count - 1));
+                    int pct1 = Convert.ToInt32(pct);
+                    backgroundWorker1.ReportProgress(pct1, aBean);
+
+                    if (backgroundWorker1.CancellationPending)
+                    {
+                        // Set the e.Cancel flag so that the WorkerCompleted event
+                        // knows that the process was cancelled.
+                        e.Cancel = true;
+                        backgroundWorker1.ReportProgress(0);
+                        return;
+                    }
+
+
                     currArrears += Double.Parse(arrearsBean.curArrears);
                     totalPaid += arrearsBean.feePaidForTheYear;
-                    row["Class"] = selectedText;
-                    row["Arrears"] = arrearsBean.curArrears;
+                    //row["Class"] = selectedText;
+                    //row["Arrears"] = arrearsBean.curArrears;
                     // tblStudents.DataSource = arrearsBean.stPaidData;               
-                    totalDatatable.Rows.Add(row);
+                    //totalDatatable.Rows.Add(row);
                     k++;
                     
 
                 }
-                else
-                {
-                    e.Cancel = true;
-                    break;
-                }
+               
             }
 
-            backgroundWorker1.ReportProgress(100);
-            /*  }
-              else {
-                  e.Cancel = true;                
-              }
-             */
+          
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            backgroundWorker1.CancelAsync();
+            if (backgroundWorker1.IsBusy)
+            {
+                backgroundWorker1.CancelAsync();
+                btCancel.Enabled = false;
+                btExecute.Enabled = true;
+            }
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
