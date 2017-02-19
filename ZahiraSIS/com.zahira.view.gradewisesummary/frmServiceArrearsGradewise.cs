@@ -242,8 +242,8 @@ namespace ZahiraSIS.com.zahira.view.reports
               
                 
                 StudentDAO studentDAO = new StudentDAO();
-              //  var totalDatatable = new DataTable();
-                totalDatatable.Columns.Add("Class");
+            //  var totalDatatable = new DataTable();
+            totalDatatable.Columns.Add("Class");
                 totalDatatable.Columns.Add("Arrears");
                // double curArrears = 0;
                 int count = chkSelectedClasses.CheckedItems.Count;

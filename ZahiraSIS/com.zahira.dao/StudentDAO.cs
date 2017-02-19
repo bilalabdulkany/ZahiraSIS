@@ -76,6 +76,7 @@ namespace ZahiraSIS
                 tbl = new DataTable();
                 tbl.Load(cmd.ExecuteReader());
             }
+
             catch (Exception e)
             {
                 Console.WriteLine("exception" + e.ToString());
@@ -311,7 +312,7 @@ namespace ZahiraSIS
                             totalPaid =totalPaid+arrearsBean.feePaidForTheYear;
                             //Call fillTable. Then add all the fees to a bean.
                             //Its better if FillTable returns a bean consisting of student's arrears.
-                            if(logging)Console.WriteLine("cum. arrears: " + cumArrears);
+                            if (logging) { Console.WriteLine("cum. arrears: " + cumArrears); }
                         }
                         else {
                             //Student on fee concession.
@@ -826,8 +827,8 @@ namespace ZahiraSIS
                 
                 /*for loop*/
                 if (arrearsToFromStudent.Year == 0) { }
-                feeRate = this.guessClassAndFee(classCode, todayDate.Year, arrearsToFromStudent.Year);             
-                Console.WriteLine("fee: " + feeRate);
+                feeRate = this.guessClassAndFee(classCode, todayDate.Year, arrearsToFromStudent.Year);
+                if (logging) { Console.WriteLine("fee: " + feeRate); }
 
                 StudentArrearsBean calculatedBean = calculateArrears(arrearsToFromStudent, todayDate, feesArrears, classCode, totalArrearsFromStudent, feeRate,logging);
                 if (!arrearsBean.paidTill.Equals(new DateTime())&&arrearsBean.paidTill.Month == todayDate.Month)
