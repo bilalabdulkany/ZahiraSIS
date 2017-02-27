@@ -250,7 +250,7 @@ namespace ZahiraSIS.com.zahira.view.reports
            
                // double curArrears = 0;
                 int count = chkSelectedClasses.CheckedItems.Count;
-            int k = 0;
+            int k = 1;
             foreach (object itemChecked in chkSelectedClasses.CheckedItems)
                 {
                 if (!backgroundWorker1.CancellationPending)
@@ -272,7 +272,7 @@ namespace ZahiraSIS.com.zahira.view.reports
                     aBean.classCode = classCode;
                     aBean.curArrears = arrearsBean.curArrears;
                     aBean.feePaidForTheYear = arrearsBean.feePaidForTheYear;
-                    decimal pct = ((decimal)k * 100 / (decimal)(count - 1));
+                    decimal pct = ((decimal)k * 100 / (decimal)(count));
                     int pct1 = Convert.ToInt32(pct);
                     backgroundWorker1.ReportProgress(pct1, aBean);
 

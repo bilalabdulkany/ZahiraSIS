@@ -277,16 +277,12 @@ namespace ZahiraSIS
         }
         public StudentArrearsBean getStudentArrearsByDatePerClass(string studentClass, string fromDate, string toDate,bool logging)
         {
-        //    SqlDataReader rdr = null;
-            SqlConnection conn = null;
-          //  SqlCommand cmd = null;
-            //DataTable tbl = null;
             StudentArrearsBean arrearsBean = null;
             StudentArrearsBean cumArrearsBean = null;
             try
             {
-                conn = new SqlConnection(connectionString);
-                conn.Open();
+                //conn = new SqlConnection(connectionString);
+                //conn.Open();
                 var classwiseStudents = this.getStudentIndexFromClass(studentClass.Trim());
                 classwiseStudents.Columns.Add(COLUMN_ARREARS);
                 classwiseStudents.Columns.Add(COLUMN_PAIDTILL);
