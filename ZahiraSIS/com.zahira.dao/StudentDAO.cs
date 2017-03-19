@@ -946,7 +946,7 @@ namespace ZahiraSIS
                         {
                             paidMonth = 12;//paidMonth % 12;
                         }
-                        int thisMonth = todayDate.Month + 1;
+                        int thisMonth = todayDate.Month + (netArrears==0?1:0);
                         if (thisMonth == 13)
                         {
                             thisMonth = 12;//paidMonth % 12;

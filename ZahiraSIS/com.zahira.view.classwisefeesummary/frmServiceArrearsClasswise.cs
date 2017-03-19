@@ -52,9 +52,10 @@ namespace ZahiraSIS.com.zahira.view.reports
             tblStudents.ColumnCount = 5;
             tblStudents.Columns[0].Name = "Admno";
             tblStudents.Columns[1].Name = "Name";
-            tblStudents.Columns[2].Name = "Arrears";
-            tblStudents.Columns[3].Name = "Fee Paid for the year";
-            tblStudents.Columns[4].Name ="Paid Till";
+            tblStudents.Columns[2].Name = "Class";
+            tblStudents.Columns[3].Name = "Arrears";
+            tblStudents.Columns[4].Name = "Fee Paid for the year";
+            
 
 
             button3.Enabled = false;

@@ -221,8 +221,11 @@ namespace ZahiraSIS.com.zahira.view.schoolwise
             if (!backgroundWorker1.CancellationPending)
             {
                 StudentArrearsBean bean = (StudentArrearsBean)e.UserState;
-                if (bean != null) { 
-                tblStudents.Rows.Add(bean.classCode, bean.curArrears, bean.feePaidForTheYear);
+                if (bean != null) {
+                    
+                            tblStudents.Rows.Add(bean.classCode, bean.curArrears, bean.feePaidForTheYear);
+
+                    
                 }
                 tsStatus.Text = e.ProgressPercentage + "%";
                 progressBar1.Value = e.ProgressPercentage;
