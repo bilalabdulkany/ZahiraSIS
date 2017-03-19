@@ -803,7 +803,7 @@ namespace ZahiraSIS
                     if (arrearsTo < arrearsToFromStudent) arrearsTo = arrearsToFromStudent;
                     if (arrearsBean.paidTill > todayDate)
                     { surplusPaid = true;
-                        if(totalPaid==0)
+                        //if(totalPaid==0)
                         totalPaid = GetFeePaidForTheYear(todayDate.Year, admNo);
                     }
                     
@@ -838,7 +838,10 @@ namespace ZahiraSIS
                 {
                     if (takeFromFeePaid || surplusPaid)
                     {
-                        mnthFeeArrears = -(totalPaid - feeRate * todayDate.Month);
+                        
+                        mnthFeeArrears = (totalPaid - feeRate * todayDate.Month);
+                        if (surplusPaid) mnthFeeArrears = (-mnthFeeArrears);
+
                         calculatedBean.curArrears = mnthFeeArrears.ToString();
                     }
                     if (paidLess)
@@ -1059,7 +1062,7 @@ namespace ZahiraSIS
                 conn = new SqlConnection(connectionString);
                 conn.Open();
                 string sql = "select sum(paid) as paid from mnthfeepay where mnthfeepay.key_stu =" +
-  "(select key_fld from student where admno = @Admno) and trndate > '" + (year - 1) + "-12-31' and trndate<= '" + year + "-12-31'";
+  "(select key_fld from student where admno = @Admno) and trndate > '" + (year - 1) + "-12-31' and trndate<= '" + year + "-12-31' and deleted=0";
                 cmd = new SqlCommand();
                 cmd.Connection = conn;
                 cmd.CommandText = sql;
