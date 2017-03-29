@@ -647,6 +647,8 @@ namespace ZahiraSIS
         {
             ClassDAO clsDao = new ClassDAO();
             int yearsToReduce = currentYear - arrearsYear;
+            //Suppose arrears is paid upto next year, yearsToReduce becomes negative. In that case change signs.
+            if (yearsToReduce < 0) yearsToReduce =(-yearsToReduce);
             double feeRate = 0;
             classCode = classCode.Trim();
             string guessedClass = this.GetMedium(classCode); //classCode[classCode.Length - 2];
@@ -670,6 +672,7 @@ namespace ZahiraSIS
             if (arrearsYear > thisYear) {
                 arrearsYear = thisYear;
             }
+            if (arrearsYear > currentYear) arrearsYear = currentYear;
             feeRate = double.Parse(this.getMonthFeeRevision(key_fee, arrearsYear).Rows[0]["amount"].ToString
                                     ());
             return feeRate;
@@ -781,7 +784,7 @@ namespace ZahiraSIS
                     DateTime arrearsFrom= (DateTime)lastRowMnthFee["arrearsfrm"];               
                     
                     double totalArrears = Double.Parse(lastRowMnthFee["totarrears"].ToString());
-                    totalPaid = Double.Parse(lastRowMnthFee["paid"].ToString());
+                    totalPaid = GetFeePaidForTheYear(todayDate.Year, admNo);//Double.Parse(lastRowMnthFee["paid"].ToString());
                     double netArrears = totalArrears - totalPaid;
                     if (logging)
                     {
@@ -806,6 +809,7 @@ namespace ZahiraSIS
                         //if(totalPaid==0)
                         totalPaid = GetFeePaidForTheYear(todayDate.Year, admNo);
                     }
+
                     
                     //arrearsBean.arrearsTo = (DateTime)arrearsTo;
                     
@@ -827,12 +831,18 @@ namespace ZahiraSIS
                 if (logging) { Console.WriteLine("fee: " + feeRate); }
 
                 StudentArrearsBean calculatedBean = calculateArrears(arrearsToFromStudent, todayDate, feesArrears, classCode, totalArrearsFromStudent, feeRate,logging);
-                if (!arrearsBean.paidTill.Equals(new DateTime())&&arrearsBean.paidTill.Month == todayDate.Month)
+                if (!arrearsBean.paidTill.Equals(todayDate)&&arrearsBean.paidTill.Month == todayDate.Month&& arrearsBean.paidTill.Year == todayDate.Year)
                 {
                     if (totalPaid < feeRate ) {
                         paidLess = true;
                     }
+                    if ((totalPaid < feeRate * todayDate.Month) )
+                    {
+                        paidLess = true;
+                    }
                 }
+                //TODO what are the other scenarios, there would be paid Less boolean = true?
+
                 double mnthFeeArrears = 0;
                 if (!IsMonthFeeNull)
                 {
@@ -840,13 +850,16 @@ namespace ZahiraSIS
                     {
                         
                         mnthFeeArrears = (totalPaid - feeRate * todayDate.Month);
-                        if (surplusPaid) mnthFeeArrears = (-mnthFeeArrears);
+                        if (surplusPaid)if(mnthFeeArrears>=0) mnthFeeArrears = (-mnthFeeArrears);
 
                         calculatedBean.curArrears = mnthFeeArrears.ToString();
                     }
+                    /*if ((totalPaid - feeRate * todayDate.Month) < 0) {
+                        paidLess = true;
+                    }*/
                     if (paidLess)
                     {
-                        mnthFeeArrears = feeRate - totalPaid;
+                        mnthFeeArrears = feeRate * todayDate.Month - totalPaid;
                         calculatedBean.curArrears = mnthFeeArrears.ToString();
                     }
                 }
