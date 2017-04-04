@@ -729,6 +729,14 @@ namespace ZahiraSIS
             classCode = classCode.Trim();
             Boolean takeFromFeePaid = false;
             double totalArrearsFromStudent = 0;
+            double totalPaid = 0;
+            DateTime todayDate = DateTime.Now;
+            Boolean surplusPaid = false;
+            Boolean paidLess = false;
+            Boolean IsMonthFeeNull = false;
+            Boolean IsFeePaidThisYear = false;
+            DataRow lastRowMnthFee = null;
+
             try
             {
                 arrearsBean = new StudentArrearsBean();
@@ -742,17 +750,14 @@ namespace ZahiraSIS
                 //This below statement is for wrongly added student info!
                 DateTime arrearsFromFromStudent = bean.Arrearsfrm;
 
-                /*  if (arrearsFromFromStudent > arrearsToFromStudent)
-                  {
-                      //arrearsFromFromStudent=arrearsFromFromStudent.
-                      arrearsToFromStudent = arrearsFromFromStudent.AddMonths(-1);
-                  }*/
+               //First check arrears info from student table.
                 if (logging)
                 {
                     Console.WriteLine("net arrears in Student: " + totalArrearsFromStudent);
 
                     Console.WriteLine("arrears to date in student: " + arrearsToFromStudent.ToString("dd-MMM-yyyy"));
                 }
+                //Check student concessions
                 if (CheckStudentConcessions(admNo, classCode) == true)
                 {
                     arrearsBean.curArrears = totalArrearsFromStudent+"";
@@ -761,13 +766,7 @@ namespace ZahiraSIS
                 }
                 DateTime arrearsTo = arrearsFromFromStudent;
                 DateTime paidTo = arrearsToFromStudent;
-                double totalPaid = 0;
-                DateTime todayDate = DateTime.Now;
-                Boolean surplusPaid = false;
-                Boolean paidLess = false;
-                Boolean IsMonthFeeNull = false;
-                DataRow lastRowMnthFee = null;
-                if (asAt.HasValue)
+                                if (asAt.HasValue)
                 {
                     todayDate = (DateTime)asAt;
                 }
@@ -784,7 +783,8 @@ namespace ZahiraSIS
                     DateTime arrearsFrom= (DateTime)lastRowMnthFee["arrearsfrm"];               
                     
                     double totalArrears = Double.Parse(lastRowMnthFee["totarrears"].ToString());
-                    totalPaid = GetFeePaidForTheYear(todayDate.Year, admNo);//Double.Parse(lastRowMnthFee["paid"].ToString());
+                    totalPaid = GetTotalFeePaidForTheYear(todayDate.Year, admNo);//Double.Parse(lastRowMnthFee["paid"].ToString());
+                    if (totalPaid > 0) IsFeePaidThisYear = true;
                     double netArrears = totalArrears - totalPaid;
                     if (logging)
                     {
@@ -807,7 +807,7 @@ namespace ZahiraSIS
                     if (arrearsBean.paidTill > todayDate)
                     { surplusPaid = true;
                         //if(totalPaid==0)
-                        totalPaid = GetFeePaidForTheYear(todayDate.Year, admNo);
+                       // totalPaid = GetFeePaidForTheYear(todayDate.Year, admNo);
                     }
 
                     
@@ -836,10 +836,11 @@ namespace ZahiraSIS
                     if (totalPaid < feeRate ) {
                         paidLess = true;
                     }
-                    if ((totalPaid < feeRate * todayDate.Month) )
-                    {
-                        paidLess = true;
-                    }
+                    
+                }
+                if ((totalPaid < feeRate * todayDate.Month))
+                {
+                    paidLess = true;
                 }
                 //TODO what are the other scenarios, there would be paid Less boolean = true?
 
@@ -854,10 +855,15 @@ namespace ZahiraSIS
 
                         calculatedBean.curArrears = mnthFeeArrears.ToString();
                     }
-                    /*if ((totalPaid - feeRate * todayDate.Month) < 0) {
-                        paidLess = true;
-                    }*/
-                    if (paidLess)
+                  /*  if (surplusPaid||paidLess) {
+                        mnthFeeArrears = -(mnthFeeArrears);
+                        calculatedBean.curArrears = mnthFeeArrears.ToString();
+                    }
+
+                        if ((totalPaid - feeRate * todayDate.Month) < 0) {
+                            paidLess = true;
+                        }*/
+                     if (paidLess&&IsFeePaidThisYear)
                     {
                         mnthFeeArrears = feeRate * todayDate.Month - totalPaid;
                         calculatedBean.curArrears = mnthFeeArrears.ToString();
@@ -1066,20 +1072,22 @@ namespace ZahiraSIS
         }
 
         public double GetFeePaidForTheYear(int year,string admno) {
+            //TODO what if the fee is paid last year for the following year?
             SqlConnection conn = null;
             SqlCommand cmd = null;          
             SqlDataReader rdr = null;
             double paidAmount = 0;
+            double lastYearPaidForThisYear = 0;
             try
             {
                 conn = new SqlConnection(connectionString);
                 conn.Open();
-                string sql = "select sum(paid) as paid from mnthfeepay where mnthfeepay.key_stu =" +
-  "(select key_fld from student where admno = @Admno) and trndate > '" + (year - 1) + "-12-31' and trndate<= '" + year + "-12-31' and deleted=0";
+                string sql = "select sum(m.paid) as paid from mnthfeepay m left join student s on  s.key_fld=m.key_stu where " +
+  "s.admno = @Admno and m.trndate > '" + (year - 1) + "-12-31' and m.trndate<= '" + year + "-12-31' and m.deleted=0";
                 cmd = new SqlCommand();
                 cmd.Connection = conn;
                 cmd.CommandText = sql;
-                
+
                 cmd.Parameters.Add("@Admno", SqlDbType.VarChar).Value = admno;
                 rdr = cmd.ExecuteReader();
                 rdr.Read();
@@ -1087,13 +1095,78 @@ namespace ZahiraSIS
                 {
                     paidAmount = Double.Parse(rdr["paid"].ToString());
                 }
+                
+
             }
             catch (Exception e)
             {
                 Console.WriteLine("exception", e);
             }
+            finally {
+                try
+                {
+                    if (rdr != null)
+                        rdr.Close();
+                    if (cmd != null)
+                        cmd.Connection.Close();
+                }
+                catch (Exception e1) {
+                    Console.WriteLine("exception when closing", e1);
+                }
+            }
             return paidAmount;
             }
+        /**
+         * This method gives all the fees paid for the whole year even if its paid last year
+         */
+        public double GetTotalFeePaidForTheYear(int year, string admno)
+        {
 
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            SqlDataReader rdr = null;
+            double paidAmount = 0;
+
+            try
+            {
+                conn = new SqlConnection(connectionString);
+                conn.Open();
+                string sql = "select sum(paid) as paid from mnthfeepay m left join student s on s.key_fld= m.key_stu  where s.admno = @Admno " +
+             " and m.deleted = 0 " +
+                "and m.payfrom > '" + (year - 1) + "-12-31' and m.payto <= '" + year + "-12-31' ";
+                cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = sql;
+                cmd.Parameters.Add("@Admno", SqlDbType.VarChar).Value = admno;
+                rdr = cmd.ExecuteReader();
+                rdr.Read();
+                if (rdr.HasRows)
+                {
+                    paidAmount = Double.Parse(rdr["paid"].ToString());
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("exception", e);
+            }
+            finally
+            {
+                try
+                {
+                    if (rdr != null)
+                        rdr.Close();
+                    if (cmd != null)
+                        cmd.Connection.Close();
+                }
+                catch (Exception e1)
+                {
+                    Console.WriteLine("exception when closing", e1);
+                }
+            }
+            return paidAmount;
+        }
     }
+
+
 }
