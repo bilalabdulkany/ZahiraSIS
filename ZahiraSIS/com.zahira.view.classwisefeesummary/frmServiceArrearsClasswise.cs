@@ -56,6 +56,7 @@ namespace ZahiraSIS.com.zahira.view.reports
             tblStudents.Columns[3].Name = "Arrears";
             tblStudents.Columns[4].Name = "Fee Paid for the year";
             
+            
 
 
             button3.Enabled = false;
@@ -112,8 +113,13 @@ namespace ZahiraSIS.com.zahira.view.reports
 
         private void button1_Click(object sender, EventArgs e)
         {
-            new Common().ExportToExcel(tblStudents,Double.Parse(txtCurArrears.Text), Double.Parse(txtCurBFArrears.Text));
-
+            if (tblStudents.Rows.Count!=1)
+            {
+                new Common().ExportToExcel(tblStudents, Double.Parse(txtCurArrears.Text), Double.Parse(txtCurBFArrears.Text), cmbClass.Text);
+            }
+            else {
+                MessageBox.Show("Nothing to export!");
+            }
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -285,6 +291,16 @@ namespace ZahiraSIS.com.zahira.view.reports
             catch (System.Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (backgroundWorker1.IsBusy)
+            {
+                backgroundWorker1.CancelAsync();
+                button3.Enabled = false;
+                button2.Enabled = true;
             }
         }
     }

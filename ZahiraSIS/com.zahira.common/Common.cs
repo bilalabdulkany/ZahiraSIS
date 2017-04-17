@@ -12,7 +12,7 @@ namespace ZahiraSIS.com.zahira.common
         /**
         * Export to Excel
         */
-        public void ExportToExcel(DataGridView grd,double fullArrears,double lastYearPay)
+        public void ExportToExcel(DataGridView grd,double fullArrears,double lastYearPay,String grade)
         {
             // Creating a Excel object. 
             Microsoft.Office.Interop.Excel._Application excel = new Microsoft.Office.Interop.Excel.Application();
@@ -26,16 +26,21 @@ namespace ZahiraSIS.com.zahira.common
 
                 worksheet.Name = "ExportedFromDatGrid";
 
-                int cellRowIndex = 1;
+                int cellRowIndex = 4;
                 int cellColumnIndex = 1;
                 int i = 0;
                 //Loop through each row and read value from each column. 
                 for (i=0; i < grd.Rows.Count; i++)
                 {
-                    for (int j = 0; j < grd.Columns.Count; j++)
+                    if (cellRowIndex-1 == 3)
+                    {
+                        worksheet.Cells[cellRowIndex-1, cellColumnIndex] = "Grade: " + grade;
+                    }
+                    
+                        for (int j = 0; j < grd.Columns.Count; j++)
                     {
                         // Excel index starts from 1,1. As first Row would have the Column headers, adding a condition check. 
-                        if (cellRowIndex == 1)
+                         if (cellRowIndex ==4)
                         {
                             worksheet.Cells[cellRowIndex, cellColumnIndex] = grd.Columns[j].HeaderText;
                         }

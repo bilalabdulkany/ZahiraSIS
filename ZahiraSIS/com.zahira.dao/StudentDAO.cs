@@ -648,7 +648,7 @@ namespace ZahiraSIS
             ClassDAO clsDao = new ClassDAO();
             int yearsToReduce = currentYear - arrearsYear;
             //Suppose arrears is paid upto next year, yearsToReduce becomes negative. In that case change signs.
-            if (yearsToReduce < 0) yearsToReduce =(-yearsToReduce);
+            if (yearsToReduce < 0) yearsToReduce = 0;//(-yearsToReduce);
             double feeRate = 0;
             classCode = classCode.Trim();
             string guessedClass = this.GetMedium(classCode); //classCode[classCode.Length - 2];
@@ -730,6 +730,9 @@ namespace ZahiraSIS
             Boolean takeFromFeePaid = false;
             double totalArrearsFromStudent = 0;
             double totalPaid = 0;
+            double totalPaidinMnthFeeTable = 0;
+            double totalPaidTillDate = 0;
+            double mfeerate = 0;
             DateTime todayDate = DateTime.Now;
             Boolean surplusPaid = false;
             Boolean paidLess = false;
@@ -783,7 +786,11 @@ namespace ZahiraSIS
                     DateTime arrearsFrom= (DateTime)lastRowMnthFee["arrearsfrm"];               
                     
                     double totalArrears = Double.Parse(lastRowMnthFee["totarrears"].ToString());
+                    mfeerate = Double.Parse(lastRowMnthFee["mfeerate"].ToString());//TODO check null
                     totalPaid = GetTotalFeePaidForTheYear(todayDate.Year, admNo);//Double.Parse(lastRowMnthFee["paid"].ToString());
+                    totalPaidTillDate = GetFeePaidForTheYear(todayDate.Year, admNo, todayDate);
+                    //TODO what about check payment by date?
+                    totalPaidinMnthFeeTable =Double.Parse(lastRowMnthFee["paid"].ToString());//TODO check null
                     if (totalPaid > 0) IsFeePaidThisYear = true;
                     double netArrears = totalArrears - totalPaid;
                     if (logging)
@@ -827,19 +834,27 @@ namespace ZahiraSIS
                 
                 /*for loop*/
                 if (arrearsToFromStudent.Year == 0) { }
+                // TODO here if the fee is paid till next year or so, fee rate should be coming from  mnthfeepay
+                //- this is for lower grades, where they pay excess for next year as well.
                 feeRate = this.guessClassAndFee(classCode, todayDate.Year, arrearsToFromStudent.Year);
+
                 if (logging) { Console.WriteLine("fee: " + feeRate); }
 
                 StudentArrearsBean calculatedBean = calculateArrears(arrearsToFromStudent, todayDate, feesArrears, classCode, totalArrearsFromStudent, feeRate,logging);
+
+                //TODO check below conditions properly
                 if (!arrearsBean.paidTill.Equals(todayDate)&&arrearsBean.paidTill.Month == todayDate.Month&& arrearsBean.paidTill.Year == todayDate.Year)
-                {
+                {//This checks for current day and month and paidtill field.
+                    //If the fee is less,
+                    //fee rate is more than the totalpaid.
                     if (totalPaid < feeRate ) {
                         paidLess = true;
                     }
                     
                 }
                 if ((totalPaid < feeRate * todayDate.Month))
-                {
+                {//If the todayDate is different than current month, calculate
+                    //till this month and determine if paid less or not.
                     paidLess = true;
                 }
                 //TODO what are the other scenarios, there would be paid Less boolean = true?
@@ -849,20 +864,32 @@ namespace ZahiraSIS
                 {
                     if (takeFromFeePaid || surplusPaid)
                     {
+                        if (totalPaid == 0 && totalPaidinMnthFeeTable != 0)
+                        {
+                            //This is for grade 2 students, where the student table has no fee info, but the mnthfeepay has.
+                            totalPaid = totalPaidinMnthFeeTable;
+                            //feeRate = mfeerate;
+                        }
+                        else if (totalPaid == 0)
+                        {
+                            //TODO since surplus paid, consider the paid Till column.
+                            totalPaid = totalPaidTillDate;
+                            //for 00686
+                        }
+                        else {
+                            //for 19353 its ok. total paid is 17100 for last year. total paid
+                            //19643 gets upset.
+                           // totalPaid = totalPaidTillDate;
+                        }
                         
-                        mnthFeeArrears = (totalPaid - feeRate * todayDate.Month);
-                        if (surplusPaid)if(mnthFeeArrears>=0) mnthFeeArrears = (-mnthFeeArrears);
+                            mnthFeeArrears = (totalPaid - feeRate * todayDate.Month);
+                        if (surplusPaid)
+                           // if (mnthFeeArrears>=0)
+                                mnthFeeArrears = (-mnthFeeArrears);
 
                         calculatedBean.curArrears = mnthFeeArrears.ToString();
                     }
-                  /*  if (surplusPaid||paidLess) {
-                        mnthFeeArrears = -(mnthFeeArrears);
-                        calculatedBean.curArrears = mnthFeeArrears.ToString();
-                    }
-
-                        if ((totalPaid - feeRate * todayDate.Month) < 0) {
-                            paidLess = true;
-                        }*/
+                  
                      if (paidLess&&IsFeePaidThisYear)
                     {
                         mnthFeeArrears = feeRate * todayDate.Month - totalPaid;
@@ -895,7 +922,7 @@ namespace ZahiraSIS
                     if(logging)
                     Console.WriteLine("Date Diff:" + dateDifference + " arrears: " + feesArrears);
                     arrearsBean.curArrears = calculatedBean.curArrears;//feesArrears + "";                  
-                    arrearsBean.feePaidForTheYear = GetFeePaidForTheYear(todayDate.Year,admNo);
+                    arrearsBean.feePaidForTheYear = GetFeePaidForTheYear(todayDate.Year,admNo, todayDate);
 
                 //Put all the fees to arrears map
                 if (arrearsBean.paidTill != null&&lastRowMnthFee["key_class"]!=null) {
@@ -1071,19 +1098,19 @@ namespace ZahiraSIS
 
         }
 
-        public double GetFeePaidForTheYear(int year,string admno) {
+        public double GetFeePaidForTheYear(int year,string admno,DateTime paidTill) {
             //TODO what if the fee is paid last year for the following year?
             SqlConnection conn = null;
             SqlCommand cmd = null;          
             SqlDataReader rdr = null;
-            double paidAmount = 0;
-            double lastYearPaidForThisYear = 0;
+            double paidAmount = 0;           
             try
             {
+                string paidTillString=paidTill.ToString("yyyy-MM-dd");
                 conn = new SqlConnection(connectionString);
                 conn.Open();
                 string sql = "select sum(m.paid) as paid from mnthfeepay m left join student s on  s.key_fld=m.key_stu where " +
-  "s.admno = @Admno and m.trndate > '" + (year - 1) + "-12-31' and m.trndate<= '" + year + "-12-31' and m.deleted=0";
+  "s.admno = @Admno and m.trndate > '" + (year - 1) + "-12-31' and m.trndate<= '" + paidTillString + "' and m.deleted=0";
                 cmd = new SqlCommand();
                 cmd.Connection = conn;
                 cmd.CommandText = sql;

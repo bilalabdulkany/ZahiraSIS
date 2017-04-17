@@ -14,7 +14,7 @@ namespace ZahiraSIS.com.zahira.view.reports
 {
     public partial class frmServiceArrearsGradewise : Form
     {
-        private volatile DataTable totalDatatable = null;
+        //private volatile DataTable totalDatatable = null;
         private  double currArrears = 0;
         private double totalPaid = 0;
         StudentDAO studentDAO = new StudentDAO();
@@ -61,9 +61,10 @@ namespace ZahiraSIS.com.zahira.view.reports
             cmbMedium.DataSource = clsDao.GetMedium();
             cmbMedium.DisplayMember = "name";
             cmbMedium.ValueMember = "key_fld";
-            tblStudents.ColumnCount = 2;
+            tblStudents.ColumnCount = 3;
             tblStudents.Columns[0].Name="Class";
             tblStudents.Columns[1].Name="Arrears";
+            tblStudents.Columns[2].Name = "Total Paid This Year";
             cmbMedium.Refresh();
             btCancel.Enabled = false;
 
@@ -115,7 +116,7 @@ namespace ZahiraSIS.com.zahira.view.reports
 
         private void button1_Click(object sender, EventArgs e)
         {
-            new Common().ExportToExcel(tblStudents,Double.Parse(txtCurArrears.Text),Double.Parse(txtCurBFArrears.Text));
+            new Common().ExportToExcel(tblStudents,Double.Parse(txtCurArrears.Text),Double.Parse(txtCurBFArrears.Text),cmbClass.SelectedItem.ToString());
 
         }
 

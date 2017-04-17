@@ -168,7 +168,7 @@ namespace ZahiraSIS
 
         private void button1_Click(object sender, EventArgs e)
         {
-            new Common().ExportToExcel(dtStudentArrears,Double.Parse(txtArrearsToDate.Text),0);            
+            new Common().ExportToExcel(dtStudentArrears,Double.Parse(txtArrearsToDate.Text),0,txtClassCode.Text);            
         }
 
         /**

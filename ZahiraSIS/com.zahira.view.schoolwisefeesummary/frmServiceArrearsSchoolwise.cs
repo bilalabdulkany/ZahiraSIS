@@ -98,7 +98,7 @@ namespace ZahiraSIS.com.zahira.view.schoolwise
 
         private void button1_Click(object sender, EventArgs e)
         {
-            new Common().ExportToExcel(tblStudents,Double.Parse(txtCurArrears.Text), Double.Parse(txtCurBFArrears.Text));
+            new Common().ExportToExcel(tblStudents,Double.Parse(txtCurArrears.Text), Double.Parse(txtCurBFArrears.Text),"ALL GRADES");
 
         }
 

@@ -36,8 +36,11 @@ namespace ZahiraSIS.com.zahira.reports
         }
 
         private void setupParameters() {
+            DateTime datetimenow = new DateTime();
+            datetimenow= DateTime.Now;
             ReportParameter p1 = new ReportParameter("TrnNo", TrnNo);
-            // ReportParameter p2 = new ReportParameter("TrnDate", new DateTime().ToShortDateString());
+             ReportParameter p2 = new ReportParameter("TrnDate", datetimenow.ToString("dd-MM-yyyy"));
+            ReportParameter p22 = new ReportParameter("TrnTime", datetimenow.ToString("HH:MM"));
 
             ReportParameter p3 = new ReportParameter("AdmNo", AdmNo);
 
@@ -49,7 +52,7 @@ namespace ZahiraSIS.com.zahira.reports
 
             ReportParameter p7 = new ReportParameter("Code", ClassCode);
 
-            this.reportViewer1.LocalReport.SetParameters(new ReportParameter[] { p1, p3, p4,p5,p6,p7 });
+            this.reportViewer1.LocalReport.SetParameters(new ReportParameter[] { p1,p2,p22, p3, p4,p5,p6,p7 });
             this.reportViewer1.RefreshReport();
 
         }
