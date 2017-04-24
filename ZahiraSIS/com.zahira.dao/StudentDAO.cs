@@ -922,7 +922,7 @@ namespace ZahiraSIS
                     if(logging)
                     Console.WriteLine("Date Diff:" + dateDifference + " arrears: " + feesArrears);
                     arrearsBean.curArrears = calculatedBean.curArrears;//feesArrears + "";                  
-                    arrearsBean.feePaidForTheYear = GetFeePaidForTheYear(todayDate.Year,admNo, todayDate);
+                arrearsBean.feePaidForTheYear = totalPaid;//GetFeePaidForTheYear(todayDate.Year,admNo, todayDate);
 
                 //Put all the fees to arrears map
                 if (arrearsBean.paidTill != null&&lastRowMnthFee["key_class"]!=null) {
@@ -1193,7 +1193,98 @@ namespace ZahiraSIS
             }
             return paidAmount;
         }
+
+        /**
+       * Get a DataTable of the student admission numbers when the class is given.
+       **/
+        public DataTable getReceiptLastNo(string RcptType)
+        {
+            //SqlDataReader rdr = null;
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            DataTable tbl = null;
+            try
+            {
+                conn = new SqlConnection(connectionString);
+                conn.Open();
+                //MFEERCPT
+                //MFEES
+                //ADMRCPT
+                //GENRCPT
+                String sql = " select prefix,lastno from genlastno where groupname=@RCPT";
+                cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = sql;
+                cmd.Parameters.Add("@RCPT", SqlDbType.VarChar).Value = RcptType;
+
+                //Console.WriteLine("SQL:" + cmd.CommandText);
+                // Console.WriteLine("*class:" + studentClass);
+                //  rdr = cmd.ExecuteReader();
+                tbl = new DataTable();
+                tbl.Load(cmd.ExecuteReader());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("exception: " + e.ToString());
+            }
+            finally
+            {
+                try
+                {
+                    conn.Close();
+                    // rdr.Close();
+                    conn.Dispose();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            return tbl;
+
+        }
+
+        public int updateRCPTLastNo(String RcptName)
+        {
+
+            //SqlDataReader rdr = null;
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            int count = 0;
+            try
+            {
+
+                conn = new SqlConnection(connectionString);
+                conn.Open();
+                string sql = "update genlastno set lastno=lastno+1 where groupname=@Rcpt";
+                cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = sql;
+                cmd.Parameters.Add("@Rcpt", SqlDbType.VarChar).Value = RcptName;
+                
+                count=cmd.ExecuteNonQuery();
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine("exception" + e.ToString());
+            }
+            finally
+            {
+                try
+                {
+                    conn.Close();
+                    // rdr.Close();
+                    conn.Dispose();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            return count;
+
+        }
+
     }
-
-
 }
