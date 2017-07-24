@@ -41,6 +41,7 @@
             this.tsStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.SaveDoc = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.tblStudents)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -62,6 +63,7 @@
             this.button1.TabIndex = 1;
             this.button1.Text = "Load Letter Template";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // tblStudents
             // 
@@ -107,6 +109,7 @@
             this.button2.TabIndex = 24;
             this.button2.Text = "Print All Students";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -201,5 +204,6 @@
         private System.Windows.Forms.ToolStripStatusLabel tsStatus;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.SaveFileDialog SaveDoc;
     }
 }
