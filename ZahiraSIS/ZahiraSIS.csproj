@@ -102,6 +102,9 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="FoxProUpdate, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\FoxProUpdate\FoxProUpdate\bin\x86\Release\FoxProUpdate.exe</HintPath>
@@ -130,11 +133,29 @@
     <Compile Include="com.zahira.common\Common.cs" />
     <Compile Include="com.zahira.dao\ClassDAO.cs" />
     <Compile Include="com.zahira.dao\StudentDAO.cs" />
+    <Compile Include="com.zahira.reports\ArrearsFeeStudentLetter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="com.zahira.reports\ArrearsFeeStudentLetter.Designer.cs">
+      <DependentUpon>ArrearsFeeStudentLetter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="com.zahira.reports\FacilityFeeInvoiceViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="com.zahira.reports\FacilityFeeInvoiceViewer.Designer.cs">
+      <DependentUpon>FacilityFeeInvoiceViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="com.zahira.reports\StudentReceiptViewer.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="com.zahira.reports\StudentReceiptViewer.Designer.cs">
       <DependentUpon>StudentReceiptViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="com.zahira.reports\StudentReportTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StudentReportTemplate.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="com.zahira.view.alstudentfees\frmALStudentFee.cs">
       <SubType>Form</SubType>
@@ -201,10 +222,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Zahira_SISDataSet.xsd</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="com.zahira.reports\ArrearsFeeStudentLetter.resx">
+      <DependentUpon>ArrearsFeeStudentLetter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="com.zahira.reports\FacilityFeeInvoiceViewer.resx">
+      <DependentUpon>FacilityFeeInvoiceViewer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="com.zahira.reports\FacilityFeesInvoiceReport.rdlc" />
     <EmbeddedResource Include="com.zahira.reports\StudentReceipt.rdlc" />
     <EmbeddedResource Include="com.zahira.reports\StudentReceiptViewer.resx">
       <DependentUpon>StudentReceiptViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="com.zahira.reports\StudentReportTemplate.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>StudentReportTemplate.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="com.zahira.view.alstudentfees\frmALStudentFee.resx">
       <DependentUpon>frmALStudentFee.cs</DependentUpon>
@@ -329,7 +360,9 @@
   <ItemGroup>
     <Content Include="zahira icon.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

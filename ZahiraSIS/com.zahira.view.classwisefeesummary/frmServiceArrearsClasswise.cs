@@ -55,15 +55,7 @@ namespace ZahiraSIS.com.zahira.view.reports
             tblStudents.Columns[2].Name = "Class";
             tblStudents.Columns[3].Name = "Arrears";
             tblStudents.Columns[4].Name = "Fee Paid for the year";
-            
-            
-
-
             button3.Enabled = false;
-
-
-
-
         }
 
         private void label2_Click(object sender, EventArgs e)

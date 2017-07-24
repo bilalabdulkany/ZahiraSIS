@@ -12,6 +12,7 @@ using ZahiraSIS.com.zahira.view.promotestudents;
 using ZahiraSIS.com.zahira.view.reports;
 using FoxProUpdate;
 using ZahiraSIS.com.zahira.view.schoolwise;
+using ZahiraSIS.com.zahira.reports;
 
 namespace ZahiraSIS
 {
@@ -152,6 +153,12 @@ namespace ZahiraSIS
         private void button4_Click(object sender, EventArgs e)
         {
             new frmServiceArrearsSchoolwise().Show();
+        }
+
+        private void btnArrearsLetters_Click(object sender, EventArgs e)
+        {
+            ArrearsFeeStudentLetter ltter = new ArrearsFeeStudentLetter();
+            ltter.Show();
         }
     }
 }

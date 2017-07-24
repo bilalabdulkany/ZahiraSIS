@@ -42,6 +42,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.btnArrearsLetters = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -109,7 +110,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(157, 163);
+            this.button2.Location = new System.Drawing.Point(49, 200);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(93, 52);
             this.button2.TabIndex = 4;
@@ -137,11 +138,22 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
+            // btnArrearsLetters
+            // 
+            this.btnArrearsLetters.Location = new System.Drawing.Point(157, 200);
+            this.btnArrearsLetters.Name = "btnArrearsLetters";
+            this.btnArrearsLetters.Size = new System.Drawing.Size(93, 52);
+            this.btnArrearsLetters.TabIndex = 7;
+            this.btnArrearsLetters.Text = "Print Arrears Letters";
+            this.btnArrearsLetters.UseVisualStyleBackColor = true;
+            this.btnArrearsLetters.Click += new System.EventHandler(this.btnArrearsLetters_Click);
+            // 
             // frmDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(489, 274);
+            this.Controls.Add(this.btnArrearsLetters);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -171,5 +183,6 @@
         private System.Windows.Forms.ToolStripMenuItem syncBackupToolStripMenuItem1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnArrearsLetters;
     }
 }
