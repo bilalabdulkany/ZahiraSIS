@@ -26,6 +26,11 @@ namespace ZahiraSIS.com.zahira.bean
         private DateTime admon;
         private DateTime arrearsfrm;
         private DateTime arrearsto;
+        public string Admno { get; set; }
+        public string Name { get; set; }
+        public DateTime Dob { get; set; }
+        public string ClassCode { get; set; }
+        public string Medium { get; set; }
 
         public StudentBean(int keyFld, int active, int enamfcnsn, double mfeecnsn, string admno, string name, DateTime dob, string address, string registerno, string bloodgr, string comments, string prntname, string prntphone, string prntemail, int keyClass, double bfarrears, double curarrears, int keyChange, double curbfarres, DateTime admon, DateTime arrearsfrm, DateTime arrearsto)
         {
@@ -104,12 +109,7 @@ namespace ZahiraSIS.com.zahira.bean
                 mfeecnsn = value;
             }
         }
-
-        public string Admno { get; set; }
-
-        public string Name { get; set; }
-
-        public DateTime Dob { get; set; }
+             
 
         public string Address
         {

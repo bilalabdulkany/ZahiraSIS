@@ -208,8 +208,13 @@ namespace ZahiraSIS
             {
                 conn = new SqlConnection(connectionString);
                 conn.Open();
-                String sql =
-                    "SELECT [key_fld],[active],[enamfcnsn],[mfeecnsn],[admno],[name],[dob],[address],[registerno],[bloodgr],[comments],[prntname],[prntphone],[prntemail],[key_class],[bfarrears],[curarrears],[key_change],[curbfarres],[admon],[arrearsfrm],[arrearsto] FROM dbo.student where admno = @Index";
+               // String sql =
+                 //   "SELECT [key_fld],[active],[enamfcnsn],[mfeecnsn],[admno],[name],[dob],[address],[registerno],[bloodgr],[comments],[prntname],[prntphone],[prntemail],[key_class],[bfarrears],[curarrears],[key_change],[curbfarres],[admon],[arrearsfrm],[arrearsto] FROM dbo.student where admno = @Index";
+
+                String sql = "SELECT s.[key_fld],[active], [enamfcnsn],[mfeecnsn],[admno],s.[name],[dob],[address],[registerno],[bloodgr],[comments],"
++ "[prntname],[prntphone],[prntemail],[key_class],[bfarrears],[curarrears],s.[key_change],[curbfarres],"
++ "[admon],[arrearsfrm],[arrearsto],m.name as medium,sc.code as classcode FROM dbo.student s, dbo.medium m, dbo.stuclass sc where admno =  @Index and s.key_class= sc.key_fld and m.key_fld= sc.key_med";
+
                 cmd = new SqlCommand();
                 cmd.Connection = conn;
                 cmd.CommandText = sql;
@@ -245,10 +250,14 @@ namespace ZahiraSIS
                         var admon = (DateTime)rdr.GetDateTime(19);
                         var arrearsfrm = (DateTime)rdr.GetDateTime(20);
                         var arrearsto = (DateTime)rdr.GetDateTime(21);
+                        var medium = (string)rdr["medium"];
+                        var classcode= (string)rdr["classcode"];
 
                         bean = new StudentBean((int)keyFld, (int)active, enamfcnsn, (double)mfeecnsn, admno, name, dob,
                             address, registerno, bloodgr, comments, prntname, prntphone, prntemail, key_class, bfarrears,
                             curarrears, key_change, curbfarres, admon, arrearsfrm, arrearsto);
+                        bean.Medium = medium;
+                        bean.ClassCode = classcode;
                     }
                 }
 
@@ -922,8 +931,8 @@ namespace ZahiraSIS
                     if(logging)
                     Console.WriteLine("Date Diff:" + dateDifference + " arrears: " + feesArrears);
                     arrearsBean.curArrears = calculatedBean.curArrears;//feesArrears + "";                  
-                arrearsBean.feePaidForTheYear = totalPaid;//GetFeePaidForTheYear(todayDate.Year,admNo, todayDate);
-
+                    arrearsBean.feePaidForTheYear = totalPaid;//GetFeePaidForTheYear(todayDate.Year,admNo, todayDate);
+                    
                 //Put all the fees to arrears map
                 if (arrearsBean.paidTill != null&&lastRowMnthFee["key_class"]!=null) {
                   //  int keyClass = int.Parse(lastRowMnthFee["key_class"].ToString());
@@ -933,12 +942,13 @@ namespace ZahiraSIS
                     {
                         double FeeRate = guessClassAndFee(classCode, todayDate.Year, year);
                         arrearsMap[year] = "Arrears Year: "+year + " | Rate: " + FeeRate;
+                        feeRate = FeeRate;
                     }
 
                    // calculatedBean.arrearsMap = arrearsMap;
                 }
                 arrearsBean.arrearsMap = arrearsMap;
-
+                arrearsBean.feerate = feeRate;
                 if (logging)
                 {
                     foreach (KeyValuePair<int, string> kvp in arrearsMap)
@@ -1093,7 +1103,8 @@ namespace ZahiraSIS
                 }
             }
             bean.curArrears = feesArrears+"";
-            bean.arrearsMap = arrearsMap;            
+            bean.arrearsMap = arrearsMap;
+                  
             return bean;
 
         }

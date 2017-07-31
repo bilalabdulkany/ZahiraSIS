@@ -10,6 +10,7 @@ using ZahiraSIS.com.zahira.bean.student;
 
 using System.Reflection;
 using Microsoft.Office.Interop.Word;
+using ZahiraSIS.com.zahira.bean;
 
 namespace ZahiraSIS.com.zahira.reports
 {
@@ -20,12 +21,14 @@ namespace ZahiraSIS.com.zahira.reports
         private double totalPaid = 0;
         ClassDAO clsDao = new ClassDAO();
         int selectedClass1 = 0;
-        string path = null;
+        private string path = null;
+        List<StudentArrearsLetterBean> studentLetterList = null;
 
         public ArrearsFeeStudentLetter()
         {
             InitializeComponent();
             path = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), @"Templates\StudentArrearsLetterTemplate.doc");
+            studentLetterList = new List<StudentArrearsLetterBean>();
         }
 
         private void ArrearsFeeStudentLetter_Load(object sender, EventArgs e)
@@ -106,7 +109,7 @@ namespace ZahiraSIS.com.zahira.reports
                 tblStudents.Refresh();                
                 currArrears = 0;
                 totalPaid = 0;
-                button2.Enabled = true;
+                button4.Enabled = true;
                 button3.Enabled = false;
 
             }
@@ -123,8 +126,10 @@ namespace ZahiraSIS.com.zahira.reports
             if (backgroundWorker1.IsBusy)
             {
                 backgroundWorker1.CancelAsync();
+
                 button3.Enabled = false;
-                button2.Enabled = true;
+                button4.Enabled = true;
+                
             }
         }
 
@@ -192,6 +197,11 @@ namespace ZahiraSIS.com.zahira.reports
                         aBean.curArrears = arrearsBean.curArrears;
                         aBean.feePaidForTheYear = arrearsBean.feePaidForTheYear;
                         aBean.paidTill = arrearsBean.paidTill;
+                        aBean.feerate = arrearsBean.feerate;
+                        
+                        StudentBean studentBean = studentDAO.getStudentInfoFromIndex(admno);
+                        StudentArrearsLetterBean stuLetterBean = new StudentArrearsLetterBean(studentBean,arrearsBean);
+                        studentLetterList.Add(stuLetterBean);                       
                         //   int k = 0;
                         // totalDatatable = arrearsBean.stPaidData;
                         int count = classwiseStudents.Rows.Count;
@@ -264,120 +274,105 @@ namespace ZahiraSIS.com.zahira.reports
 
 
 
-        string pathImage = "TEST11";
-        private string tArrearsAsAt = "TEST11";
-        private string tFeePaid = "TEST11";
-        private string tFeeBalance = "TEST11";
-        private string tParentName = "TEST11";
-        private string tStudentAddress = "TEST11";
-        private string tStudentName = "TEST11";
-        private string tAdmno = "TEST11";
-        private string tClassCode = "TEST11";
-        private string tMedium = "TEST11";
-        private string tArrearsAmount = "TEST11";
-        private string tFeeBeginMon = "TEST11";
-        private string tFeeEndMon = "TEST11";
-        private string tFeeBeginToEndMon = "TEST11";
-        private string tPayBefore = "TEST11";
-        //Methode Create the document :
-        private void CreateWordDocument(object filename, object savaAs, object image)
+               //Methode Create the document :
+        private void CreateWordDocument(object filename, object savaAs, List<StudentArrearsLetterBean> stuLetterList)
         {
             List<int> processesbeforegen = getRunningProcesses();
             object missing = Missing.Value;
-            string tempPath = null;
+                      string tempPath = null;
+            int i = 0;
+            //
+            foreach (StudentArrearsLetterBean stuBean in studentLetterList) {
+                if (!stuBean.studentBean.Admno.Trim().Equals("00250"))
+                    continue;
+                Microsoft.Office.Interop.Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
 
-            Microsoft.Office.Interop.Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
+                Microsoft.Office.Interop.Word.Document aDoc = null;
 
-            Microsoft.Office.Interop.Word.Document aDoc = null;
-
-            if (File.Exists((string)filename))
-            {
-                DateTime today = DateTime.Now;
-
-                object readOnly = false; //default
-                object isVisible = false;
-
-                wordApp.Visible = false;
-
-                aDoc = wordApp.Documents.Open(ref filename, ref missing, ref readOnly,
-                                            ref missing, ref missing, ref missing,
-                                            ref missing, ref missing, ref missing,
-                                            ref missing, ref missing, ref missing,
-                                            ref missing, ref missing, ref missing, ref missing);
-
-                aDoc.Activate();
-
-                //Find and replace:
-                this.FindAndReplace(wordApp, "CurrentDate", DateTime.Now.ToShortDateString());
-                this.FindAndReplace(wordApp, "Parent's Name", tParentName);
-                this.FindAndReplace(wordApp, "Student Address", tStudentAddress);
-                this.FindAndReplace(wordApp, "Student Name", tStudentName);
-                this.FindAndReplace(wordApp, "Admission No.", tAdmno);
-                this.FindAndReplace(wordApp, "Class Code", tClassCode);
-                this.FindAndReplace(wordApp, "Medium Name", tMedium);
-                this.FindAndReplace(wordApp, "Arrears as at date as \"dd/mm/yyyy\"", tArrearsAsAt);
-                this.FindAndReplace(wordApp, "Arrears amount", tArrearsAmount);
-                this.FindAndReplace(wordApp, "Fees begin month as \"month yyyy\"", tFeeBeginMon);
-                this.FindAndReplace(wordApp, "Fees end month as \"month yyyy\"", tFeeEndMon);
-                this.FindAndReplace(wordApp, "Fees amount from begin month to end month", tFeeBeginToEndMon);
-                this.FindAndReplace(wordApp, "Fees paid amount for period", tFeePaid);
-                this.FindAndReplace(wordApp, "Balance amount to be paid", tFeeBalance);
-                this.FindAndReplace(wordApp, "PayBefore", tFeeBalance);
-
-
-                //insert the picture:
-                /* Image img = resizeImage(pathImage, new Size(200, 90));
-                 tempPath = System.Windows.Forms.Application.StartupPath + "\\Images\\~Temp\\temp.jpg";
-                 img.Save(tempPath);
-
-                 Object oMissed = aDoc.Paragraphs[1].Range; //the position you want to insert
-                 Object oLinkToFile = false;  //default
-                 Object oSaveWithDocument = true;//default
-                 aDoc.InlineShapes.AddPicture(tempPath, ref  oLinkToFile, ref  oSaveWithDocument, ref oMissed);
- */
-                #region Print Document :
-                /*object copies = "1";
-                object pages = "1";
-                object range = Word.WdPrintOutRange.wdPrintCurrentPage;
-                object items = Word.WdPrintOutItem.wdPrintDocumentContent;
-                object pageType = Word.WdPrintOutPages.wdPrintAllPages;
-                object oTrue = true;
-                object oFalse = false;
-
-                Word.Document document = aDoc;
-                object nullobj = Missing.Value;
-                int dialogResult = wordApp.Dialogs[Microsoft.Office.Interop.Word.WdWordDialog.wdDialogFilePrint].Show(ref nullobj);
-                wordApp.Visible = false;
-                if (dialogResult == 1)
+                if (File.Exists((string)filename))
                 {
-                    document.PrintOut(
-                    ref oTrue, ref oFalse, ref range, ref missing, ref missing, ref missing,
-                    ref items, ref copies, ref pages, ref pageType, ref oFalse, ref oTrue,
-                    ref missing, ref oFalse, ref missing, ref missing, ref missing, ref missing);
+                    DateTime today = DateTime.Now;
+
+                    object readOnly = false; //default
+                    object isVisible = false;
+
+                    wordApp.Visible = false;
+
+                    aDoc = wordApp.Documents.Open(ref filename, ref missing, ref readOnly,
+                                                ref missing, ref missing, ref missing,
+                                                ref missing, ref missing, ref missing,
+                                                ref missing, ref missing, ref missing,
+                                                ref missing, ref missing, ref missing, ref missing);
+
+                    aDoc.Activate();
+                    int mnthDiff = dtFeeTo.Value.Month - dtFeeFrom.Value.Month+1;
+                    double feeAddition = stuBean.studentArrearsBean.feerate * mnthDiff;
+                    //Find and replace:
+                    this.FindAndReplace(wordApp, "CurrentDate", DateTime.Now.ToShortDateString());
+                    this.FindAndReplace(wordApp, "Parent's Name", stuBean.studentBean.Prntname);
+                    this.FindAndReplace(wordApp, "Student Address", stuBean.studentBean.Address);
+                    this.FindAndReplace(wordApp, "Student Name", stuBean.studentBean.Name);
+                    this.FindAndReplace(wordApp, "Admission No.", stuBean.studentBean.Admno);
+                    this.FindAndReplace(wordApp, "Class Code", stuBean.studentBean.ClassCode);
+                    this.FindAndReplace(wordApp, "Medium Name", stuBean.studentBean.Medium);
+                    this.FindAndReplace(wordApp, "Arrears as at date as \"dd/mm/yyyy\"", dateTimePicker2.Value.ToString("dd/MM/yyyy"));
+                    this.FindAndReplace(wordApp, "Arrears amount", stuBean.studentArrearsBean.curArrears);
+                    this.FindAndReplace(wordApp, "Fees begin month as \"month yyyy\"", dtFeeFrom.Value.ToString("MMMM yyyy"));
+                    this.FindAndReplace(wordApp, "Fees end month as \"month yyyy\"", dtFeeTo.Value.ToString("MMMM yyyy"));
+                    this.FindAndReplace(wordApp, "Fees amount from begin month to end month", feeAddition);//TODO get the fee and the amount for the period
+                    this.FindAndReplace(wordApp, "Fees paid amount for period", stuBean.studentArrearsBean.feePaidForTheYear);
+                    this.FindAndReplace(wordApp, "Balance amount to be paid", (Double.Parse(stuBean.studentArrearsBean.curArrears)+feeAddition));
+                    this.FindAndReplace(wordApp, "PayBefore",dtPayBefore.Value.ToString("dd MMMM yyyy"));
+
+
+                    #region Print Document :
+                    /*object copies = "1";
+                    object pages = "1";
+                    object range = Word.WdPrintOutRange.wdPrintCurrentPage;
+                    object items = Word.WdPrintOutItem.wdPrintDocumentContent;
+                    object pageType = Word.WdPrintOutPages.wdPrintAllPages;
+                    object oTrue = true;
+                    object oFalse = false;
+
+                    Word.Document document = aDoc;
+                    object nullobj = Missing.Value;
+                    int dialogResult = wordApp.Dialogs[Microsoft.Office.Interop.Word.WdWordDialog.wdDialogFilePrint].Show(ref nullobj);
+                    wordApp.Visible = false;
+                    if (dialogResult == 1)
+                    {
+                        document.PrintOut(
+                        ref oTrue, ref oFalse, ref range, ref missing, ref missing, ref missing,
+                        ref items, ref copies, ref pages, ref pageType, ref oFalse, ref oTrue,
+                        ref missing, ref oFalse, ref missing, ref missing, ref missing, ref missing);
+                    }
+                    */
+                    #endregion
+
                 }
-                */
-                #endregion
+                else
+                {
+                    MessageBox.Show("file dose not exist.");
+                    return;
+                }
 
+                //Save as: filename
+               
+                aDoc.SaveAs2(ref savaAs, ref missing, ref missing, ref missing,
+                        ref missing, ref missing, ref missing,
+                        ref missing, ref missing, ref missing,
+                        ref missing, ref missing, ref missing,
+                        ref missing, ref missing, ref missing);
+
+                //Close Document:
+                aDoc.Close(ref missing, ref missing, ref missing);
+                if (tempPath != null) File.Delete(tempPath);
+                MessageBox.Show("File created.");
+                List<int> processesaftergen = getRunningProcesses();
+                killProcesses(processesbeforegen, processesaftergen);
+
+                i++;
             }
-            else
-            {
-                MessageBox.Show("file dose not exist.");
-                return;
-            }
-
-            //Save as: filename
-            aDoc.SaveAs2(ref savaAs, ref missing, ref missing, ref missing,
-                    ref missing, ref missing, ref missing,
-                    ref missing, ref missing, ref missing,
-                    ref missing, ref missing, ref missing,
-                    ref missing, ref missing, ref missing);
-
-            //Close Document:
-            aDoc.Close(ref missing, ref missing, ref missing);
-            if (tempPath != null) File.Delete(tempPath);
-            MessageBox.Show("File created.");
-            List<int> processesaftergen = getRunningProcesses();
-            killProcesses(processesbeforegen, processesaftergen);
+            //For Loop
         }
 
 
@@ -426,10 +421,15 @@ namespace ZahiraSIS.com.zahira.reports
         {
             if (SaveDoc.ShowDialog() == DialogResult.OK)
             {
-                CreateWordDocument(path, SaveDoc.FileName, pathImage);
+                CreateWordDocument(path, SaveDoc.FileName, studentLetterList);
                 //tEnabled(false);
                 //printDocument1.DocumentName = SaveDoc.FileName;
             }
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

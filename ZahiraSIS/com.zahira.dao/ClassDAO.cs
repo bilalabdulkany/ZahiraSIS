@@ -140,7 +140,7 @@ namespace ZahiraSIS
             {
                 conn = new SqlConnection(connectionString);
                 conn.Open();
-                string selectClass = " select g.key_fld as gfield, s.key_fld,s.name as name ,g.name as gname,s.code as scode, m.code as mcode, m.name as mname,m.key_fld as mfield from stuclass s left join grade g on g.key_fld=s.key_grd "+
+                string selectClass = " select g.key_fld as gfield, s.key_fld,(rtrim(s.name)+(' - ')+ s.code) as name,g.name as gname,s.code as scode, m.code as mcode, m.name as mname,m.key_fld as mfield from stuclass s left join grade g on g.key_fld=s.key_grd " +
  "left join medium m on m.key_fld = s.key_med "+
  "where s.status = @Type order by g.code,mcode";
                 var cmd = new SqlCommand
