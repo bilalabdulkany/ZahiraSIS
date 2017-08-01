@@ -1208,12 +1208,13 @@ namespace ZahiraSIS
         /**
        * Get a DataTable of the student admission numbers when the class is given.
        **/
-        public DataTable getReceiptLastNo(string RcptType)
+        public string getReceiptLastNo(string RcptType)
         {
             //SqlDataReader rdr = null;
             SqlConnection conn = null;
             SqlCommand cmd = null;
             DataTable tbl = null;
+            string rcptNo = null;
             try
             {
                 conn = new SqlConnection(connectionString);
@@ -1222,7 +1223,8 @@ namespace ZahiraSIS
                 //MFEES
                 //ADMRCPT
                 //GENRCPT
-                String sql = " select prefix,lastno from genlastno where groupname=@RCPT";
+                //ALRCPT
+                String sql = "select prefix,lastno from genlastno where groupname=@RCPT";
                 cmd = new SqlCommand();
                 cmd.Connection = conn;
                 cmd.CommandText = sql;
@@ -1233,6 +1235,7 @@ namespace ZahiraSIS
                 //  rdr = cmd.ExecuteReader();
                 tbl = new DataTable();
                 tbl.Load(cmd.ExecuteReader());
+                rcptNo = tbl.Rows[0]["prefix"].ToString() + tbl.Rows[0]["lastno"].ToString();
             }
             catch (Exception e)
             {
@@ -1251,13 +1254,12 @@ namespace ZahiraSIS
                     Console.WriteLine(e);
                 }
             }
-            return tbl;
+            return rcptNo;
 
         }
 
         public int updateRCPTLastNo(String RcptName)
         {
-
             //SqlDataReader rdr = null;
             SqlConnection conn = null;
             SqlCommand cmd = null;
@@ -1294,6 +1296,63 @@ namespace ZahiraSIS
                 }
             }
             return count;
+
+        }
+        //Monthly Fee insert for AL students
+        private int getLastMnthFeeId() {
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            SqlDataReader rdr = null;
+            int id = 0;
+
+            try
+            {
+                conn = new SqlConnection(connectionString);
+                conn.Open();
+                string sql = "SELECT MAX(key_fld)+1 as key_fld FROM mnthfeepay";
+                cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = sql;                
+                rdr = cmd.ExecuteReader();
+                rdr.Read();
+                if (rdr.HasRows)
+                {
+                    id = int.Parse(rdr["key_fld"].ToString());
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("exception", e);
+            }
+            finally
+            {
+                try
+                {
+                    if (rdr != null)
+                        rdr.Close();
+                    if (cmd != null)
+                        cmd.Connection.Close();
+                }
+                catch (Exception e1)
+                {
+                    Console.WriteLine("exception when closing", e1);
+                }
+            }
+            return id;
+        }
+
+
+        public Boolean insertALstudentFee(string admno,double payment,DateTime payFrom, DateTime payTo) {
+            int key_fld = getLastMnthFeeId();
+            StudentBean stubean = getStudentInfoFromIndex(admno);
+            string trno = getReceiptLastNo("ALRCPT");
+
+            string query = "insert into mnthfeepay (key_fld,trnno,trndate,key_stu,paid,balance,paymode,payccrd,paycash,paycheque,"
+ +"ccrdno,chequeno,cashtndrd,chequedate,payfrom,payto,deleted,mfeerate,totarrears,arrearsfrm,arrearsto,"
+ +"created,key_class,curbfarres,key_fee,key_grd,key_med,key_tea,key_sec,key_sh,key_vp,crtdky_user,winlguser,computernm)"
+ +"values() ";
+            return true;
 
         }
 

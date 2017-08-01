@@ -240,14 +240,14 @@ namespace ZahiraSIS
 
         private void button3_Click(object sender, EventArgs e)
         {
-            DataTable dtRCPT = dao.getReceiptLastNo("MFEERCPT");
+           // DataTable dtRCPT = dao.getReceiptLastNo("MFEERCPT");
             if (dtStudentArrears.RowCount > 0)
             {
                 int count = dao.updateRCPTLastNo("MFEERCPT");
                 
             }
 
-            string rcptNo = dtRCPT.Rows[0]["prefix"].ToString()+ dtRCPT.Rows[0]["lastno"].ToString();
+            string rcptNo = dao.getReceiptLastNo("MFEERCPT");//dtRCPT.Rows[0]["prefix"].ToString()+ dtRCPT.Rows[0]["lastno"].ToString();
             StudentReceiptViewer rp = new StudentReceiptViewer(rcptNo, comboBox2.Text,txtName.Text,txtPaid.Text,txtArrearsToDate.Text, txtClassCode.Text);
             rp.Show();
            

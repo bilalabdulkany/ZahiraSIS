@@ -20,5 +20,16 @@ namespace ZahiraSIS.com.zahira.view.alstudentfees
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //TODO
+            /**
+             * Insert into mnthfeepay table, 
+             * update the student table.  
+             */
+
+            //class: select key_fee,key_grd,key_med,key_tea from stuclass where key_fld=185;
+        }
     }
 }

@@ -283,8 +283,8 @@ namespace ZahiraSIS.com.zahira.reports
             int i = 0;
             //
             foreach (StudentArrearsLetterBean stuBean in studentLetterList) {
-                if (!stuBean.studentBean.Admno.Trim().Equals("00250"))
-                    continue;
+             //   if (!stuBean.studentBean.Admno.Trim().Equals("00250"))
+               //     continue;
                 Microsoft.Office.Interop.Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
 
                 Microsoft.Office.Interop.Word.Document aDoc = null;
@@ -326,15 +326,15 @@ namespace ZahiraSIS.com.zahira.reports
 
 
                     #region Print Document :
-                    /*object copies = "1";
+                    object copies = "1";
                     object pages = "1";
-                    object range = Word.WdPrintOutRange.wdPrintCurrentPage;
-                    object items = Word.WdPrintOutItem.wdPrintDocumentContent;
-                    object pageType = Word.WdPrintOutPages.wdPrintAllPages;
+                    object range = Microsoft.Office.Interop.Word.WdPrintOutRange.wdPrintCurrentPage;
+                    object items = Microsoft.Office.Interop.Word.WdPrintOutItem.wdPrintDocumentContent;
+                    object pageType = Microsoft.Office.Interop.Word.WdPrintOutPages.wdPrintAllPages;
                     object oTrue = true;
                     object oFalse = false;
 
-                    Word.Document document = aDoc;
+                    Microsoft.Office.Interop.Word.Document document = aDoc;
                     object nullobj = Missing.Value;
                     int dialogResult = wordApp.Dialogs[Microsoft.Office.Interop.Word.WdWordDialog.wdDialogFilePrint].Show(ref nullobj);
                     wordApp.Visible = false;
@@ -345,7 +345,7 @@ namespace ZahiraSIS.com.zahira.reports
                         ref items, ref copies, ref pages, ref pageType, ref oFalse, ref oTrue,
                         ref missing, ref oFalse, ref missing, ref missing, ref missing, ref missing);
                     }
-                    */
+                    //*/
                     #endregion
 
                 }
@@ -356,20 +356,24 @@ namespace ZahiraSIS.com.zahira.reports
                 }
 
                 //Save as: filename
-               
-                aDoc.SaveAs2(ref savaAs, ref missing, ref missing, ref missing,
-                        ref missing, ref missing, ref missing,
-                        ref missing, ref missing, ref missing,
-                        ref missing, ref missing, ref missing,
-                        ref missing, ref missing, ref missing);
+                try
+                {
+                    aDoc.SaveAs2(ref savaAs, ref missing, ref missing, ref missing,
+                            ref missing, ref missing, ref missing,
+                            ref missing, ref missing, ref missing,
+                            ref missing, ref missing, ref missing,
+                            ref missing, ref missing, ref missing);
 
-                //Close Document:
-                aDoc.Close(ref missing, ref missing, ref missing);
-                if (tempPath != null) File.Delete(tempPath);
-                MessageBox.Show("File created.");
-                List<int> processesaftergen = getRunningProcesses();
-                killProcesses(processesbeforegen, processesaftergen);
-
+                    //Close Document:
+                    aDoc.Close(ref missing, ref missing, ref missing);
+                    if (tempPath != null) File.Delete(tempPath);
+                    MessageBox.Show("File created.");
+                    List<int> processesaftergen = getRunningProcesses();
+                    killProcesses(processesbeforegen, processesaftergen);
+                }
+                catch (Exception e) {
+                    MessageBox.Show("Error", e.Message);
+                }
                 i++;
             }
             //For Loop
