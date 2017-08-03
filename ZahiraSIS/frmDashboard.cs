@@ -13,6 +13,7 @@ using ZahiraSIS.com.zahira.view.reports;
 using FoxProUpdate;
 using ZahiraSIS.com.zahira.view.schoolwise;
 using ZahiraSIS.com.zahira.reports;
+using ZahiraSIS.com.zahira.view.alstudentfees;
 
 namespace ZahiraSIS
 {
@@ -159,6 +160,12 @@ namespace ZahiraSIS
         {
             ArrearsFeeStudentLetter ltter = new ArrearsFeeStudentLetter();
             ltter.Show();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            frmALStudentFee alStud = new frmALStudentFee();
+            alStud.Show();
         }
     }
 }

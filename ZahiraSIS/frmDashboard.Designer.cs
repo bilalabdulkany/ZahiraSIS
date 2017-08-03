@@ -43,6 +43,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.btnArrearsLetters = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -90,29 +91,32 @@
             // 
             // btnStuArrears
             // 
-            this.btnStuArrears.Location = new System.Drawing.Point(49, 87);
+            this.btnStuArrears.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnStuArrears.Location = new System.Drawing.Point(236, 85);
             this.btnStuArrears.Name = "btnStuArrears";
             this.btnStuArrears.Size = new System.Drawing.Size(101, 52);
             this.btnStuArrears.TabIndex = 2;
             this.btnStuArrears.Text = "Student Arrears";
-            this.btnStuArrears.UseVisualStyleBackColor = true;
+            this.btnStuArrears.UseVisualStyleBackColor = false;
             this.btnStuArrears.Click += new System.EventHandler(this.btnStuArrears_Click);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(157, 87);
+            this.button1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.button1.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.button1.Location = new System.Drawing.Point(355, 27);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(93, 52);
             this.button1.TabIndex = 3;
             this.button1.Text = "Classwise Arrears";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(49, 200);
+            this.button2.Location = new System.Drawing.Point(35, 229);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(93, 52);
+            this.button2.Size = new System.Drawing.Size(101, 52);
             this.button2.TabIndex = 4;
             this.button2.Text = "Class Info\r\n";
             this.button2.UseVisualStyleBackColor = true;
@@ -120,39 +124,57 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(256, 87);
+            this.button3.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.button3.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.button3.Location = new System.Drawing.Point(355, 85);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(93, 52);
             this.button3.TabIndex = 5;
             this.button3.Text = "Gradewise Arrears";
-            this.button3.UseVisualStyleBackColor = true;
+            this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(355, 87);
+            this.button4.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.button4.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.button4.Location = new System.Drawing.Point(355, 143);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(93, 52);
             this.button4.TabIndex = 6;
             this.button4.Text = "Schoolwise Arrears";
-            this.button4.UseVisualStyleBackColor = true;
+            this.button4.UseVisualStyleBackColor = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // btnArrearsLetters
             // 
-            this.btnArrearsLetters.Location = new System.Drawing.Point(157, 200);
+            this.btnArrearsLetters.BackColor = System.Drawing.Color.Honeydew;
+            this.btnArrearsLetters.Location = new System.Drawing.Point(355, 229);
             this.btnArrearsLetters.Name = "btnArrearsLetters";
             this.btnArrearsLetters.Size = new System.Drawing.Size(93, 52);
             this.btnArrearsLetters.TabIndex = 7;
             this.btnArrearsLetters.Text = "Print Arrears Letters";
-            this.btnArrearsLetters.UseVisualStyleBackColor = true;
+            this.btnArrearsLetters.UseVisualStyleBackColor = false;
             this.btnArrearsLetters.Click += new System.EventHandler(this.btnArrearsLetters_Click);
+            // 
+            // button5
+            // 
+            this.button5.BackColor = System.Drawing.Color.Turquoise;
+            this.button5.Location = new System.Drawing.Point(189, 229);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(101, 52);
+            this.button5.TabIndex = 8;
+            this.button5.Text = "AL Student Fees";
+            this.button5.UseVisualStyleBackColor = false;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // frmDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(489, 274);
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.ClientSize = new System.Drawing.Size(489, 293);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.btnArrearsLetters);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -184,5 +206,6 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button btnArrearsLetters;
+        private System.Windows.Forms.Button button5;
     }
 }

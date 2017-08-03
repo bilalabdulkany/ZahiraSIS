@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using ZahiraSIS.com.zahira.bean;
 
 namespace ZahiraSIS
 {
@@ -229,9 +230,6 @@ namespace ZahiraSIS
 
         }
 
-
-
-
         public DataTable GetStudentClassFee(string grade, string medium)
         {
             //SqlDataReader rdr = null;
@@ -330,6 +328,69 @@ namespace ZahiraSIS
                 }
             }
             return tbl;
+        }
+
+        public StuclassBean getStuClass(int stuClass)
+        {
+            SqlConnection conn = null;
+            DataTable tbl = null;
+            SqlDataReader rdr = null;
+            StuclassBean StuClassBean = null;
+            try
+            {
+                conn = new SqlConnection(connectionString);
+                conn.Open();
+                string selectClass =
+                    "select * from stuclass  where key_field=@Key and status = @Status";
+                var cmd = new SqlCommand
+                {
+                    Connection = conn,
+                    CommandText = selectClass
+                };
+                cmd.Parameters.AddWithValue("@Key", stuClass);
+                cmd.Parameters.AddWithValue("@Status", "ACT");
+
+                // Console.WriteLine("SQL:" + cmd.CommandText);
+
+                rdr = cmd.ExecuteReader();
+                rdr.Read();
+                if (rdr.HasRows)
+                {
+                    int keyfield = int.Parse(rdr["key_fld"].ToString());
+                    int keygrade= int.Parse(rdr["key_grd"].ToString());
+                    int keymed= int.Parse(rdr["key_med"].ToString());
+                    string name = rdr["name"].ToString();
+                    string code = rdr["code"].ToString();
+                    int keytea = int.Parse(rdr["key_tea"].ToString());
+                    int keyfee = int.Parse(rdr["key_fee"].ToString());
+                    int keychange = int.Parse(rdr["key_change"].ToString());
+                    StuClassBean = new StuclassBean(keyfield,keygrade,keymed,name,code,keytea,keyfee,keychange);
+                                       
+
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("exception" + e.ToString());
+            }
+            finally
+            {
+                try
+                {
+                    if (conn != null)
+                    {
+                        conn.Close();
+                        // rdr.Close();
+                        conn.Dispose();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            return StuClassBean; ;
+
         }
     }
 }

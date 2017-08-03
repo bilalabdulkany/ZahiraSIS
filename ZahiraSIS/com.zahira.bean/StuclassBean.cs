@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ZahiraSIS.com.zahira.bean
 {
-    class StuclassBean
+   public class StuclassBean
     {
         private int key_fld;
         private int key_grd;
@@ -16,6 +16,19 @@ namespace ZahiraSIS.com.zahira.bean
         private int key_tea;
         private int key_fee;
         private int key_change;
+
+        public StuclassBean() {
+        }
+
+        public StuclassBean(int key_fld, int key_grd, int key_med, string name, string code, int key_tea, int key_fee, int key_change) {
+            this.key_fld = key_fld;
+            this.key_med = key_med;
+            this.name = name;
+            this.code = code;
+            this.key_tea = key_tea;
+            this.key_fee = key_fee;
+            this.key_change = key_change;
+        }
 
         public int Key_fld
         {
@@ -120,6 +133,8 @@ namespace ZahiraSIS.com.zahira.bean
                 key_fee = value;
             }
         }
+
+        
 
         public int Key_change
         {
