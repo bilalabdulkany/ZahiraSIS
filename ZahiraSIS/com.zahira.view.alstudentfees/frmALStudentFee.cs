@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using ZahiraSIS.com.zahira.bean;
 
 namespace ZahiraSIS.com.zahira.view.alstudentfees
 {
@@ -26,6 +27,15 @@ namespace ZahiraSIS.com.zahira.view.alstudentfees
         {
             if (checkInput()) {
                 MessageBox.Show("Validation Success", "Successful!");
+                PaymentBean payBean = new PaymentBean();
+                payBean.Admno = txtAdmNo.Text;
+                payBean.Paid = double.Parse(txtAmount.Text);
+                payBean.IsCash = radioButton1.Checked;
+                payBean.PayFrom = dtPayFrom.Value;
+                payBean.PayTo = dtPayTo.Value;
+                payBean.SetCheque(payBean.IsCash);
+
+
             }
             //TODO
             /**
@@ -55,7 +65,7 @@ namespace ZahiraSIS.com.zahira.view.alstudentfees
         }
 
         private Boolean checkInput() {
-            if (textBox1.Text == "" || txtAmount.Text == "")
+            if (txtAdmNo.Text == "" || txtAmount.Text == "")
             {
                 MessageBox.Show("Validation Error", "Mandatory Fields are missing");
                 return false;
@@ -72,6 +82,11 @@ namespace ZahiraSIS.com.zahira.view.alstudentfees
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
             makeCash(true);
+        }
+
+        private void frmALStudentFee_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

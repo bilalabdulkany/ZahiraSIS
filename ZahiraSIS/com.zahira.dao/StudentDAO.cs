@@ -371,25 +371,17 @@ namespace ZahiraSIS
                 //string key_fld = "";
                 if (rdr.HasRows)
                 {
-                    int key_fld = int.Parse(rdr["key_fld"] + "");
-                    int key_grd = (int)rdr["key_grd"];
-                    int key_med = (int)rdr["key_med"];
-                    string name = rdr["name"] + "";
-                    string code = rdr["code"] + "";
-                    string classcode = rdr["classcode"] + "";
-                    int key_tea = (int)rdr["key_tea"];
-                    int key_fee = (int)rdr["key_fee"];
-                    int key_change = (int)rdr["key_change"];
                     bean = new StuclassBean();
-                    bean.Key_fld = key_fld;
-                    bean.Key_grd = key_grd;
-                    bean.Key_med = key_med;
-                    bean.Name = name;
-                    bean.Code = code;
-                    bean.Classcode = classcode;
-                    bean.Key_tea = key_tea;
-                    bean.Key_fee = key_fee;
-                    bean.Key_change = key_change;
+                    bean.Key_fld = int.Parse(rdr["key_fld"] + "");
+                    bean.Key_grd = (int)rdr["key_grd"];
+                    bean.Key_med = (int)rdr["key_med"];
+                    bean.Name = rdr["name"] + "";
+                    bean.Code = rdr["code"] + "";
+                    bean.Classcode = rdr["classcode"] + "";
+                    bean.Key_tea = (int)rdr["key_tea"];
+                    bean.Key_fee = (int)rdr["key_fee"];
+                    bean.Key_change = (int)rdr["key_change"];            
+                    
                 }
 
             }
@@ -1343,14 +1335,14 @@ namespace ZahiraSIS
         }
 
 
-        public Boolean insertALstudentFee(string admno,double payment, Boolean isCash,DateTime payFrom, DateTime payTo) {
+        public Boolean insertALstudentFee(PaymentBean payBean) {
             SqlConnection conn = null;
             SqlCommand cmd = null;
             int count = 0;
             try
             {
                 int key_fld = getLastMnthFeeId();
-                StudentBean stubean = getStudentInfoFromIndex(admno);
+                StudentBean stubean = getStudentInfoFromIndex(payBean.Admno);
                 StuclassBean stuclass = new ClassDAO().getStuClass(stubean.Key_class);
                 string trno = getReceiptLastNo("ALRCPT");
 
@@ -1369,46 +1361,40 @@ namespace ZahiraSIS
                 cmd.Parameters.AddWithValue("@key_fld", key_fld);
                 cmd.Parameters.AddWithValue("@trndate", new DateTime());
                 cmd.Parameters.AddWithValue("@key_stu", stubean.Key_fld);
-                cmd.Parameters.AddWithValue("@paid", payment);
-                cmd.Parameters.AddWithValue("@balance",0);
+                cmd.Parameters.AddWithValue("@paid", payBean.Paid);
+                cmd.Parameters.AddWithValue("@balance", payBean.Balance);
                 cmd.Parameters.AddWithValue("@payccrd",0);
-                cmd.Parameters.AddWithValue("@paycash",0);
-                cmd.Parameters.AddWithValue("@paycheque",0);//cheque
+                cmd.Parameters.AddWithValue("@paycash", payBean.IsCash == true? payBean.Paid : 0);
+                cmd.Parameters.AddWithValue("@paycheque", payBean.IsCash == true ? 0: payBean.Paid);//cheque
                 cmd.Parameters.AddWithValue("@ccrdno",0);
-                cmd.Parameters.AddWithValue("@chequeno",0);
+                cmd.Parameters.AddWithValue("@chequeno", payBean.ChequeNo);
                 cmd.Parameters.AddWithValue("@cashtndrd",0);//cash
-                cmd.Parameters.AddWithValue("@chequedate",0);//
-                cmd.Parameters.AddWithValue("@payfrom",0);
-                cmd.Parameters.AddWithValue("@payto",0);
-                cmd.Parameters.AddWithValue("@deleted",0);//1 means deleted
-                cmd.Parameters.AddWithValue("@mfeerate",0);//AL fee rate for the year
-                cmd.Parameters.AddWithValue("@totarrears",0);//same as balance
-                cmd.Parameters.AddWithValue("@arrearsfrm",0);//not paid from month
-                cmd.Parameters.AddWithValue("@arrearsto",0);//not paid date to
+                cmd.Parameters.AddWithValue("@chequedate", payBean.ChequeDate);//
+                cmd.Parameters.AddWithValue("@payfrom", payBean.PayFrom);
+                cmd.Parameters.AddWithValue("@payto", payBean.PayTo);
+                cmd.Parameters.AddWithValue("@deleted", payBean.Deleted);//1 means deleted
+                cmd.Parameters.AddWithValue("@mfeerate", payBean.FeeRate);//AL fee rate for the year
+                cmd.Parameters.AddWithValue("@totarrears", payBean.TotalArrears);//same as balance
+                cmd.Parameters.AddWithValue("@arrearsfrm", payBean.ArrearsFrom);//not paid from month
+                cmd.Parameters.AddWithValue("@arrearsto", payBean.ArrearsTo);//not paid date to
                 cmd.Parameters.AddWithValue("@created", new DateTime());//created date
                 cmd.Parameters.AddWithValue("@key_class", stubean.Key_class);//get appropriata class
                 cmd.Parameters.AddWithValue("@curbfarres",0);//
-                cmd.Parameters.AddWithValue("@key_fee", 0);//key_fee 
-                cmd.Parameters.AddWithValue("@key_grd", 0);//
-                cmd.Parameters.AddWithValue("@key_med", 0);
-                cmd.Parameters.AddWithValue("@key_tea", 0);
+                cmd.Parameters.AddWithValue("@key_fee", stuclass.Key_fee );//key_fee 
+                cmd.Parameters.AddWithValue("@key_grd", stuclass.Key_grd);//
+                cmd.Parameters.AddWithValue("@key_med", stuclass.Key_med);
+                cmd.Parameters.AddWithValue("@key_tea", stuclass.Key_tea);
                 cmd.Parameters.AddWithValue("@key_sec",0);
                 cmd.Parameters.AddWithValue("@key_sh",0);
                 cmd.Parameters.AddWithValue("@key_vp",0);
                 cmd.Parameters.AddWithValue("@crtdky_user",0);
                 cmd.Parameters.AddWithValue("@winlguser",0);
-                cmd.Parameters.AddWithValue("@computernm","");
-                
-
-
-
-
-
-                                cmd.ExecuteNonQuery();
+                cmd.Parameters.AddWithValue("@computernm","User1");
+                cmd.ExecuteNonQuery();
 
             }
             catch (Exception e) {
-
+              
             }
             return true;
 

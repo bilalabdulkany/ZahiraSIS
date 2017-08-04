@@ -127,6 +127,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="com.zahira.bean\PaymentBean.cs" />
     <Compile Include="com.zahira.bean\StuclassBean.cs" />
     <Compile Include="com.zahira.bean\StudentArrearsBean.cs" />
     <Compile Include="com.zahira.bean\StudentArrearsLetterBean.cs" />
