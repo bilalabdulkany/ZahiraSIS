@@ -33,14 +33,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.cmbClass = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtFeeRate = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.dtPayFrom = new System.Windows.Forms.DateTimePicker();
             this.label5 = new System.Windows.Forms.Label();
             this.dtPayTo = new System.Windows.Forms.DateTimePicker();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnPay = new System.Windows.Forms.Button();
+            this.btnExp = new System.Windows.Forms.Button();
+            this.btnGen = new System.Windows.Forms.Button();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -49,11 +49,21 @@
             this.lblAmount = new System.Windows.Forms.Label();
             this.txtAmount = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtClass = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtAddress = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtName = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.txtFullAmount = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtBalance = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.btnSearch = new System.Windows.Forms.Button();
+            this.txtPaid = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -83,10 +93,11 @@
             // 
             // cmbClass
             // 
+            this.cmbClass.Enabled = false;
             this.cmbClass.FormattingEnabled = true;
             this.cmbClass.Location = new System.Drawing.Point(113, 54);
             this.cmbClass.Name = "cmbClass";
-            this.cmbClass.Size = new System.Drawing.Size(126, 21);
+            this.cmbClass.Size = new System.Drawing.Size(234, 21);
             this.cmbClass.TabIndex = 2;
             // 
             // label3
@@ -98,14 +109,14 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "Fee Rate";
             // 
-            // textBox2
+            // txtFeeRate
             // 
-            this.textBox2.Enabled = false;
-            this.textBox2.Location = new System.Drawing.Point(113, 131);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(115, 20);
-            this.textBox2.TabIndex = 3;
+            this.txtFeeRate.Enabled = false;
+            this.txtFeeRate.Location = new System.Drawing.Point(113, 131);
+            this.txtFeeRate.Name = "txtFeeRate";
+            this.txtFeeRate.ReadOnly = true;
+            this.txtFeeRate.Size = new System.Drawing.Size(115, 20);
+            this.txtFeeRate.TabIndex = 3;
             // 
             // label4
             // 
@@ -139,33 +150,33 @@
             this.dtPayTo.Size = new System.Drawing.Size(188, 20);
             this.dtPayTo.TabIndex = 5;
             // 
-            // button1
+            // btnPay
             // 
-            this.button1.Location = new System.Drawing.Point(481, 246);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(126, 27);
-            this.button1.TabIndex = 17;
-            this.button1.Text = "Make Payment";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnPay.Location = new System.Drawing.Point(481, 246);
+            this.btnPay.Name = "btnPay";
+            this.btnPay.Size = new System.Drawing.Size(126, 27);
+            this.btnPay.TabIndex = 17;
+            this.btnPay.Text = "Make Payment";
+            this.btnPay.UseVisualStyleBackColor = true;
+            this.btnPay.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // btnExp
             // 
-            this.button2.Location = new System.Drawing.Point(481, 291);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(126, 23);
-            this.button2.TabIndex = 18;
-            this.button2.Text = "Export to Excel";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnExp.Location = new System.Drawing.Point(481, 291);
+            this.btnExp.Name = "btnExp";
+            this.btnExp.Size = new System.Drawing.Size(126, 23);
+            this.btnExp.TabIndex = 18;
+            this.btnExp.Text = "Export to Excel";
+            this.btnExp.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnGen
             // 
-            this.button3.Location = new System.Drawing.Point(481, 332);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(126, 23);
-            this.button3.TabIndex = 19;
-            this.button3.Text = "Generate Receipt";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnGen.Location = new System.Drawing.Point(481, 332);
+            this.btnGen.Name = "btnGen";
+            this.btnGen.Size = new System.Drawing.Size(126, 23);
+            this.btnGen.TabIndex = 19;
+            this.btnGen.Text = "Generate Receipt";
+            this.btnGen.UseVisualStyleBackColor = true;
             // 
             // radioButton1
             // 
@@ -240,12 +251,72 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Location = new System.Drawing.Point(437, 18);
+            this.groupBox2.Controls.Add(this.txtClass);
+            this.groupBox2.Controls.Add(this.label10);
+            this.groupBox2.Controls.Add(this.txtAddress);
+            this.groupBox2.Controls.Add(this.label9);
+            this.groupBox2.Controls.Add(this.txtName);
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Location = new System.Drawing.Point(437, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(262, 202);
+            this.groupBox2.Size = new System.Drawing.Size(262, 208);
             this.groupBox2.TabIndex = 20;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Student Details";
+            // 
+            // txtClass
+            // 
+            this.txtClass.Enabled = false;
+            this.txtClass.Location = new System.Drawing.Point(79, 71);
+            this.txtClass.Name = "txtClass";
+            this.txtClass.ReadOnly = true;
+            this.txtClass.Size = new System.Drawing.Size(161, 20);
+            this.txtClass.TabIndex = 27;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(19, 74);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(60, 13);
+            this.label10.TabIndex = 28;
+            this.label10.Text = "Class Code";
+            // 
+            // txtAddress
+            // 
+            this.txtAddress.Enabled = false;
+            this.txtAddress.Location = new System.Drawing.Point(79, 45);
+            this.txtAddress.Name = "txtAddress";
+            this.txtAddress.ReadOnly = true;
+            this.txtAddress.Size = new System.Drawing.Size(161, 20);
+            this.txtAddress.TabIndex = 25;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(19, 48);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(45, 13);
+            this.label9.TabIndex = 26;
+            this.label9.Text = "Address";
+            // 
+            // txtName
+            // 
+            this.txtName.Enabled = false;
+            this.txtName.Location = new System.Drawing.Point(79, 19);
+            this.txtName.Name = "txtName";
+            this.txtName.ReadOnly = true;
+            this.txtName.Size = new System.Drawing.Size(161, 20);
+            this.txtName.TabIndex = 23;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(19, 22);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(35, 13);
+            this.label8.TabIndex = 24;
+            this.label8.Text = "Name";
             // 
             // txtFullAmount
             // 
@@ -268,7 +339,7 @@
             // txtBalance
             // 
             this.txtBalance.Enabled = false;
-            this.txtBalance.Location = new System.Drawing.Point(316, 92);
+            this.txtBalance.Location = new System.Drawing.Point(300, 131);
             this.txtBalance.Name = "txtBalance";
             this.txtBalance.ReadOnly = true;
             this.txtBalance.Size = new System.Drawing.Size(115, 20);
@@ -277,31 +348,62 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(248, 99);
+            this.label7.Location = new System.Drawing.Point(239, 134);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(46, 13);
             this.label7.TabIndex = 24;
             this.label7.Text = "Balance";
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Location = new System.Drawing.Point(251, 15);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(96, 23);
+            this.btnSearch.TabIndex = 25;
+            this.btnSearch.Text = "Search";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // txtPaid
+            // 
+            this.txtPaid.Enabled = false;
+            this.txtPaid.Location = new System.Drawing.Point(300, 92);
+            this.txtPaid.Name = "txtPaid";
+            this.txtPaid.ReadOnly = true;
+            this.txtPaid.Size = new System.Drawing.Size(115, 20);
+            this.txtPaid.TabIndex = 26;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(239, 95);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(55, 13);
+            this.label11.TabIndex = 27;
+            this.label11.Text = "Total Paid";
             // 
             // frmALStudentFee
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(768, 456);
+            this.Controls.Add(this.txtPaid);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.txtBalance);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtFullAmount);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnGen);
+            this.Controls.Add(this.btnExp);
+            this.Controls.Add(this.btnPay);
             this.Controls.Add(this.dtPayTo);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.dtPayFrom);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.txtFeeRate);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.cmbClass);
             this.Controls.Add(this.label2);
@@ -312,6 +414,8 @@
             this.Load += new System.EventHandler(this.frmALStudentFee_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -324,14 +428,14 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cmbClass;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtFeeRate;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DateTimePicker dtPayFrom;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DateTimePicker dtPayTo;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnPay;
+        private System.Windows.Forms.Button btnExp;
+        private System.Windows.Forms.Button btnGen;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -344,5 +448,14 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtBalance;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox txtAddress;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.TextBox txtClass;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox txtPaid;
+        private System.Windows.Forms.Label label11;
     }
 }

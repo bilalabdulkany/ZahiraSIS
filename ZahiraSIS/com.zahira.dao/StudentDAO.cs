@@ -63,8 +63,9 @@ namespace ZahiraSIS
 
                 conn = new SqlConnection(connectionString);
                 conn.Open();
-                String sql = "select trnno,trndate,paid,payfrom,payto,mfeerate,totarrears,arrearsfrm,arrearsto,key_class from mnthfeepay where mnthfeepay.key_stu ="
-  + "(select key_fld from student where admno = @Index) order by trndate";
+                String sql = "select trnno,trndate,paid,payfrom,payto,mfeerate,totarrears,arrearsfrm,arrearsto,s.code as key_class from mnthfeepay m "
+                    +"left join stuclass s on s.key_fld=m.key_class "+
+                    "where m.key_stu =(select key_fld from student where admno = @Index) order by m.trndate";
                 cmd = new SqlCommand();
                 cmd.Connection = conn;
                 cmd.CommandText = sql;
@@ -394,7 +395,7 @@ namespace ZahiraSIS
                 try
                 {
                     conn.Close();
-                    // rdr.Close();
+                    rdr.Close();
                     conn.Dispose();
                 }
                 catch (Exception e)
@@ -644,7 +645,7 @@ namespace ZahiraSIS
             return false;
         }
 
-        private double guessClassAndFee(string classCode, int currentYear,int arrearsYear)
+        public double guessClassAndFee(string classCode, int currentYear,int arrearsYear)
         {
             ClassDAO clsDao = new ClassDAO();
             int yearsToReduce = currentYear - arrearsYear;

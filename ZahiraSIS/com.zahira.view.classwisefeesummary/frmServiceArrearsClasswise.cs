@@ -52,9 +52,10 @@ namespace ZahiraSIS.com.zahira.view.reports
             tblStudents.ColumnCount = 5;
             tblStudents.Columns[0].Name = "Admno";
             tblStudents.Columns[1].Name = "Name";
-            tblStudents.Columns[2].Name = "Class";
-            tblStudents.Columns[3].Name = "Arrears";
-            tblStudents.Columns[4].Name = "Fee Paid for the year";
+            //tblStudents.Columns[2].Name = "Class";
+            tblStudents.Columns[2].Name = "Arrears";
+            tblStudents.Columns[3].Name = "Fee Paid for the year";
+            tblStudents.Columns[4].Name = "Fee Paid Till";
             button3.Enabled = false;
         }
 
@@ -65,15 +66,7 @@ namespace ZahiraSIS.com.zahira.view.reports
 
         private void fillByToolStripButton_Click(object sender, EventArgs e)
         {
-            try
-            {
-                object ParameterName = new object();
-               // this.studentTableAdapter.FillBy(this.zahira_SISDataSet.student, ParameterName);
-            }
-            catch (System.Exception ex)
-            {
-                System.Windows.Forms.MessageBox.Show(ex.Message);
-            }
+            
 
         }
 
@@ -210,7 +203,7 @@ namespace ZahiraSIS.com.zahira.view.reports
                     //Report Progress
                     aBean.admNo = admno;
                     aBean.studentName = name;
-                    aBean.classCode = classCode;
+                   // aBean.classCode = classCode;
                     aBean.curArrears = arrearsBean.curArrears;
                     aBean.feePaidForTheYear = arrearsBean.feePaidForTheYear;
                     aBean.paidTill = arrearsBean.paidTill;
@@ -252,7 +245,7 @@ namespace ZahiraSIS.com.zahira.view.reports
                 StudentArrearsBean bean = (StudentArrearsBean)e.UserState;
                 if (bean != null)
                 {
-                    tblStudents.Rows.Add(bean.admNo,bean.studentName,bean.classCode, bean.curArrears, bean.feePaidForTheYear, bean.paidTill.ToString("dd-MMM-yyyy"));
+                    tblStudents.Rows.Add(bean.admNo,bean.studentName,bean.curArrears, bean.feePaidForTheYear, bean.paidTill.ToString("dd-MMM-yyyy"));
                     currArrears += Double.Parse(bean.curArrears);
                     totalPaid += bean.feePaidForTheYear;
                 }

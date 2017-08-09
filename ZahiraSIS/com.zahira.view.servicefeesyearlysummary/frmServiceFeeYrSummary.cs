@@ -36,7 +36,7 @@ namespace ZahiraSIS
                 // TODO: This line of code loads data into the 'zahira_SISDataSet.student' table. You can move, or remove it, as needed.
                 this.studentTableAdapter.Fill(this.zahira_SISDataSet.student);
                 // TODO: This line of code loads data into the 'zahira_SISDataSet.stuclass' table. You can move, or remove it, as needed.
-                this.stuclassTableAdapter.Fill(this.zahira_SISDataSet.stuclass);
+                this.stuclassTableAdapter.FillBy(this.zahira_SISDataSet.stuclass);
             }
             catch (Exception ex)
             {
@@ -252,6 +252,45 @@ namespace ZahiraSIS
             rp.Show();
            
             
+        }
+
+        private void fillByToolStripButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.stuclassTableAdapter.FillBy(this.zahira_SISDataSet.stuclass);
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+
+        }
+
+        private void fillByToolStripButton1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.stuclassTableAdapter.FillBy(this.zahira_SISDataSet.stuclass);
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+
+        }
+
+        private void fillByToolStripButton_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                this.stuclassTableAdapter.FillBy(this.zahira_SISDataSet.stuclass);
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+
         }
     }
 

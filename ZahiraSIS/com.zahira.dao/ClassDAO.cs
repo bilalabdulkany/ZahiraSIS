@@ -333,7 +333,6 @@ namespace ZahiraSIS
         public StuclassBean getStuClass(int stuClass)
         {
             SqlConnection conn = null;
-            DataTable tbl = null;
             SqlDataReader rdr = null;
             StuclassBean StuClassBean = null;
             try
@@ -392,5 +391,53 @@ namespace ZahiraSIS
             return StuClassBean; ;
 
         }
-    }
+
+        public Boolean CheckALClass(int keyClass)
+        {
+            SqlConnection conn = null;
+            SqlDataReader rdr = null;            
+            try
+            {
+                conn = new SqlConnection(connectionString);
+                conn.Open();
+                string query = " select key_fld from stuclass where status=@Status and (name like '%12%' or name like '%13%') and key_fld=@key";
+                var cmd = new SqlCommand
+                {
+                    Connection = conn,
+                    CommandText = query
+                };
+                cmd.Parameters.AddWithValue("@Status", "ACT");
+                cmd.Parameters.AddWithValue("@key",keyClass);
+                // Console.WriteLine("SQL:" + cmd.CommandText);
+
+                rdr = cmd.ExecuteReader();
+                rdr.Read();
+                if (rdr.HasRows)
+                {
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("exception" + e.ToString());
+            }
+            finally
+            {
+                try
+                {
+                    if (conn != null)
+                    {
+                        conn.Close();
+                        rdr.Close();
+                        conn.Dispose();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            return false;
+        }
+        }
 }

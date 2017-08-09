@@ -12,9 +12,13 @@ namespace ZahiraSIS.com.zahira.view.alstudentfees
 {
     public partial class frmALStudentFee : Form
     {
+        StudentDAO dao = null;
+        ClassDAO clsDao = null;
         public frmALStudentFee()
         {
             InitializeComponent();
+            dao = new StudentDAO();
+            clsDao = new ClassDAO();
             makeCash(false);
         }
 
@@ -87,6 +91,39 @@ namespace ZahiraSIS.com.zahira.view.alstudentfees
         private void frmALStudentFee_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            if (txtAdmNo.Text.Trim()!= "") {
+                makeCommandsVisible(true);
+                string admno = txtAdmNo.Text.Trim();
+                if (dao.getStudentInfoFromIndex(admno) != null) { 
+                StudentBean bean = dao.getStudentInfoFromIndex(admno);
+                txtName.Text = bean.Name.Trim();
+                txtAddress.Text= bean.Address.Trim();
+                int keyClass = bean.Key_class;
+                StuclassBean classBean = dao.getStudentClasses(keyClass);
+                cmbClass.Text = classBean.Name;
+                txtClass.Text = classBean.Code;
+                    if (!clsDao.CheckALClass(keyClass))
+                    {
+                        MessageBox.Show("The student is not from an AL class!", "Not AL");
+                        makeCommandsVisible(false);
+                    }
+                    else {
+                        double feeRate = dao.guessClassAndFee(classBean.Code, DateTime.Today.Year, DateTime.Today.Year);
+                        txtFeeRate.Text= feeRate+"";
+                        txtFullAmount.Text = feeRate * 24+"";
+                    }
+                }
+            }
+        }
+
+        private void makeCommandsVisible(Boolean flag) {
+            btnExp.Enabled = flag;
+            btnGen.Enabled = flag;
+            btnPay.Enabled = flag;
         }
     }
 }
