@@ -316,12 +316,12 @@ namespace ZahiraSIS.com.zahira.reports
                     this.FindAndReplace(wordApp, "Class Code", stuBean.studentBean.ClassCode);
                     this.FindAndReplace(wordApp, "Medium Name", stuBean.studentBean.Medium);
                     this.FindAndReplace(wordApp, "Arrears as at date as \"dd/mm/yyyy\"", dateTimePicker2.Value.ToString("dd/MM/yyyy"));
-                    this.FindAndReplace(wordApp, "Arrears amount", stuBean.studentArrearsBean.curArrears);
+                    this.FindAndReplace(wordApp, "Arrears amount", String.Format("{0:n}", stuBean.studentArrearsBean.curArrears));
                     this.FindAndReplace(wordApp, "Fees begin month as \"month yyyy\"", dtFeeFrom.Value.ToString("MMMM yyyy"));
                     this.FindAndReplace(wordApp, "Fees end month as \"month yyyy\"", dtFeeTo.Value.ToString("MMMM yyyy"));
-                    this.FindAndReplace(wordApp, "Fees amount from begin month to end month", feeAddition);//TODO get the fee and the amount for the period
-                    this.FindAndReplace(wordApp, "Fees paid amount for period", stuBean.studentArrearsBean.feePaidForTheYear);
-                    this.FindAndReplace(wordApp, "Balance amount to be paid", (Double.Parse(stuBean.studentArrearsBean.curArrears)+feeAddition));
+                    this.FindAndReplace(wordApp, "Fees amount from begin month to end month", String.Format("{0:n}", feeAddition));//TODO get the fee and the amount for the period
+                    this.FindAndReplace(wordApp, "Fees paid amount for period", String.Format("{0:n}", stuBean.studentArrearsBean.feePaidForTheYear));
+                    this.FindAndReplace(wordApp, "Balance amount to be paid", String.Format("{0:n}", (feeAddition- stuBean.studentArrearsBean.feePaidForTheYear)));
                     this.FindAndReplace(wordApp, "PayBefore",dtPayBefore.Value.ToString("dd MMMM yyyy"));
 
 

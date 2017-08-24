@@ -32,12 +32,31 @@ namespace ZahiraSIS.com.zahira.view.alstudentfees
             if (checkInput()) {
                 MessageBox.Show("Validation Success", "Successful!");
                 PaymentBean payBean = new PaymentBean();
-                payBean.Admno = txtAdmNo.Text;
+                payBean.Admno = txtAdmNo.Text.Trim();
                 payBean.Paid = double.Parse(txtAmount.Text);
                 payBean.IsCash = radioButton1.Checked;
                 payBean.PayFrom = dtPayFrom.Value;
                 payBean.PayTo = dtPayTo.Value;
                 payBean.SetCheque(payBean.IsCash);
+                payBean.ChequeNo = txtCheque.Text.Trim();
+                payBean.ChequeDate = dtChequeDate.Value;
+                payBean.FeeRate = Double.Parse(txtFeeRate.Text.Trim());
+                payBean.Paid = Double.Parse(txtAmount.Text.Trim());
+                payBean.Balance = Double.Parse(txtBalance.Text.Trim());
+                payBean.TotalArrears = payBean.Balance - payBean.Paid;
+
+                if (dao.insertALstudentFee(payBean))
+                {
+                    //TODO update student with the above info:
+                    //Pay from - pay To. totarrears, 
+                    MessageBox.Show("Successfully Paid");
+                }else
+                {
+                    MessageBox.Show("Payment unsuccessful!");
+                }
+
+
+                //payBean
 
 
             }
@@ -61,11 +80,16 @@ namespace ZahiraSIS.com.zahira.view.alstudentfees
             {
                 lblCheque.Visible = true;
                 txtCheque.Visible = true;
+                lblChequeDAte.Visible = true;
+                dtChequeDate.Visible = true;
             }
             else {
                 lblCheque.Visible = false;
                 txtCheque.Visible = false;
-            }
+                lblChequeDAte.Visible = false;
+                dtChequeDate.Visible =false;
+            
+        }
         }
 
         private Boolean checkInput() {
@@ -124,6 +148,11 @@ namespace ZahiraSIS.com.zahira.view.alstudentfees
             btnExp.Enabled = flag;
             btnGen.Enabled = flag;
             btnPay.Enabled = flag;
+        }
+
+        private void btnGen_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

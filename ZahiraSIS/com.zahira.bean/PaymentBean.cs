@@ -12,7 +12,7 @@ namespace ZahiraSIS.com.zahira.bean
         public string Admno { get; set; }
         public Boolean IsCash { get; set; }
         public double Paid { get; set; }
-        public double ChequeNo { get; set; }
+        public string ChequeNo { get; set; }
         public DateTime? ChequeDate { get; set; }
         public double FeeRate { get; set; }
         public DateTime PayFrom { get; set; }
@@ -25,7 +25,7 @@ namespace ZahiraSIS.com.zahira.bean
         
         public void SetCheque(Boolean IsCash) {
             if (IsCash) {
-                ChequeNo = 0;
+                ChequeNo = "0";
                 ChequeDate = null;
             }
         }

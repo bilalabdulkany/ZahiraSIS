@@ -62,6 +62,8 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.txtPaid = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
+            this.lblChequeDAte = new System.Windows.Forms.Label();
+            this.dtChequeDate = new System.Windows.Forms.DateTimePicker();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -177,6 +179,7 @@
             this.btnGen.TabIndex = 19;
             this.btnGen.Text = "Generate Receipt";
             this.btnGen.UseVisualStyleBackColor = true;
+            this.btnGen.Click += new System.EventHandler(this.btnGen_Click);
             // 
             // radioButton1
             // 
@@ -204,6 +207,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.dtChequeDate);
+            this.groupBox1.Controls.Add(this.lblChequeDAte);
             this.groupBox1.Controls.Add(this.lblCheque);
             this.groupBox1.Controls.Add(this.txtCheque);
             this.groupBox1.Controls.Add(this.lblAmount);
@@ -212,7 +217,7 @@
             this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.Location = new System.Drawing.Point(16, 236);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(459, 148);
+            this.groupBox1.Size = new System.Drawing.Size(459, 175);
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Payment";
@@ -228,7 +233,7 @@
             // 
             // txtCheque
             // 
-            this.txtCheque.Location = new System.Drawing.Point(115, 94);
+            this.txtCheque.Location = new System.Drawing.Point(121, 94);
             this.txtCheque.Name = "txtCheque";
             this.txtCheque.Size = new System.Drawing.Size(188, 20);
             this.txtCheque.TabIndex = 16;
@@ -244,7 +249,7 @@
             // 
             // txtAmount
             // 
-            this.txtAmount.Location = new System.Drawing.Point(114, 61);
+            this.txtAmount.Location = new System.Drawing.Point(120, 61);
             this.txtAmount.Name = "txtAmount";
             this.txtAmount.Size = new System.Drawing.Size(188, 20);
             this.txtAmount.TabIndex = 16;
@@ -382,6 +387,23 @@
             this.label11.TabIndex = 27;
             this.label11.Text = "Total Paid";
             // 
+            // lblChequeDAte
+            // 
+            this.lblChequeDAte.AutoSize = true;
+            this.lblChequeDAte.Location = new System.Drawing.Point(47, 132);
+            this.lblChequeDAte.Name = "lblChequeDAte";
+            this.lblChequeDAte.Size = new System.Drawing.Size(70, 13);
+            this.lblChequeDAte.TabIndex = 19;
+            this.lblChequeDAte.Text = "Cheque Date";
+            // 
+            // dtChequeDate
+            // 
+            this.dtChequeDate.CustomFormat = "DD/MMM/YYYY";
+            this.dtChequeDate.Location = new System.Drawing.Point(120, 132);
+            this.dtChequeDate.Name = "dtChequeDate";
+            this.dtChequeDate.Size = new System.Drawing.Size(188, 20);
+            this.dtChequeDate.TabIndex = 20;
+            // 
             // frmALStudentFee
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -457,5 +479,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtPaid;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.DateTimePicker dtChequeDate;
+        private System.Windows.Forms.Label lblChequeDAte;
     }
 }

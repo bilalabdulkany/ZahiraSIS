@@ -1401,5 +1401,20 @@ namespace ZahiraSIS
 
         }
 
+        public Boolean updateStudentFeeInfo(PaymentBean bean) {
+            SqlConnection conn = null;
+            SqlCommand cmd = null;
+            Boolean flag=false;
+            int count = 0;
+            try
+            {
+                string sql = "update STUDENT SET ";
+            }
+            catch (Exception e) {
+
+            }
+                return true;
+        }
+
     }
 }

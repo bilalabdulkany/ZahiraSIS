@@ -18,6 +18,7 @@ namespace ZahiraSIS.com.zahira.view.reports
         private volatile DataTable totalDatatable = null;
         private double currArrears = 0;
         private double totalPaid = 0;
+        private int count = 0;
         ClassDAO clsDao = new ClassDAO();
         int selectedClass1 = 0;
         public frmServiceArrearsClasswise()
@@ -209,7 +210,8 @@ namespace ZahiraSIS.com.zahira.view.reports
                     aBean.paidTill = arrearsBean.paidTill;
                  //   int k = 0;
                     // totalDatatable = arrearsBean.stPaidData;
-                    int count = classwiseStudents.Rows.Count;
+                     count = classwiseStudents.Rows.Count;
+                        aBean.studentCount = count;
                     decimal pct = ((decimal)i * 100 / (decimal)(count - 1));
                     int pct1 = Convert.ToInt32(pct);
                     backgroundWorker1.ReportProgress(pct1, aBean);
@@ -253,6 +255,7 @@ namespace ZahiraSIS.com.zahira.view.reports
                 progressBar1.Value = e.ProgressPercentage;
                 txtCurArrears.Text = currArrears + "";
                 txtCurBFArrears.Text = totalPaid + "";
+                txtSudents.Text = count+"";
             }
         }
 

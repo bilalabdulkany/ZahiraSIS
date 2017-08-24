@@ -54,6 +54,8 @@
             this.button3 = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtSudents = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.tblStudents)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.studentBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zahira_SISDataSet)).BeginInit();
@@ -264,11 +266,30 @@
             this.progressBar1.Size = new System.Drawing.Size(499, 10);
             this.progressBar1.TabIndex = 31;
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(59, 112);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(79, 13);
+            this.label7.TabIndex = 32;
+            this.label7.Text = "Total Students:";
+            // 
+            // txtSudents
+            // 
+            this.txtSudents.Location = new System.Drawing.Point(144, 106);
+            this.txtSudents.Name = "txtSudents";
+            this.txtSudents.ReadOnly = true;
+            this.txtSudents.Size = new System.Drawing.Size(48, 20);
+            this.txtSudents.TabIndex = 33;
+            // 
             // frmServiceArrearsClasswise
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(681, 386);
+            this.Controls.Add(this.txtSudents);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.statusStrip1);
@@ -328,5 +349,7 @@
         private System.Windows.Forms.Button button3;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtSudents;
     }
 }
